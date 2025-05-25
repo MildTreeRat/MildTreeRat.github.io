@@ -1,564 +1,562 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<title>Aaron Sierra - Personal Resume</title>
-<style>
-.font-outline {
-    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.6);
-}
-
-.hover-glow {
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-transition: box-shadow 0.3s;
-}
-
-.hover-glow:hover {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 1);
-}
-</style>
-</head>
-
-<body class="bg-gray-900 text-gray-200 font-sans">
-<!-- Header Section -->
-<header class="text-center my-10">
-<h1 class="text-5xl md:text-7xl font-bold text-primary-500
-font-outline">Aaron Sierra</h1>
-<h2 class="text-2xl md:text-4xl italic text-gray-400">Computer Scientist
-with Cybersecurity Concentration</h2>
-</header>
-
-<!-- Main Content -->
-<main class="max-w-6xl mx-auto grid grid-cols-6 gap-4 px-6">
-<!-- About Section -->
-<section class="col-span-6 md:col-span-3 bg-gray-800 p-6 rounded hover-glow">
-<h3 class="text-3xl text-center mb-4 border-b-2 border-gray-500 pb-2">Who Am I?</h3>
-<p class="text-lg">
-I have the experience and technical foundation of a computer scientist, which
-means I'm not just comfortable with coding, but I also enjoy digging into
-complex systems and understanding how they work. Computer Science is great, but my true passion is cybersecurity. I’ve explored many different areas within the field, but lately, I’ve been diving deeper into offensive security. I love learning and constantly expanding my skills to stay on top of the latest in cybersecurity.
-</p>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Aaron Sierra - Personal Portfolio and Resume</title>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@1.0.4/css/bulma.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/style.css" />
+    <script src="/static/js/showcase.js"></script>
+    <script
+      src="https://kit.fontawesome.com/2828f7885a.js"
+      integrity="sha384-WAsFbnLEQcpCk8lM1UTWesAf5rGTCvb2Y+8LvyjAAcxK1c3s5c0L+SYOgxvc6PWG"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="icon" type="image/png" href="favicon.png" />
+  </head>
 
 
+  <body data-aos-easing="ease-out" data-aos-duration="800" data-aos-delay="0">
 
-</section>
+    <form action="#home">
+      <button id="toTop" title="Go to top">
+        <i class="fas fa-angle-up"></i>
+      </button>
+    </form>
 
-<!-- Professional Image Placeholder -->
-<div class="col-span-6 md:col-span-3 flex justify-center items-center border border-dashed border-gray-700 p-6 rounded">
-<img src="AaronGrad.jpeg" alt="Professional Headshot" class="mt-4 h-auto rounded-lg">
-<p class="text-center italic"></p>
-</div>
+    <!-- Begin Header -->
+    <div class="header-wrapper" id="home">
+      <!-- Begin Hero -->
+      <section class="hero is-large">
+        <!-- Begin Mobile Nav -->
+        <nav class="navbar is-fixed-top is-transparent is-hidden-desktop">
+          <!-- Begin Burger Menu -->
+          <div class="navbar-brand">
+            <div class="navbar-burger burger" data-target="mobile-nav">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+          <!-- End Burger Menu -->
+          <div id="mobile-nav" class="navbar-menu">
+            <div class="navbar-end">
+              <div class="navbar-item">
+                <a class="navbar-item" href="#home">
+                  Home
+                </a>
+              </div>
+              <div class="navbar-item">
+                <a class="navbar-item" href="#about-me">
+                  About Me
+                </a>
+              </div>
+              <div class="navbar-item">
+                <a class="navbar-item" href="#services">
+                  Services
+                </a>
+              </div>
+              <div class="navbar-item">
+                <a class="navbar-item" href="#skills">
+                  Skills
+                </a>
+              </div>
+              <div class="navbar-item">
+                <a class="navbar-item" href="#my-work">
+                  My Work
+                </a>
+              </div>
+              <div class="navbar-item">
+                <a class="navbar-item" href="#contact">
+                  Contact
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <!-- End Mobile Nav -->
+        <!-- Begin Hero Content-->
+        <div class="hero-body">
+          <div class="container has-text-centered">
+            <h2 class="title">Aaron Sierra</h2>
+            <h1 class="subtitle profession">Computer Scientist with a passion for Cybersecurity</h1>
+          </div>
+        </div>
+        <!-- End Hero Content-->
+        <!-- Begin Hero Menu -->
+        <div class="hero-foot ">
+          <div class="hero-foot--wrapper">
+            <div class="columns">
+              <div class="column is-12 hero-menu-desktop has-text-centered is-fixed-top">
+                <ul>
+                  <li class="is-active">
+                    <a href="#home">Home</a>
+                  </li>
+                  <li>
+                    <a href="#about-me">About Me</a>
+                  </li>
+                  <li>
+                    <a href="#services">Services</a>
+                  </li>
+                  <li>
+                    <a href="#skills">Skills</a>
+                  </li>
+                  <li>
+                    <a href="#my-work">My Work</a>
+                  </li>
+                  <li>
+                    <a href="#contact">Contact</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Hero Menu -->
+      </section>
+      <!-- End Hero -->
+    </div>
+    <!-- End Header -->
 
-
-<!-- Education Section -->
-<section class="col-span-6 md:col-span-3 bg-primary-900 p-6 rounded hover-glow">
-<h3 class="text-2xl text-center mb-4 border-b-2 border-gray-500 pb-2">Education</h3>
-<h4 class="font-bold">Baylor University </h4>
-<p>Bachelor of Science in Computer Science Concentration in Cybersecurity</p>
-<p><strong>Graduation:</strong> May 2025</p>
-<p><strong>Courses Taken:</strong></p>
-<p>Computer Systems (x86 course), Data Structures, Software Eng II, Intro
-Algorithms, Database Design, Data Communications (Networking), Intro Cyber, Operating Systems,
-    Foundations of Computing.</p>
-    Calc II, Linear Algebra, Cryptology, Statistics
-    </section>
-
-
-    <!-- Contact Information -->
-    <section class="col-span-6 md:col-span-3 bg-primary-900 p-6 rounded hover-glow">
-    <h3 class="text-xl font-bold text-center mb-2">Contact Info</h3>
-    <p><strong>Email:</strong> aaron_sierra1@baylor.edu
-    <p><strong>Email 2:</strong> aaronsierra2nd@gmail.com
-    <p><strong>Phone:</strong> 806-922-3947</p>
-    <p>
-    <a href="https://www.linkedin.com/in/aaronsierra1/" target="_blank" class="text-primary-500 hover:underline flex items-center gap-2">
-      <!-- LinkedIn SVG Icon -->
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M22.23 0H1.77C.79 0 0 .77 0 1.72v20.54C0 23.24.79 24 1.77
-        24h20.46c.98 0 1.77-.76 1.77-1.73V1.72C24 .77 23.21 0 22.23 0zM7.08
-        20.47H3.56V9h3.52v11.47zM5.32 7.51c-1.13 0-2.06-.92-2.06-2.06S4.19 3.4
-        5.32 3.4c1.13 0 2.06.92 2.06 2.06s-.93 2.05-2.06 2.05zm15.14
-        12.96h-3.52v-5.57c0-1.33-.02-3.05-1.86-3.05-1.86 0-2.14 1.45-2.14
-        2.94v5.68H9.42V9h3.39v1.57h.05c.47-.9 1.63-1.86 3.36-1.86 3.6 0 4.27
-        2.37 4.27 5.46v6.3z"/>
-      </svg>
-      www.linkedin.com/in/aaronsierra1/
-    </a>
-    </p>
-    <p>
-      <!-- GitHub Link with SVG Icon -->
-    <a href="https://www.github.com/ElTragedy/" target="_blank" class="text-primary-500 hover:underline flex items-center gap-2">
-      <!-- GitHub SVG Icon -->
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-      fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 .5C5.4.5 0 5.9 0 12.5c0 5.3 3.4 9.8 8.1
-        11.4.6.1.8-.3.8-.6v-2.3c-3.3.7-4-1.5-4-1.5-.5-1.3-1.1-1.7-1.1-1.7-.9-.6
-        0-.6 0-.6 1.1.1 1.6 1.1 1.6 1.1.9 1.6 2.3 1.1
-        2.8.9.1-.7.3-1.1.6-1.4-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.4
-        1.2-3.3-.1-.3-.6-1.7.1-3.4 0 0 1-.3 3.4 1.2 1-.3 2-.4 3.1-.4s2.1.1
-        3.1.4c2.4-1.5 3.4-1.2 3.4-1.2.7 1.7.2 3.1.1 3.4.7.9 1.2 2 1.2 3.3 0
-        4.5-2.7 5.5-5.3 5.8.3.3.6.8.6 1.7v2.5c0 .3.2.7.8.6 4.7-1.6 8.1-6.1
-        8.1-11.4C24 5.9 18.6.5 12 .5z"/>
-      </svg>
-      www.github.com/ElTragedy/
-    </a>
-    </p>
-    <p><strong>TryHackMe: </strong><a
-    href="https://tryhackme.com/p/aaronsierra" target="_blank"
-    class="text-primary-500 hover:underline">https://tryhackme.com/p/aaronsierra</a></p>
-<img src="https://tryhackme-badges.s3.amazonaws.com/aaronsierra.png" alt="Your Image Badge" />
-    <p><strong>HackTheBox: </strong><a
-    href="https://app.hackthebox.com/profile/817994" target="_blank"
-    class="text-primary-500 hover:underline">https://app.hackthebox.com/profile/817994</a></p>
-    </section>
-
-
-<!-- Skills Section -->
-<section class="col-span-6 md:col-span-3 bg-gray-800 p-6 rounded hover-glow">
-    <h3 class="text-2xl text-center mb-4 border-b-4 border-gray-500 pb-2">Skills/Experience working with</h3>
-    <ul class="list-disc list-inside columns-2 md:columns-3 gap-4">
-        <li>Assembly (x86)</li>
-        <li>Azure 365 Defender</li>
-        <li>Bash</li>
-        <li>Binary Ninja</li>
-        <li>C</li>
-        <li>C#</li>
-        <li>C++</li>
-        <li>Docker</li>
-        <li>Elk</li>
-        <li>Ghidra</li>
-        <li>Git</li>
-        <li>GlobalProtect</li>
-        <li>Graylog</li>
-        <li>HTML/CSS</li>
-        <li>Java</li>
-        <li>Microsoft Sentinel</li>
-        <li>Node.js</li>
-        <li>Proxmox</li>
-        <li>Python</li>
-        <li>QRadar</li>
-        <li>React</li>
-        <li>SQL</li>
-        <li>VMWare</li>
-        <li>Wazuh</li>
-    </ul>
-</section>
-
-
-<!-- Certification Section -->
-<section class="col-span-6 md:col-span-3 bg-gray-800 p-6 rounded hover-glow">
-<h3 class="text-2xl text-center mb-4 border-b-2 border-gray-500
-pb-2">Certifications: CompTIA Security+</h3>
-<img src="CompTIASecurityPlus-1.jpg" alt="Resume" class="h-auto rounded-lg mx-auto">
-
-</div>
-</section>
-
-
-
-    </main>
-
-
-    </main>
-    <div></div>
-
-<!-- Professional Image -->
-<div class="col-span-6 md:col-span-3 flex flex-col justify-center items-center border border-dashed border-gray-700 p-6 rounded">
-    <h2 class="text-2xl text-center font-bold">Resume (updated: 1-14-2025)</h2>
-    <img 
-        src="Resume-1.jpg" 
-        alt="Resume" 
-        class="mt-4 w-3/4 md:w-1/2 lg:w-1/2 h-auto rounded-lg mx-auto"
-    >
-    <p class="text-center italic"></p>
-</div>
-
-
-
-<header class="text-3xl text-center mb-8 border-b-4 pb-4 text-gray-100">Leadership Experience</header>
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-  <section class="bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
-    <h3 class="text-xl text-center text-gray-100 font-bold mb-2">Project Manager for Group Project - Baylor Software Engineering II</h3>
-  </section>
-
-  <section class="bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
-    <h3 class="text-xl text-center text-gray-100 font-bold mb-2">Project Manager for Team Sandilya - General Motors Software Engineer Project</h3>
-  </section>
-
-  <section class="bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
-    <h3 class="text-xl text-center text-gray-100 font-bold mb-2">Cyber@Baylor Club Founding Officer (Treasurer)</h3>
-  </section>
-
-
-  <section class="bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
-    <h3 class="text-xl text-center text-gray-100 font-bold mb-2">Red Teaming Mentor Cyber@Baylor Club</h3>
-  </section>
-
-  <section class="bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
-    <h3 class="text-xl text-center text-gray-100 font-bold mb-2">Red Team Captain for CCDC</h3>
-  </section>
-
-  <section class="bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
-    <h3 class="text-xl text-center text-gray-100 font-bold mb-2">Former Vice President of OSO Esports</h3>
-  </section>
-
-  <section class="bg-gradient-to-br from-gray-800 to-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
-    <h3 class="text-xl text-center text-gray-100 font-bold mb-2">Former Team Captain for Overwatch 2 Team OSO Esports</h3>
-  </section>
-
-
-</div>
-
-
-    <!-- Experience Section -->
-    <section class="col-span-6 md:col-span-3 bg-gray-800 p-6 rounded hover-glow mt-12">
-    <h3 class="text-3xl text-center mb-4 border-b-2 border-gray-500 pb-2">Work Experience</h3>
-    <div class="mb-4">
-
-    <!-- First Experience Item - Left Aligned -->
-    <div class="bg-gray-700 p-4 rounded-lg border-2 border-gray-500
-    hover-glow-left ml-12 mb-8">
-    <h4 class="text-2xl font-bold">Undergraduate Cybersecurity Research
-    Assistant</h4>
-    <p class="italic mb-2" style="margin-bottom: 10px;">Baylor University - August 2024-Current</p>
-    Researching initiatives aimed at developing educational labs to teach cybersecurity principles. Organized,
-    executed, and supported cybersecurity student competition, Cybersecurity Interdisciplinary Incident Response
-    Competition (CIIRC). Performed penetration testing on competition networks after establishing Rules of
-    Engagement (ROE). Created post-mortem reports to analyze findings for improvement of future competition
-    frameworks. Current project consists of collaborating with Head of CS Dept to research AI/ML applications in
-    offensive cybersecurity strategies for upcoming implementation in curriculum strategies and am excited to expand my
-    experience in this emerging area.
-    </p>
-    <div>
-      <p class="text-l font-bold border-b-2 border-gray-500 pb-2 mb-2 mt-5">Skills and Technologies Learned:</p>
-      <div class="flex flex-wrap gap-2">
-        <!-- Skill Item -->
-        <span
-          class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-          AI/ML
-        </span>
-        <span
-          class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-          WEKA
-        </span>
-        <span
-          class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-          Sklearn
-        </span>
-        <span
-          class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-          KNN
-        </span>
-        <span
-          class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-          Terraform 
-        </span>
+    <!-- Begin Main Content -->
+    <div class="main-content">
+      <!-- Begin About Me Section -->
+      <div class="section-light about-me" id="about-me">
+        <div class="container">
+          <div class="column is-12 about-me">
+            <h1 class="title has-text-centered section-title">About Me</h1>
+          </div>
+          <div class="columns is-multiline">
+            <div
+              class="column is-6 has-vertically-aligned-content"
+              data-aos="fade-right"
+            >
+              <p class="is-larger">
+                &emsp;&emsp;<strong
+                  >I have the experience and technical foundation of a computer 
+                  scientist and love working with complex systems to understand
+                  how they work. </strong                >
+              </p>
+              <br />
+              <p>
+                I love learning. I have most recently taken an interest in cybersecurity 
+                and this is where my true passion lies. I have been diving deeper 
+                into offensive security to try and expand my skills and continue 
+                to learn as I walk through life.
+              </p>
+              <br />
+              <div class="is-divider"></div>
+              <div class="columns about-links">
+                <div class="column">
+                  <p class="heading">
+                    <strong>Give me a call</strong>
+                  </p>
+                  <p class="subheading">
+                    806-922-3947
+                  </p>
+                </div>
+                <div class="column">
+                  <p class="heading">
+                    <strong>Email Me</strong>
+                  </p>
+                  <p class="subheading">
+                    aaronsierra2nd@gmail.com
+                  </p>
+                </div>
+                <div class="column">
+                  <p class="heading">
+                    <strong>View my socials</strong>
+                  </p>
+                  <p>
+                    <a href="https://www.linkedin.com/in/aaronsierra1/" target="_blank"
+                      class="text-primary-500 hover:underline flex items-center">
+                      <!-- LinkedIn SVG Icon -->
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22.23 0H1.77C.79 0 0 .77 0 1.72v20.54C0 23.24.79 24 1.77
+                          24h20.46c.98 0 1.77-.76 1.77-1.73V1.72C24 .77 23.21 0 22.23 0zM7.08
+                          20.47H3.56V9h3.52v11.47zM5.32 7.51c-1.13 0-2.06-.92-2.06-2.06S4.19 3.4
+                          5.32 3.4c1.13 0 2.06.92 2.06 2.06s-.93 2.05-2.06 2.05zm15.14
+                          12.96h-3.52v-5.57c0-1.33-.02-3.05-1.86-3.05-1.86 0-2.14 1.45-2.14
+                          2.94v5.68H9.42V9h3.39v1.57h.05c.47-.9 1.63-1.86 3.36-1.86 3.6 0 4.27
+                          2.37 4.27 5.46v6.3z" />
+                      </svg>
+                      linkedin.com
+                    </a>
+                  </p>
+                  <p>
+                    <!-- GitHub Link with SVG Icon -->
+                    <a href="https://www.github.com/MildTreeRat/" target="_blank"
+                      class="text-primary-500 hover:underline flex items-center mb-2">
+                      <!-- GitHub SVG Icon -->
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 .5C5.4.5 0 5.9 0 12.5c0 5.3 3.4 9.8 8.1
+                          11.4.6.1.8-.3.8-.6v-2.3c-3.3.7-4-1.5-4-1.5-.5-1.3-1.1-1.7-1.1-1.7-.9-.6
+                          0-.6 0-.6 1.1.1 1.6 1.1 1.6 1.1.9 1.6 2.3 1.1
+                          2.8.9.1-.7.3-1.1.6-1.4-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.4
+                          1.2-3.3-.1-.3-.6-1.7.1-3.4 0 0 1-.3 3.4 1.2 1-.3 2-.4 3.1-.4s2.1.1
+                          3.1.4c2.4-1.5 3.4-1.2 3.4-1.2.7 1.7.2 3.1.1 3.4.7.9 1.2 2 1.2 3.3 0
+                          4.5-2.7 5.5-5.3 5.8.3.3.6.8.6 1.7v2.5c0 .3.2.7.8.6 4.7-1.6 8.1-6.1
+                          8.1-11.4C24 5.9 18.6.5 12 .5z" />
+                      </svg>
+                      www.github.com/MildTreeRat/
+                    </a>
+                  </p>
+                  <p><strong>TryHackMe: </strong><a href="https://tryhackme.com/p/aaronsierra" target="_blank"
+                      class="text-primary-500 hover:underline">https://tryhackme.com</a></p>
+                  <p><strong>HackTheBox: </strong><a href="https://app.hackthebox.com/profile/817994" target="_blank"
+                      class="text-primary-500 hover:underline">https://hackthebox.com</a></p>
+                  </section>
+                  </div>
+                  </div>
+                  </div>
+                  <div class="column is-6 right-image " data-aos="fade-left">
+                    <img
+                class="is-rounded"
+                src="static/img/AaronGrad.jpeg"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
       </div>
+      <!-- End About Me Content -->
+      <div class="section-dark resume">
+        <div class="container">
+          <div
+            class="columns is-multiline"
+            data-aos="fade-in"
+            data-aos-easing="linear"
+          >
+            <div class="column is-12 about-me">
+              <h1 class="title has-text-centered section-title">
+                View My Resume
+              </h1>
+            </div>
+            <div class="column is-10 has-text-centered is-offset-1">
+              <h2 class="subtitle">
+               My most recent version of my resume was updated as of 05-25-2025. 
+               Avaliable for download as a PDF. (not currently working) 
+              </h2>
+              <form action="example.docs">
+                <button class="button">
+                  Download Resume&emsp;<i class="fad fa-download fa-lg"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Begin Services Content -->
+      <div class="section-color services" id="services">
+        <div class="container">
+          <div class="columns is-multiline">
+            <div
+              class="column is-12 about-me"
+              data-aos="fade-in"
+              data-aos-easing="linear"
+            >
+              <h1 class="title has-text-centered section-title">Services</h1>
+
+              <h2 class="subtitle">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua
+              </h2>
+              <br />
+            </div>
+            <div class="columns is-12">
+              <div
+                class="column is-4 has-text-centered"
+                data-aos="fade-in"
+                data-aos-easing="linear"
+              >
+                <i class="fad fa-meteor fa-3x"></i>
+                <hr />
+                <h2>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                </h2>
+              </div>
+              <div
+                class="column is-4 has-text-centered"
+                data-aos="fade-in"
+                data-aos-easing="linear"
+              >
+                <i class="fas fa-paint-brush fa-3x"></i>
+                <hr />
+                <h2>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                </h2>
+              </div>
+              <div
+                class="column is-4 has-text-centered"
+                data-aos="fade-in"
+                data-aos-easing="linear"
+              >
+                <i class="fas fa-rocket fa-3x"></i>
+                <hr />
+                <h2>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                </h2>
+              </div>
+            </div>
+            <hr />
+            <div class="columns is-12">
+              <div
+                class="column is-4 has-text-centered"
+                data-aos="fade-in"
+                data-aos-easing="linear"
+              >
+                <i class="fas fa-upload fa-3x"></i>
+                <hr />
+                <h2>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                </h2>
+              </div>
+              <div
+                class="column is-4 has-text-centered"
+                data-aos="fade-in"
+                data-aos-easing="linear"
+              >
+                <i class="fas fa-bus fa-3x"></i>
+                <hr />
+                <h2>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                </h2>
+              </div>
+              <div
+                class="column is-4 has-text-centered"
+                data-aos="fade-in"
+                data-aos-easing="linear"
+              >
+                <i class="fas fa-code fa-3x"></i>
+                <hr />
+                <h2>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Services Content -->
+      <!-- Begin Skills Content -->
+      <div class="section-light skills" id="skills">
+        <div class="container">
+          <div class="columns is-multiline">
+            <div class="column is-12 about-me">
+              <h1 class="title has-text-centered section-title">Skills</h1>
+            </div>
+            <div
+              class="column is-6"
+              data-aos="fade-in"
+              data-aos-easing="linear"
+            >
+              <h1>Adobe Experience Design</h1>
+              <progress class="progress" value="70" max="100">30%</progress>
+              <h1>Adobe After Effects</h1>
+              <progress class="progress" value="65" max="100">30%</progress>
+              <h1>Visual Studio Code</h1>
+              <progress class="progress" value="58" max="100">45%</progress>
+              <h1>Sketch</h1>
+              <progress class="progress" value="90" max="100">60%</progress>
+            </div>
+            <div
+              class="column is-6"
+              data-aos="fade-in"
+              data-aos-easing="linear"
+            >
+              <h1>HTML</h1>
+              <progress class="progress" value="85" max="100">30%</progress>
+              <h1>CSS</h1>
+              <progress class="progress" value="95" max="100">30%</progress>
+              <h1>VueJS</h1>
+              <progress class="progress" value="70" max="100">45%</progress>
+              <h1>React</h1>
+              <progress class="progress" value="60" max="100">60%</progress>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Skills Content -->
+      <!-- Begin Work Content -->
+      <div class="section-dark my-work" id="my-work">
+        <div class="container">
+          <div
+            class="columns is-multiline"
+            data-aos="fade-in"
+            data-aos-easing="linear"
+          >
+            <div class="column is-12">
+              <h1 class="title has-text-centered section-title">My Work</h1>
+            </div>
+            <div class="column is-3">
+              <a href="#">
+                <figure
+                  class="image is-2by1 work-item"
+                  style="background-image: url('https://picsum.photos/320/180?image=0');"
+                ></figure>
+              </a>
+            </div>
+            <div class="column is-3">
+              <a href="#">
+                <figure
+                  class="image is-2by1 work-item"
+                  style="background-image: url('https://picsum.photos/320/180?image=10');"
+                ></figure>
+              </a>
+            </div>
+            <div class="column is-3">
+              <a href="#">
+                <figure
+                  class="image is-2by1 work-item"
+                  style="background-image: url('https://picsum.photos/320/180?image=20');"
+                ></figure>
+              </a>
+            </div>
+            <div class="column is-3">
+              <a href="#">
+                <figure
+                  class="image is-2by1 work-item"
+                  style="background-image: url('https://picsum.photos/320/180?image=30');"
+                ></figure>
+              </a>
+            </div>
+            <div class="column is-3">
+              <a href="#">
+                <figure
+                  class="image is-2by1 work-item"
+                  style="background-image: url('https://picsum.photos/320/180?image=40');"
+                ></figure>
+              </a>
+            </div>
+            <div class="column is-3">
+              <a href="#">
+                <figure
+                  class="image is-2by1 work-item"
+                  style="background-image: url('https://picsum.photos/320/180?image=50');"
+                ></figure>
+              </a>
+            </div>
+            <div class="column is-3">
+              <a href="#">
+                <figure
+                  class="image is-2by1 work-item"
+                  style="background-image: url('https://picsum.photos/320/180?image=60');"
+                ></figure>
+              </a>
+            </div>
+            <div class="column is-3">
+              <a href="#">
+                <figure
+                  class="image is-2by1 work-item"
+                  style="background-image: url('https://picsum.photos/320/180?image=70');"
+                ></figure>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Work Content -->
+      <!-- Begin Contact Content -->
+      <div class="section-light contact" id="contact">
+        <div class="container">
+          <div
+            class="columns is-multiline"
+            data-aos="fade-in-up"
+            data-aos-easing="linear"
+          >
+            <div class="column is-12 about-me">
+              <h1 class="title has-text-centered section-title">
+                Get in touch
+              </h1>
+            </div>
+            <div class="column is-8 is-offset-2">
+              <form
+                action="https://formspree.io/email@example.com"
+                method="POST"
+              >
+                <div class="field">
+                  <label class="label">Name</label>
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="text"
+                      placeholder="Ex. Jane Smith"
+                      name="Name"
+                    />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-user"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Email</label>
+                  <div class="control has-icons-left">
+                    <input
+                      class="input"
+                      type="email"
+                      placeholder="Ex. hello@arctheme.com"
+                      name="Email"
+                    />
+                    <span class="icon is-small is-left">
+                      <i class="fas fa-envelope"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label">Message</label>
+                  <div class="control">
+                    <textarea
+                      class="textarea"
+                      placeholder="Textarea"
+                      name="Message"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="control ">
+                    <button class="button submit-button">
+                      Submit&nbsp;&nbsp;
+                      <i class="fas fa-paper-plane"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Contact Content -->
     </div>
+    <!-- End Main Content -->
 
+    <!-- Begin Footer -->
+    <div class="footer">
+      <p>
+        <strong class="white">Bulma</strong> by <a href="http://jgthms.com">Jeremy Thomas</a>.
+        The source code is licensed
+        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content is licensed
+        <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+      </p>
     </div>
-    <!-- Second Experience Item - Right aligned -->
-    <div class="bg-gray-700 p-4 rounded-lg border-2 border-gray-500
-    hover-glow-right mr-12 mb-8">
-    <h4 class="text-2xl font-bold">Digital Information Technology Intern</h4>
-    <p class="italic" style="margin-bottom: 10px;">General Motors - May 2024-August 2024</p>
-    <p>
-      Developed distinct applications crucial to the operations of the Operating Systems Engineers (OSE) team.
-      These applications were designed to track, schedule, or analyze and were compatible with multiple operating
-      systems, including Linux, Windows, macOS, Android, and iOS. Applied various software engineering principles
-      such as General Responsibility Assignment Software Patterns (GRASP) and Keep It Simple, Stupid (KISS).
-    </p>
-    <div>
-  <p class="text-l font-bold border-b-2 border-gray-500 pb-2 mb-2 mt-5">Skills and Technologies Learned:</p>
-  <div class="flex flex-wrap gap-2">
-    <!-- Skill Item -->
-    <span
-      class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      C#
-    </span>
-    <span
-      class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      .NET MAUI
-    </span>
-    <span
-      class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Agile
-    </span>
-    <span
-      class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      HashiVault
-    </span>
-    <span
-      class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Microsoft Graph API
-    </span>
-    <span
-      class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Insomnia
-    </span>
-  </div>
-</div>
+    <!-- End Footer -->
 
-    </div>
-    <div class="bg-gray-700 p-4 rounded-lg border-2 border-gray-500
-    hover-glow-left ml-12 mb-8">
-    <h4 class="text-2xl font-bold" >Security Operations Center (SOC) Intern</h4>
-    <p class="italic" style="margin-bottom: 10px;">Baylor University - August 2023-May 2024</p>
-    <p>
-      Used Splunk for security information and event management (SIEM) . Worked extensively with Intrusion
-      Detection Systems (IDS), including Host-based Intrusion Detection Systems (HIDS) and Network-based
-      Intrusion Detection Systems (NIDS). Performed real-time threat monitoring, log analysis, and incident
-      response, providing a strong foundation in cybersecurity operations and defense strategies.
-    </p>
-
-
-  <p class="text-l font-bold border-b-2 border-gray-500 pb-2 mb-2 mt-5">Skills and Technologies Learned:</p>
-  <div class="flex flex-wrap gap-2">
-    <!-- Skill Item -->
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Splunk
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Python</span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Incident investigation
-    </span>
-  </div>
-</div>
-
-    <div class="bg-gray-700 p-4 rounded-lg border-2 border-gray-500
-    hover-glow-right mr-12 mb-8">
-    <h4 class="text-2xl font-bold" >Information Security Analyst Intern</h4>
-    <p class="italic" style="margin-bottom: 10px;">General Motors - May 2023-August 2023</p>
-    <p>
-      Gained hands-on industry experience on the Cyber Detect team analyzing security logs and evaluating the
-      severity of alerts. Monitored and secured cloud environments utilizing Microsoft Sentinel and 365 Defender. To
-      streamline the process of identifying potential threats for the team, I employed Jupyter Notebooks to automate
-      security log analysis and aggregate detected data.
-    </p>
-
-  <p class="text-l font-bold border-b-2 border-gray-500 pb-2 mb-2 mt-5">Skills and Technologies Learned:</p>
-  <div class="flex flex-wrap gap-2">
-    <!-- Skill Item -->
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      KQL
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-     Microsoft Azure Sentinel 
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-    365 Defender for Cloud
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Azure Cloud
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Jupyter Notebook 
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Microsoft Entitiy Management 
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Incident Automation
-    </span>
-  </div>
-</div>
-
-
-
-    <div class="bg-gray-700 p-4 rounded-lg border-2 border-gray-500
-    hover-glow-left ml-12 mb-8">
-    <h4 class="text-2xl font-bold" >Student Network Technician</h4>
-    <p class="italic" style="margin-bottom: 10px;">Baylor University - August 2022 to May 2023</p>
-    <p>
-      Managed and supported Baylor’s network infrastructure by building and testing Ethernet cables using RJ45
-      connectors, repairing network jacks, and frequently activating data ports to ensure reliable connectivity across
-      the entire campus. Performed regular maintenance and troubleshooting for Intermediate Distribution Frames
-      (IDFs) and Main Distribution Frames (MDFs), ensuring optimal network performance resulting in minimal
-      downtime.
-    </p>
-
-  <p class="text-l font-bold border-b-2 border-gray-500 pb-2 mb-2 mt-5">Skills and Technologies Learned:</p>
-  <div class="flex flex-wrap gap-2">
-    <!-- Skill Item -->
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      RJ45 
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Data ports 
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      MDF & IDF 
-    </span>
-  </div>
-</div>
-
-
-
-
-
-    <div class="bg-gray-700 p-4 rounded-lg border-2 border-gray-500
-    hover-glow-right mr-12 mb-8">
-    <h4 class="text-2xl font-bold" >Cybersecurity Student Worker</h4>
-    <p class="italic" style="margin-bottom: 10px;">Baylor University - January 2022 to August 2022</p>
-    <p style="margin-bottom: 10px;">
-      Created and maintained virtual environments for Baylor's Collegiate Cyber Defense Competition (CCDC) team.
-      Managed and maintained a Proxmox cluster hosted on a server in a graduate laboratory, where I had hands-
-      on access to configure and optimize resources. Designed complex, interdependent service environments to
-      simulate real-world networks, such as setting up an Apache web server that relied on a MariaDB backend, or
-      deploying Active Directory domains integrated with both Windows and Linux clients using RealmD. Created
-      comprehensive documentation for Proxmox deployments to support the team’s understanding and use of the
-      platform.
-
-
-
-  <p class="text-l font-bold border-b-2 border-gray-500 pb-2 mb-2 mt-5">Skills and Technologies Learned:</p>
-  <div class="flex flex-wrap gap-2">
-    <!-- Skill Item -->
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      DNS (Bind9 & Power DNS) 
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Bash 
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-     Powershell 
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-    Active Directory and Forests
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-     Group Policy 
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-     Databases (MariaDB & MySQL & MongoDB)
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-    Webservers (Apache Tomcat & nginx)
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-    Mail (POP3 & IMAP)
-    </span>
-    <span class="bg-primary-700 px-2 py-1 rounded border border-gray-500 hover:border-blue-500 hover:bg-primary-600 transition">
-      Proxmox server management
-    </span>
-  </div>
-</div>
-
-
-
-    <h3 class="text-3xl text-center mb-4 mt-8 border-t-2 border-b-2 border-gray-500
-    pb-2">Competition + Extracurricular Experience</h3>
-    <div class="bg-gray-700 p-4 rounded-lg border-2 border-gray-500
-    hover-glow-left mb-8">
-    <h4 class="text-2xl font-bold">Southwest Collegiate Cyber Defense
-    Competition CCDC</h4>
-    <p class="italic " style="margin-bottom: 10px;">2x Regional Qualifier -
-    August 2022-Current</p>
-
-
-    <p class="mb-4"><a href="https://southwestccdc.com/"target="_blank" class="text-primary-500
-    hover:underline">www.southwestccdc.com</a></p>
-    <p class="mb-2">
-    The Collegiate Cyber Defense Competition (CCDC) is a high-intensity incident
-    response competition designed to provide students with a realistic
-    experience in managing and defending a simulated corporate network
-    infrastructure. Participants are tasked with identifying, responding to, and
-    mitigating a variety of cybersecurity incidents while maintaining critical
-    business operations. Teams must secure services, handle complex scenarios,
-    and demonstrate effective teamwork and technical skills under pressure.
-    </p>
-    <p class="mb-2">
-    During my first year competing in CCDC, I was responsible for creating the
-    network diagram and mapping out our environment. To achieve this, I developed
-    custom nmap scripts to scan and map out the entire subnet. Once I identified the
-    machines on our network, I conducted comprehensive port scans on all devices to
-    determine which ports were open and potentially vulnerable. Following this, I
-    created a preliminary attack surface report to outline potential threats and
-    focus our defense strategy.
-    </p>
-    <p class="mb-2">
-    In my second year, I continued with similar responsibilities, but also took on
-    the specialized role of our team’s LDAP expert. I managed all user
-    modifications, onboarding, and offboarding processes, as well as implementing
-    mass password resets and enforcing password policy changes on an OpenLDAP
-    server. This expanded role allowed me to deepen my understanding of directory
-    services and user management, while continuing to refine my skills in network
-    mapping and incident response.
-
-    <p class="mb-2">
-    This year (Senior Year) I will be taking on the role of the Active Directory
-    Expert. I will be our expert on any onboarding, offboarding, and gpos that
-    could come our way.
-    </p>
-    </div>
-    <div class="bg-gray-700 p-4 rounded-lg border-2 border-gray-500
-    hover-glow-left mb-8">
-    <h4 class="text-2xl font-bold">National Cyber League (NCL)</h4>
-    <p class="italic" style="margin-bottom: 10px;" >395th place out of 8000
-    participants - BiAnnual Competitor for 4 years.</p>
-    <p class="mb-4">
-    <a href="https://nationalcyberleague.org/" target="_blank"
-    class="text-primary-500 hover:underline mb-4" style="margin-bottom: 10px;">www.nationalcyberleague.org</a></p>
-
-    The National Cyber League (NCL) is a cybersecurity competition that helps
-    students and professionals build and showcase their skills through hands-on
-    challenges. Participants engage in scenarios such as cryptography, network
-    traffic analysis, log analysis, web application security, and more. The
-    competition allows participants to demonstrate their skills in both
-    individual and collaborative formats. NCL is widely recognized in the
-    industry and aligns with the NIST Cybersecurity Framework.
-
-    </p>
-    </div>
-    <div class="bg-gray-700 p-4 rounded-lg border-2 border-gray-500
-    hover-glow-left mb-8">
-    <h4 class="text-2xl font-bold">TryHackMe</h4>
-    <p class="italic mb-2" style="margin-bottom: 10px;">Top 4%</p>
-    <p class="mb-4">
-    <a/ href="https://tryhackme.com/p/aaronsierra" target="_blank"
-    class="text-primary-500 hover:underline">https://tryhackme.com/p/aaronsierra</a></p>
-
-    TryHackMe is an interactive cybersecurity training platform where I spent a
-    lot of time learning the basics and building a solid foundation in topics
-    like networking, Linux, and web security. After covering the fundamentals, I
-    moved on to the Red Teaming module, where I learned more about offensive
-    security techniques like privilege escalation, moving between systems, and
-    finding vulnerabilities. This gave me hands-on experience in how real-world
-    attacks work and how to think like an attacker.
-
-    </p>
-    </div>
-    <div class="bg-gray-700 p-4 rounded-lg border-2 border-gray-500
-    hover-glow-left mb-8">
-    <h4 class="text-2xl font-bold">HiveStorm</h4>
-    <p class="italic mb-2" style="margin-bottom: 10px;">4x Competitor</p>
-    <p class="mb-4">
-    <a/ href="https://www.hivestorm.org/" target="_blank"
-    class="text-primary-500 hover:underline">www.hivestorm.org/</a></p>
-
-    Hivestorm is a cybersecurity competition where teams work to secure and
-    defend a network within a set time frame. I participated in this competition
-    to get more experience with real-world defensive strategies. During
-    Hivestorm, we focused on identifying and fixing security misconfigurations,
-    hardening systems, and keeping critical services up and running. It was a
-    great way to practice defending understanding what it takes to keep a
-    network secure.
-
-    </p>
-    </div>
-    </section>
-
-
-    <!-- Footer Section -->
-    <footer class="text-center mt-10 py-4 bg-gray-800">
-    <p>&copy; 2024 Aaron Sierra. All rights reserved.</p>
-    </footer>
-    </body>
-    </html>
-
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../js/showcase.js"></script>
+    <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        easing: "ease-out",
+        duration: 800,
+      });
+    </script>
+  </body>
+</html>
