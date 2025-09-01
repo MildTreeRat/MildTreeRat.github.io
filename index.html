@@ -1,3 +1,19 @@
+<!--
+ Author:             Aaron Sierra
+
+ Description:        Resume website
+
+ Date Created:       TODO
+ Date Last Modified: 09-01-2025 - Aaron Sierra - Changed styling to incoorproate Bulma CSS
+
+ #TODO:              09-01-2025 -  add screen interactions for scrolling
+                                   (containers and stuff fade in and out)
+                     09-01-2025 -  add "Walkthroughs" section for TryHackMe and stuff
+                     09-01-2025 -  add Notable Books section where I write down books
+                                   that I enjoyed reading.
+
+ -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,6 +67,11 @@
       </div>
 
       <!-- Hero Desktop Menu -->
+      <!-- I want to add a dynamic nav bar that appears on the right of the screen
+            (In a vertical format) and does the following: 1. highlights what section
+            the user is currently on | 2. allows user to click on section and have
+            wepage jump to that section. | 3. dissapears when user scrolls to top
+            of the page, replaced by current navbar/hero-menu -->
       <div class="hero-foot">
         <div class="hero-foot--wrapper">
           <div class="hero-menu-desktop">
@@ -161,19 +182,23 @@
           <span class="tag">Azure 365 Defender</span>
           <span class="tag">Bash</span>
           <span class="tag">Binary Ninja</span>
+          <span class="tag">Bind9</span>
           <span class="tag">C</span>
           <span class="tag">C#</span>
           <span class="tag">C++</span>
+          <span class="tag">Datagrams</span>
           <span class="tag">Docker</span>
           <span class="tag">ELK</span>
           <span class="tag">Ghidra</span>
           <span class="tag">Git</span>
           <span class="tag">GlobalProtect</span>
+          <span class="tag">Gradle</span>
           <span class="tag">Graylog</span>
           <span class="tag">HTML/CSS</span>
           <span class="tag">Java</span>
           <span class="tag">Microsoft Sentinel</span>
-            <span class="tag">Node.js</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">PowerDNS</span>
           <span class="tag">Proxmox</span>
           <span class="tag">Python</span>
           <span class="tag">QRadar</span>
@@ -181,6 +206,7 @@
           <span class="tag">SQL</span>
           <span class="tag">VMWare</span>
           <span class="tag">Wazuh</span>
+          <span class="tag">WireShark</span>
         </div>
       </div>
     </div>
@@ -193,12 +219,12 @@
       <div class="columns is-multiline">
         <div class="column is-one-third-desktop is-half-tablet">
           <div class="box hover-glow">
-            <p class="has-text-weight-semibold">Project Manager - Software Engineering II</p>
+            <p class="has-text-weight-semibold">Project Manager - Software Engineering II course</p>
           </div>
         </div>
         <div class="column is-one-third-desktop is-half-tablet">
             <div class="box hover-glow">
-              <p class="has-text-weight-semibold">Project Manager - Team Sandilya (GM Software Engineer Project)</p>
+              <p class="has-text-weight-semibold">Project Manager - Team Sandilya (General Motors Software Engineer Project)</p>
             </div>
         </div>
         <div class="column is-one-third-desktop is-half-tablet">
@@ -208,12 +234,12 @@
         </div>
         <div class="column is-one-third-desktop is-half-tablet">
           <div class="box hover-glow">
-            <p class="has-text-weight-semibold">Red Teaming Mentor - Cyber@Baylor</p>
+            <p class="has-text-weight-semibold">Cyber Security Mentor - Cyber@Baylor</p>
           </div>
         </div>
         <div class="column is-one-third-desktop is-half-tablet">
           <div class="box hover-glow">
-            <p class="has-text-weight-semibold">Red Team Captain for CCDC</p>
+            <p class="has-text-weight-semibold">Former Offensive Security (Red Team) Captain for CCDC</p>
           </div>
         </div>
         <div class="column is-one-third-desktop is-half-tablet">
@@ -257,13 +283,33 @@
 
 
   <!-- Work Experience -->
+  <!-- TODO: I want to add pictures to these work experience sections -->
+  <!-- TODO: I want to add "notable projects" section to each work experience
+              where I describe projects that I have worked on  -->
   <section class="section" id="experience">
     <div class="container">
       <h3 class="title is-3 has-text-centered">Work Experience</h3>
 
+
+      <div class="box hover-glow">
+        <h4 class="title is-4 mb-1">Junior Software Engineer</h4>
+        <p class="is-italic mb-3">L3Harris — June 2025-Current</p>
+        <p>
+          At this position I am a software engineer working at L3Harris in Waco, TX. I do lots of activites
+          such as code in java, gradle and I do some infrastructure activites as well. I created an initial
+          DNS server for the software engineerring team.
+        </p>
+        <p class="has-text-weight-semibold mt-4 mb-2">Skills and Technologies Learned:</p>
+        <div class="tags is-flex is-flex-wrap-wrap">
+          <span class="tag">Java 11</span><span class="tag">Gradle 8.9</span>
+          <span class="tag">Git 2.13</span><span class="tag">PowerDNS</span>
+          <span class="tag">Python 13</span><span class="tag">Artifactory</span>
+        </div>
+      </div>
+
       <div class="box hover-glow">
         <h4 class="title is-4 mb-1">Undergraduate Cybersecurity Research Assistant</h4>
-        <p class="is-italic mb-3">Baylor University — August 2024–Current</p>
+        <p class="is-italic mb-3">Baylor University — August 2024–May2025</p>
         <p>
           Researching initiatives aimed at developing educational labs to teach cybersecurity principles. Organized,
           executed, and supported the Cybersecurity Interdisciplinary Incident Response Competition (CIIRC). Performed
@@ -358,7 +404,7 @@
 
       <div class="box hover-glow">
         <h4 class="title is-4 mb-1">Southwest Collegiate Cyber Defense Competition (CCDC)</h4>
-        <p class="is-italic mb-2">2x Regional Qualifier — August 2022–Current</p>
+        <p class="is-italic mb-2">2x Regional Qualifier — August 2022–May 2025</p>
         <p><a href="https://southwestccdc.com/" target="_blank">southwestccdc.com</a></p>
         <p>
           High-intensity incident response competition defending simulated corporate network infrastructure under
@@ -369,7 +415,7 @@
 
       <div class="box hover-glow">
         <h4 class="title is-4 mb-1">National Cyber League (NCL)</h4>
-        <p class="is-italic mb-2">395th place / 8000 — Biannual Competitor (4 years)</p>
+        <p class="is-italic mb-2">395th place / 8000 — Biannual Competitor 2021-2025</p>
         <p><a href="https://nationalcyberleague.org/" target="_blank">nationalcyberleague.org</a></p>
         <p>
           Hands-on challenges across cryptography, traffic analysis, log analysis, web application security, and more,
