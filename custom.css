@@ -1,0 +1,187 @@
+/* Dark base */
+body {
+  background: #111;
+  color: #e2e2e2;
+}
+
+/* Preserve outlined title effect */
+.font-outline {
+  -webkit-text-stroke: 1px rgba(0,0,0,0.6);
+  text-shadow: 0 0 6px rgba(255,255,255,0.15);
+}
+
+/* Hover glow effect (replaces Tailwind hover utilities) */
+.hover-glow {
+  transition: box-shadow .3s, transform .25s;
+  box-shadow: 0 0 5px rgba(255,255,255,0.25);
+}
+.hover-glow:hover {
+  box-shadow: 0 0 18px rgba(255,255,255,0.7);
+  transform: translateY(-3px);
+}
+
+/* Adjust Bulma boxes for darker theme */
+.box {
+  background: #1c1c1c;
+  border: 1px solid #2a2a2a;
+  color: #e0e0e0;
+}
+
+a {
+  color: #67b7ff;
+}
+a:hover {
+  color: #9fd3ff;
+  text-decoration: underline;
+}
+
+/* Tag styling tweak */
+.tag {
+  background: #242424;
+  color: #d8d8d8;
+  margin: 0 .4rem .4rem 0;
+  border: 1px solid #333;
+}
+.tag:hover {
+  background: #333;
+}
+
+/* Headings spacing */
+.title + .subtitle {
+  margin-top: .5rem;
+}
+
+/* Full-bleed hero background with fixed (parallax-like) effect */
+.hero.hero-banner {
+  position: relative;
+  background-image: url("AaronGrad.jpeg"); /* Replace with a wider banner image if you have one */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Parallax feel */
+  overflow: hidden;
+}
+
+/* White translucent film over the background ONLY */
+.hero.hero-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.25); /* Adjust opacity (0.10–0.25) to taste */
+  backdrop-filter: brightness(1.05);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Keep foreground content above overlay */
+.hero.hero-banner .hero-body,
+.hero.hero-banner .hero-foot,
+.hero.hero-banner .navbar,
+.hero.hero-banner .hero-menu-desktop {
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensure avatar + text stand out */
+.hero-avatar img {
+  position: relative;
+  z-index: 2;
+}
+
+/* Optional subtle text lift */
+.hero.hero-banner h1,
+.hero.hero-banner h2 {
+  text-shadow: 0 2px 12px rgba(0,0,0,0.55);
+}
+
+/* Refined hero menu glass panel */
+.hero-foot--wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem 1.1rem;
+}
+
+.hero-menu-desktop {
+  position: relative;
+}
+
+.hero-nav {
+  display: flex;
+  gap: .35rem;
+  padding: .55rem .7rem;
+  background: linear-gradient(145deg, rgba(20,20,22,0.78), rgba(32,32,36,0.55));
+  backdrop-filter: blur(14px) saturate(135%);
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 46px;
+  box-shadow: 0 4px 18px -6px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+.hero-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: .55rem .95rem;
+  font-size: .78rem;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #d2d2d5;
+  border-radius: 28px;
+  line-height: 1;
+  transition: color .25s, background .35s, box-shadow .35s;
+}
+
+.hero-nav a::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 6px;
+  height: 2px;
+  background: linear-gradient(90deg,#5e8dff,#9b60ff);
+  opacity: 0;
+  transform: scaleX(.25);
+  transform-origin: center;
+  transition: opacity .35s, transform .35s;
+  border-radius: 2px;
+}
+
+.hero-nav a:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,0.05);
+}
+
+.hero-nav a.is-active {
+  color: #ffffff;
+  background: linear-gradient(145deg, rgba(70,70,255,0.18), rgba(150,70,255,0.18));
+  box-shadow: 0 0 0 1px rgba(180,180,255,0.18), 0 4px 14px -4px rgba(90,70,255,0.45);
+}
+
+.hero-nav a.is-active::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Tighten on very wide screens */
+@media (min-width: 1600px) {
+  .hero-nav {
+    padding: .6rem .9rem;
+  }
+  .hero-nav a {
+    font-size: .75rem;
+    letter-spacing: .7px;
+  }
+}
+
+/* Mobile: hide desktop nav (already hidden earlier) */
+@media (max-width: 1023px) {
+  .hero-nav { display: none; }
+}
+
+/* Mobile fallback: disable fixed attachment to avoid jank */
+@media (max-width: 768px) {
+  .hero.hero-banner {
+    background-attachment: scroll;
+  }
+}
