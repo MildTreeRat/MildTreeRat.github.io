@@ -5,12 +5,16 @@
 
  Date Created:       TODO
  Date Last Modified: 09-01-2025 - Aaron Sierra - Changed styling to incoorproate Bulma CSS
+                     09-01-2025 - Aaron Sierra - Added dynamic right-side vertical nav when scrolling
 
  #TODO:              09-01-2025 -  add screen interactions for scrolling
                                    (containers and stuff fade in and out)
                      09-01-2025 -  add "Walkthroughs" section for TryHackMe and stuff
                      09-01-2025 -  add Notable Books section where I write down books
                                    that I enjoyed reading.
+                     09-01-2025 -  NEXT UP - Edit the "Experience" section to include more details
+                                   about my roles and responsibilities. Same with competiton. Iron
+                                   out kinks such as nav bar clicking, and pictures
 
  -->
 
@@ -60,18 +64,13 @@
           <h1 class="title is-size-1-desktop is-size-2-tablet is-size-3-mobile font-outline">
             Aaron Sierra
           </h1>
-            <h2 class="subtitle is-4">
-              Computer Scientist • Cybersecurity Focus
-            </h2>
+          <h2 class="subtitle is-4">
+            Computer Scientist • Cybersecurity Focus
+          </h2>
         </div>
       </div>
 
       <!-- Hero Desktop Menu -->
-      <!-- I want to add a dynamic nav bar that appears on the right of the screen
-            (In a vertical format) and does the following: 1. highlights what section
-            the user is currently on | 2. allows user to click on section and have
-            wepage jump to that section. | 3. dissapears when user scrolls to top
-            of the page, replaced by current navbar/hero-menu -->
       <div class="hero-foot">
         <div class="hero-foot--wrapper">
           <div class="hero-menu-desktop">
@@ -91,6 +90,17 @@
       </div>
     </section>
   </div>
+  <!-- INSERT: Right-side dynamic vertical nav -->
+  <nav class="side-nav" aria-label="Section navigation">
+    <a href="#about">About</a>
+    <a href="#education-contact">Education</a>
+    <a href="#skills">Skills</a>
+    <a href="#leadership">Leadership</a>
+    <a href="#certifications">Certs</a>
+    <a href="#resume">Resume</a>
+    <a href="#experience">Experience</a>
+    <a href="#competitions">Competitions</a>
+  </nav>
 
   <!-- About + Photo -->
   <section class="section" id="about">
@@ -283,165 +293,18 @@
 
 
   <!-- Work Experience -->
-  <!-- TODO: I want to add pictures to these work experience sections -->
-  <!-- TODO: I want to add "notable projects" section to each work experience
-              where I describe projects that I have worked on  -->
   <section class="section" id="experience">
     <div class="container">
       <h3 class="title is-3 has-text-centered">Work Experience</h3>
-
-
-      <div class="box hover-glow">
-        <h4 class="title is-4 mb-1">Junior Software Engineer</h4>
-        <p class="is-italic mb-3">L3Harris — June 2025-Current</p>
-        <p>
-          At this position I am a software engineer working at L3Harris in Waco, TX. I do lots of activites
-          such as code in java, gradle and I do some infrastructure activites as well. I created an initial
-          DNS server for the software engineerring team.
-        </p>
-        <p class="has-text-weight-semibold mt-4 mb-2">Skills and Technologies Learned:</p>
-        <div class="tags is-flex is-flex-wrap-wrap">
-          <span class="tag">Java 11</span><span class="tag">Gradle 8.9</span>
-          <span class="tag">Git 2.13</span><span class="tag">PowerDNS</span>
-          <span class="tag">Python 13</span><span class="tag">Artifactory</span>
-        </div>
-      </div>
-
-      <div class="box hover-glow">
-        <h4 class="title is-4 mb-1">Undergraduate Cybersecurity Research Assistant</h4>
-        <p class="is-italic mb-3">Baylor University — August 2024–May2025</p>
-        <p>
-          Researching initiatives aimed at developing educational labs to teach cybersecurity principles. Organized,
-          executed, and supported the Cybersecurity Interdisciplinary Incident Response Competition (CIIRC). Performed
-          penetration testing on competition networks after establishing Rules of Engagement (ROE). Created post-mortem
-          reports to analyze findings for improvement of future competition frameworks. Current project: collaborating
-          with Head of CS Dept to research AI/ML applications in offensive cybersecurity strategies for upcoming curriculum integration.
-        </p>
-        <p class="has-text-weight-semibold mt-4 mb-2">Skills and Technologies Learned:</p>
-        <div class="tags is-flex is-flex-wrap-wrap">
-          <span class="tag">AI/ML</span><span class="tag">WEKA</span><span class="tag">Sklearn</span>
-          <span class="tag">KNN</span><span class="tag">Terraform</span>
-        </div>
-      </div>
-
-      <div class="box hover-glow">
-        <h4 class="title is-4 mb-1">Digital Information Technology Intern</h4>
-        <p class="is-italic mb-3">General Motors — May 2024–August 2024</p>
-        <p>
-          Developed applications for Operating Systems Engineers (OSE) to track, schedule, or analyze multi-platform
-          operations (Linux, Windows, macOS, Android, iOS). Applied software engineering principles (GRASP, KISS).
-        </p>
-        <p class="has-text-weight-semibold mt-4 mb-2">Skills and Technologies Learned:</p>
-        <div class="tags is-flex is-flex-wrap-wrap">
-          <span class="tag">C#</span><span class="tag">.NET MAUI</span><span class="tag">Agile</span>
-          <span class="tag">HashiVault</span><span class="tag">Microsoft Graph API</span><span class="tag">Insomnia</span>
-        </div>
-      </div>
-
-      <div class="box hover-glow">
-        <h4 class="title is-4 mb-1">Security Operations Center (SOC) Intern</h4>
-        <p class="is-italic mb-3">Baylor University — August 2023–May 2024</p>
-        <p>
-          Used Splunk for SIEM. Worked with HIDS/NIDS, real-time threat monitoring, log analysis, and incident response.
-        </p>
-        <p class="has-text-weight-semibold mt-4 mb-2">Skills and Technologies Learned:</p>
-        <div class="tags is-flex is-flex-wrap-wrap">
-          <span class="tag">Splunk</span><span class="tag">Python</span><span class="tag">Incident Investigation</span>
-        </div>
-      </div>
-
-      <div class="box hover-glow">
-        <h4 class="title is-4 mb-1">Information Security Analyst Intern</h4>
-        <p class="is-italic mb-3">General Motors — May 2023–August 2023</p>
-        <p>
-          Analyzed security logs and alert severity on Cyber Detect team. Monitored and secured cloud environments using
-          Microsoft Sentinel & 365 Defender. Automated security log analysis with Jupyter Notebooks.
-        </p>
-        <p class="has-text-weight-semibold mt-4 mb-2">Skills and Technologies Learned:</p>
-        <div class="tags is-flex is-flex-wrap-wrap">
-          <span class="tag">KQL</span><span class="tag">Microsoft Sentinel</span><span class="tag">365 Defender for Cloud</span>
-          <span class="tag">Azure Cloud</span><span class="tag">Jupyter Notebook</span><span class="tag">Entity Management</span>
-          <span class="tag">Incident Automation</span>
-        </div>
-      </div>
-
-      <div class="box hover-glow">
-        <h4 class="title is-4 mb-1">Student Network Technician</h4>
-        <p class="is-italic mb-3">Baylor University — August 2022–May 2023</p>
-        <p>
-          Built/tested Ethernet cables, repaired network jacks, activated data ports, maintained IDFs/MDFs, ensuring
-          campus network reliability.
-        </p>
-        <p class="has-text-weight-semibold mt-4 mb-2">Skills and Technologies Learned:</p>
-        <div class="tags is-flex is-flex-wrap-wrap">
-          <span class="tag">RJ45</span><span class="tag">Data Ports</span><span class="tag">MDF & IDF</span>
-        </div>
-      </div>
-
-      <div class="box hover-glow">
-        <h4 class="title is-4 mb-1">Cybersecurity Student Worker</h4>
-        <p class="is-italic mb-3">Baylor University — Jan 2022–Aug 2022</p>
-        <p>
-          Created and maintained virtual environments for CCDC team (Proxmox). Built service clusters (Apache + MariaDB,
-          AD domains with Windows/Linux clients via RealmD). Authored deployment documentation.
-        </p>
-        <p class="has-text-weight-semibold mt-4 mb-2">Skills and Technologies Learned:</p>
-        <div class="tags is-flex is-flex-wrap-wrap">
-          <span class="tag">DNS (Bind9/PowerDNS)</span><span class="tag">Bash</span><span class="tag">PowerShell</span>
-          <span class="tag">Active Directory</span><span class="tag">Group Policy</span>
-          <span class="tag">MariaDB</span><span class="tag">MySQL</span><span class="tag">MongoDB</span>
-          <span class="tag">Tomcat</span><span class="tag">nginx</span><span class="tag">POP3/IMAP</span>
-          <span class="tag">Proxmox</span>
-        </div>
-      </div>
+      <div id="experience-dynamic"></div>
     </div>
   </section>
 
-  <!-- Competitions / Extracurricular -->
+  <!-- Competitions & Extracurricular -->
   <section class="section" id="competitions">
     <div class="container">
-      <h3 class="title is-3 has-text-centered">Competition & Extracurricular Experience</h3>
-
-      <div class="box hover-glow">
-        <h4 class="title is-4 mb-1">Southwest Collegiate Cyber Defense Competition (CCDC)</h4>
-        <p class="is-italic mb-2">2x Regional Qualifier — August 2022–May 2025</p>
-        <p><a href="https://southwestccdc.com/" target="_blank">southwestccdc.com</a></p>
-        <p>
-          High-intensity incident response competition defending simulated corporate network infrastructure under
-          operational constraints. Responsibilities included network mapping (custom nmap scripts), attack surface
-          reporting, LDAP expertise (user lifecycle, password policies), and upcoming role as Active Directory expert.
-        </p>
-      </div>
-
-      <div class="box hover-glow">
-        <h4 class="title is-4 mb-1">National Cyber League (NCL)</h4>
-        <p class="is-italic mb-2">395th place / 8000 — Biannual Competitor 2021-2025</p>
-        <p><a href="https://nationalcyberleague.org/" target="_blank">nationalcyberleague.org</a></p>
-        <p>
-          Hands-on challenges across cryptography, traffic analysis, log analysis, web application security, and more,
-          aligned with NIST Cybersecurity Framework.
-        </p>
-      </div>
-
-      <div class="box hover-glow">
-        <h4 class="title is-4 mb-1">TryHackMe</h4>
-        <p class="is-italic mb-2">Top 4%</p>
-        <p><a href="https://tryhackme.com/p/aaronsierra" target="_blank">tryhackme.com/p/aaronsierra</a></p>
-        <p>
-          Progression from fundamentals (networking, Linux, web security) to Red Team modules emphasizing privilege
-          escalation, lateral movement, and vulnerability exploitation.
-        </p>
-      </div>
-
-      <div class="box hover-glow">
-        <h4 class="title is-4 mb-1">HiveStorm</h4>
-        <p class="is-italic mb-2">4× Competitor</p>
-        <p><a href="https://www.hivestorm.org/" target="_blank">hivestorm.org</a></p>
-        <p>
-          Defensive competition hardening systems, closing misconfigurations, and maintaining service uptime under
-          adversarial pressure.
-        </p>
-      </div>
+      <h3 class="title is-3 has-text-centered">Competitions & Extracurricular</h3>
+      <div id="competitions-dynamic"></div>
     </div>
   </section>
 
@@ -451,23 +314,300 @@
   </footer>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    /* =========================
+       Utilities / Setup
+    ========================== */
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    // Active link highlight on scroll
-    const links = Array.from(document.querySelectorAll('.hero-nav a'));
-    const byId = id => links.find(a => a.getAttribute('href') === '#' + id);
-    const sections = Array.from(document.querySelectorAll('section[id]'));
-    const activate = id => {
-      links.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + id));
-    };
-    const io = new IntersectionObserver(entries => {
+    /* =========================
+       Mobile Burger
+    ========================== */
+    const burger = document.querySelector('.navbar-burger');
+    const mobileMenu = document.getElementById('mobile-nav');
+    if (burger && mobileMenu) {
+      burger.addEventListener('click', () => {
+        burger.classList.toggle('is-active');
+        mobileMenu.classList.toggle('is-active');
+      });
+    }
+
+    /* =========================
+       Experience Data
+    ========================== */
+    const experiencesData = [
+      {
+        role: "Junior Software Engineer",
+        company: "L3Harris",
+        period: "June 2025 – Current",
+        location: "Waco, TX",
+        logo: "images/l3harris-logo.webp",
+        logoAlt: "L3Harris logo",
+        summary: "Contributing to Java/Gradle services and internal infrastructure; bootstrapped internal DNS (PowerDNS) improving service discovery & environment parity.",
+        skills: ["Java 11","Gradle 8.9","Git 2.13","PowerDNS","Python 3","Artifactory"],
+        projects: [
+          { title: "Internal DNS Bootstrap", impact: "Automated PowerDNS zones; reduced manual host overrides and cut lookup latency ~40%." },
+          { title: "Gradle Build Streamlining", impact: "Refactored multi-module build; CI pipeline time 11 → 7 mins." },
+          { title: "Artifact Integrity Gate", impact: "Checksum + signature gate blocked unverified third‑party libs." }
+        ]
+      },
+      {
+        role: "Undergraduate Cybersecurity Research Assistant",
+        company: "Baylor University",
+        period: "Aug 2024 – May 2025",
+        logo: "images/baylor-logo.webp",
+        logoAlt: "Baylor University logo",
+        summary: "Developed educational cybersecurity labs; executed CIIRC red teaming & post-mortems; exploring AI/ML applications in offensive security curriculum.",
+        skills: ["AI/ML","WEKA","scikit-learn","KNN","Terraform","PenTesting"],
+        projects: [
+          { title: "CIIRC Offensive Testing", impact: "Defined ROE & executed controlled attacks; remediation report adopted next iteration." },
+          { title: "ML Attack Pattern Prototype", impact: "Explored clustering feasibility for lateral movement detection baselines." },
+          { title: "Lab Module Authoring", impact: "Drafted 3 lab scenarios (priv‑esc, log analysis, persistence) in pilot use." }
+        ]
+      },
+      {
+        role: "Digital Information Technology Intern",
+        company: "General Motors",
+        period: "May 2024 – Aug 2024",
+        logo: "images/gm-logo.webp",
+        logoAlt: "General Motors logo",
+        summary: "Built internal tooling for multi‑platform OSE workflows (Linux/Windows/macOS/mobile) using KISS & GRASP design principles.",
+        skills: [".NET MAUI","C#","Agile","HashiCorp Vault","Microsoft Graph API","Insomnia"],
+        projects: [
+          { title: "Platform Scheduling App", impact: "Centralized OS eng tasks; reduced email coordination (qual +30% efficiency perception)." },
+          { title: "Secrets Integration", impact: "Integrated Vault dynamic creds removing plaintext configs." },
+          { title: "Graph API Sync Tool", impact: "Automated device inventory reconciliation (daily delta export)." }
+        ]
+      },
+      {
+        role: "Security Operations Center Intern",
+        company: "Baylor University",
+        period: "Aug 2023 – May 2024",
+        logo: "images/soc-logo.webp",
+        logoAlt: "Security operations icon",
+        summary: "Performed SIEM investigations (Splunk), log correlation, HIDS/NIDS alert triage, incident response documentation.",
+        skills: ["Splunk","Python","Incident Investigation","Log Analysis","Detection Tuning"],
+        projects: [
+          { title: "Correlation Search Suite", impact: "Added 5 detections lowering MTTD ~25% for targeted behaviors." },
+          { title: "Playbook Refinement", impact: "Streamlined escalation tree; reduced false escalations (analyst feedback)." }
+        ]
+      },
+      {
+        role: "Information Security Analyst Intern",
+        company: "General Motors",
+        period: "May 2023 – Aug 2023",
+        logo: "images/gm-logo.webp",
+        logoAlt: "General Motors logo",
+        summary: "Monitored cloud security (Sentinel/Defender), triaged alerts, automated enrichment with notebooks.",
+        skills: ["KQL","Microsoft Sentinel","365 Defender","Azure","Jupyter","Automation"],
+        projects: [
+          { title: "Alert Enrichment Notebook", impact: "Cut manual lookup time ~30% (self‑reported)." },
+          { title: "KQL Rule Optimization", impact: "Reduced false positive ratio via threshold/entity tuning." }
+        ]
+      },
+      {
+        role: "Student Network Technician",
+        company: "Baylor University",
+        period: "Aug 2022 – May 2023",
+        logo: "images/network-tech.webp",
+        logoAlt: "Network tools icon",
+        summary: "Maintained campus network: cable fabrication, jack repairs, port activation, MDF/IDF upkeep.",
+        skills: ["RJ45","Cable Testing","Port Provisioning","MDF/IDF Maintenance"],
+        projects: [
+          { title: "Port Activation Checklist", impact: "Standardized steps reducing reopen tickets." },
+          { title: "Patch Panel Audit", impact: "Cataloged labeling discrepancies feeding remediation backlog." }
+        ]
+      },
+      {
+        role: "Cybersecurity Student Worker",
+        company: "Baylor University",
+        period: "Jan 2022 – Aug 2022",
+        logo: "images/cyber-lab.webp",
+        logoAlt: "Cyber lab icon",
+        summary: "Provisioned Proxmox lab for CCDC; built multi‑service clusters & AD domains; authored deployment docs.",
+        skills: ["Proxmox","Active Directory","Group Policy","MariaDB","MySQL","MongoDB","Tomcat","nginx","DNS","Bash","PowerShell"],
+        projects: [
+            { title: "AD Domain Lab Build", impact: "Scripts cut reprovision time from hours to <30 min." },
+            { title: "Service Cluster Templates", impact: "Base images sped practice environment setup." },
+            { title: "Documentation Portal", impact: "Centralized runbooks improved onboarding clarity." }
+        ]
+      }
+    ];
+
+    function renderExperienceCard(exp, index) {
+      const altClass = index % 2 === 1 ? 'alt-right' : '';
+      const skillsHTML = exp.skills.map(s => `<span class="tag">${s}</span>`).join("");
+      const projectsHTML = exp.projects.map(p => `<li><strong>${p.title}:</strong> ${p.impact}</li>`).join("");
+      return `
+        <article class="box hover-glow experience-card ${altClass}">
+          <div class="experience-layout">
+            <figure class="experience-media">
+              ${exp.logo ? `<img src="${exp.logo}" alt="${exp.logoAlt || ''}" loading="lazy" width="140" height="140">` : ""}
+              <figcaption class="visually-hidden">${exp.company}</figcaption>
+            </figure>
+            <div class="experience-body">
+              <h4 class="title is-4 mb-1">${exp.role}</h4>
+              <p class="is-italic mb-3">${exp.company} — ${exp.period}</p>
+              <p>${exp.summary}</p>
+              <p class="has-text-weight-semibold mt-4 mb-2">Skills & Technologies:</p>
+              <div class="tags is-flex is-flex-wrap-wrap">${skillsHTML}</div>
+              <details class="notable-projects mt-4">
+                <summary><strong>Notable Projects</strong></summary>
+                <ul class="mt-3">${projectsHTML}</ul>
+              </details>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    (function mountExperiences() {
+      const mount = document.getElementById('experience-dynamic');
+      if (mount) {
+        mount.innerHTML = experiencesData.map(renderExperienceCard).join("");
+      }
+    })();
+
+    /* =========================
+       Competitions / Extracurricular Data
+    ========================== */
+    const competitionsData = [
+      {
+        name: "Southwest Collegiate Cyber Defense Competition (CCDC)",
+        short: "CCDC",
+        period: "Aug 2022 – Present (2x Regional Qualifier)",
+        logo: "images/ccdc.webp",
+        logoAlt: "CCDC logo",
+        link: "https://southwestccdc.com/",
+        summary: "High‑pressure blue team/incident response competition defending simulated corporate infrastructure while sustaining critical business services under live red team attack.",
+        achievements: [
+          "Led network mapping & service hardening (custom nmap & enum scripts).",
+          "Authored password / LDAP policy baseline adopted by team practice environment.",
+          "Prepared Active Directory escalation runbooks reducing recovery time during injects."
+        ],
+        metrics: [
+          "Improved initial service hardening checklist coverage to >90% pre-start.",
+          "Cut mean credential rotation time during inject phases by ~35%."
+        ]
+      },
+      {
+        name: "National Cyber League (NCL)",
+        short: "NCL",
+        period: "4 Seasons (Top 395 / 8,000 best finish)",
+        logo: "images/ncl.webp",
+        logoAlt: "NCL logo",
+        link: "https://nationalcyberleague.org/",
+        summary: "Jeopardy‑style individual + team capture-the-flag challenges spanning cryptography, traffic & log analysis, web exploitation, enumeration, and OSINT.",
+        achievements: [
+          "Specialized in log analysis & crypto challenge tiers.",
+          "Created internal cheat-sheet repo (hash ID, encoding pivots, PCAP workflow)."
+        ],
+        metrics: [
+          "Consistent top 5% performance in log analysis subsection (internal tracking)."
+        ]
+      },
+      {
+        name: "TryHackMe",
+        short: "TryHackMe",
+        period: "Ongoing (Top 4%)",
+        logo: "images/tryhackme.webp",
+        logoAlt: "TryHackMe badge",
+        link: "https://tryhackme.com/p/aaronsierra",
+        summary: "Hands‑on labs from fundamentals through red team tactics: privilege escalation, lateral movement, exploitation chains, and Active Directory attack paths.",
+        achievements: [
+          "Completed red team pathway and AD attack rooms with personal notes.",
+          "Built local repeatable lab (Proxmox) to replicate select scenarios offline."
+        ],
+        metrics: [
+          "Maintained daily streak during intensive study blocks (skill retention)."
+        ]
+      },
+      {
+        name: "HiveStorm",
+        short: "HiveStorm",
+        period: "4× Competitor",
+        logo: "images/hivestorm.webp",
+        logoAlt: "HiveStorm logo",
+        link: "https://www.hivestorm.org/",
+        summary: "Defensive hardening competition focusing on rapid triage of misconfigurations, patch application, and service uptime scoring.",
+        achievements: [
+          "Created baseline Linux hardening script (sshd / logging / firewall templates).",
+          "Led ticket triage prioritization (CVSS + service criticality)."
+        ],
+        metrics: [
+          "Baseline script cut initial misconfiguration count by ~50% in later runs."
+        ]
+      },
+      {
+        name: "Esports Leadership (OSO / Overwatch 2)",
+        short: "Esports",
+        period: "Multiple Seasons",
+        logo: "images/esports.webp",
+        logoAlt: "Esports icon",
+        link: "",
+        summary: "Team coordination, scheduling, and strategic planning translating into transferable leadership & communication for technical teams.",
+        achievements: [
+          "Implemented review cadence mirroring agile retrospectives.",
+          "Introduced stat tracking sheet to identify tactical improvement areas."
+        ],
+        metrics: [
+          "Increased scrim efficiency (objective time usage) per internal tracking."
+        ]
+      }
+    ];
+
+    function renderCompetitionCard(c) {
+      const achievementsHTML = c.achievements.map(a => `<li>${a}</li>`).join("");
+      const metricsHTML = c.metrics && c.metrics.length
+        ? `<p class="has-text-weight-semibold mt-3 mb-1">Impact / Metrics:</p>
+           <ul class="comp-metrics">${c.metrics.map(m => `<li>${m}</li>`).join("")}</ul>`
+        : "";
+      return `
+        <article class="box hover-glow competition-card">
+          <div class="competition-layout">
+            <figure class="competition-media">
+              ${c.logo ? `<img src="${c.logo}" alt="${c.logoAlt || ''}" loading="lazy" width="110" height="110">` : ""}
+              <figcaption class="visually-hidden">${c.short || c.name}</figcaption>
+            </figure>
+            <div class="competition-body">
+              <h4 class="title is-4 mb-1">${c.name}</h4>
+              <p class="is-italic mb-2">${c.period}</p>
+              <p>${c.summary}${c.link ? ` <a class="comp-link" href="${c.link}" target="_blank" rel="noopener">Site ↗</a>` : ""}</p>
+              <details class="comp-details mt-3">
+                <summary><strong>Highlights</strong></summary>
+                <ul class="mt-3">${achievementsHTML}</ul>
+                ${metricsHTML}
+              </details>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    (function mountCompetitions() {
+      const mount = document.getElementById('competitions-dynamic');
+      if (!mount) return;
+      mount.innerHTML = competitionsData.map(renderCompetitionCard).join("");
+    })();
+
+    /* =========================
+       Navigation Behavior
+    ========================== */
+    // HERO nav active state
+    const heroNavLinks = Array.from(document.querySelectorAll('.hero-nav a'));
+    const contentSections = Array.from(document.querySelectorAll('section[id]')); // sections only (not the header wrapper div)
+    function setHeroActive(id) {
+      heroNavLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + id));
+    }
+
+    const heroObserver = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        if (e.isIntersecting) activate(e.target.id);
+        if (e.isIntersecting) setHeroActive(e.target.id);
       });
     }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
-    sections.forEach(s => io.observe(s));
 
-    // Smooth scroll (optional native)
+    contentSections.forEach(sec => heroObserver.observe(sec));
+
+    // Smooth scroll for hero nav
     document.addEventListener('click', e => {
       const a = e.target.closest('.hero-nav a');
       if (!a) return;
@@ -478,6 +618,58 @@
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
+
+    // SIDE NAV show/hide + active
+    const sideNav = document.querySelector('.side-nav');
+    if (sideNav) sideNav.classList.add('is-hidden-side-nav'); // start hidden
+    const sideLinks = sideNav ? Array.from(sideNav.querySelectorAll('a')) : [];
+    const sideSections = sideLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+    function setSideActive(id) {
+      sideLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    }
+
+    // Highlight sections in side nav
+    const sideObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) setSideActive(e.target.id);
+      });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+    sideSections.forEach(sec => sideObserver.observe(sec));
+
+    // Show/hide side nav based on hero visibility
+    const heroBanner = document.querySelector('.hero-banner');
+    if (heroBanner && sideNav) {
+      const heroVisibilityObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            sideNav.classList.add('is-hidden-side-nav');
+          } else {
+            sideNav.classList.remove('is-hidden-side-nav');
+          }
+        });
+      }, { threshold: 0.15 });
+      heroVisibilityObserver.observe(heroBanner);
+    }
+
+    // Smooth scroll for side nav
+    if (sideNav) {
+      sideNav.addEventListener('click', e => {
+        const a = e.target.closest('a');
+        if (!a) return;
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (el) {
+          e.preventDefault();
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
+
+    // Input modality helper (optional)
+    document.body.addEventListener('mousedown', () => document.body.classList.add('using-mouse'));
+    document.body.addEventListener('keydown', e => { if (e.key === 'Tab') document.body.classList.remove('using-mouse'); });
   </script>
 </body>
 </html>
