@@ -198,37 +198,102 @@ section[id] { scroll-margin-top: 70px; }
   display: flex;
   flex-direction: column;
   gap: .65rem;
-  padding: 1.15rem .95rem;
+  padding: 1.1rem .35rem 1.1rem .95rem; /* reduced right padding */
+  width: 210px;
   background: linear-gradient(160deg, rgba(25,25,30,0.82), rgba(35,35,40,0.55));
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 20px;
-  box-shadow: 0 6px 28px -10px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03);
-  z-index: 60;
+  border-radius: 20px 0 0 20px;
+  box-shadow: 0 6px 28px -10px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03); /* removed purple glow */
   max-height: 70vh;
   overflow: hidden;
+  position: relative;
   transition: opacity .35s, visibility .35s, transform .45s;
 }
 
-.side-nav.is-hidden-side-nav {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(-50%) translateX(20px);
+/* Side Nav WRAPPER (controls slide + vertical centering) */
+.side-nav-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;          /* vertical centering */
+  z-index: 60;
+  transition: transform .45s cubic-bezier(.4,.12,.15,.98), opacity .35s;
 }
 
+/* Collapsed: leave 18px indicator visible */
+.side-nav-wrapper.collapsed {
+  transform: translateX(calc(100% - 14px));
+  opacity: .65;
+}
+.side-nav-wrapper.expanded {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Side Nav PANEL (no longer fixed; wrapper handles position) */
+.side-nav {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+  /* Base padding (collapsed state keeps a little interior space) */
+  padding: 1.1rem .3rem 1.1rem .95rem;
+  width: 210px;
+  max-height: 70vh;
+  overflow: hidden;
+  background: linear-gradient(160deg, rgba(25,25,30,0.82), rgba(35,35,40,0.55));
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px 0 0 20px;
+  box-shadow: 0 6px 28px -10px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03);
+  transition: padding .35s;
+}
+
+/* Remove right padding when expanded */
+.side-nav-wrapper.expanded .side-nav {
+  padding-right: 0;             /* flush on the right */
+}
+
+/* Indicator strip (teaser when collapsed) */
+.side-nav::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -14px;
+  width: 14px;
+  height: 100%;
+  background: linear-gradient(180deg,#6a5dff,#9b60ff);
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 12px -2px rgba(120,90,255,0.55);
+  opacity: .85;
+  transition: opacity .35s, filter .35s;
+}
+.side-nav-wrapper.expanded .side-nav::after {
+  opacity: 0;
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+/* Links: trim right padding further; flush feel when expanded */
 .side-nav a {
   position: relative;
   font-size: .78rem;
   letter-spacing: .55px;
   font-weight: 600;
-  padding: .55rem .9rem .5rem 1.1rem;
+  padding: .55rem .3rem .5rem 1.05rem; /* reduced right padding */
   border-radius: 14px;
   color: #d2d2d6;
   line-height: 1.1;
   text-decoration: none;
   transition: background .25s, color .25s;
+}
+.side-nav-wrapper.expanded .side-nav a {
+  padding-right: .2rem;         /* even tighter when visible */
 }
 
 .side-nav a::before {
@@ -241,21 +306,18 @@ section[id] { scroll-margin-top: 70px; }
   background: #6e6e75;
   border-radius: 50%;
   transform: translateY(-50%) scale(1);
-  transition: background .25s, transform .35s;
-  box-shadow: 0 0 0 0 rgba(140,110,255,0.0);
+  transition: background .25s, transform .35s, box-shadow .35s;
 }
 
 .side-nav a:hover {
   background: rgba(255,255,255,0.06);
   color: #fff;
 }
-
 .side-nav a.active {
   color: #fff;
   background: linear-gradient(145deg, rgba(85,110,255,0.22), rgba(160,80,255,0.22));
   box-shadow: 0 0 0 1px rgba(160,140,255,0.20), 0 4px 14px -4px rgba(110,80,255,0.55);
 }
-
 .side-nav a.active::before {
   background: linear-gradient(135deg,#5e8dff,#b07bff);
   transform: translateY(-50%) scale(1.5);
@@ -263,15 +325,18 @@ section[id] { scroll-margin-top: 70px; }
 }
 
 @media (max-width: 1023px) {
-  .side-nav { display: none; }
+  .side-nav-wrapper { display: none; }
 }
 
-/* Optional focus style (hide outline when using mouse) */
+/* Focus */
 .using-mouse .side-nav a:focus { outline: none; }
 .side-nav a:focus {
   outline: 2px solid #7a5dff;
   outline-offset: 2px;
 }
+
+/* Remove old hidden class (deprecated) */
+.side-nav.is-hidden-side-nav { /* legacy noop */ }
 
 /* (If not already present) hero banner parallax overlay adjustments */
 .hero.hero-banner {
@@ -476,4 +541,62 @@ section[id] { scroll-margin-top: 70px; }
 @media (max-width:640px){
   .competition-layout { flex-direction:column; }
   .competition-media img { width:90px; height:90px; }
+}
+
+/* --- SIDE NAV FIX PATCH ---
+   Issues: duplicate .side-nav block (old fixed version) leaves top/right/transform causing
+   off‑center + gap. We neutralize the old block and tighten edge spacing.
+   ACTION: Delete (or comment out) the FIRST ".side-nav { position: fixed; top:50%; right:2.2vw; ... }"
+   block that appears under the comment "Right-side vertical nav".
+   Keep the wrapper-based version only. Then apply the overrides below.
+*/
+
+/* Collapse translation now matches new indicator width (14px instead of 18px) */
+.side-nav-wrapper.collapsed {
+  transform: translateX(calc(100% - 14px));
+}
+
+/* Ensure wrapper still centers vertically */
+.side-nav-wrapper {
+  top:0;
+  bottom:0;
+  right:0;
+  display:flex;
+  align-items:center;
+}
+
+/* Reset any legacy fixed positioning properties from the earlier (removed) block */
+.side-nav {
+  top:auto !important;
+  right:auto !important;
+  transform:none !important;
+  margin:0;
+  /* Tighten right padding for flush edge */
+  padding:1.1rem 0 1.1rem .9rem; /* right padding = 0 */
+  width:210px;
+}
+
+/* When expanded keep zero right padding; (already zero, left for clarity) */
+.side-nav-wrapper.expanded .side-nav {
+  padding-right:0;
+}
+
+/* Indicator strip: narrower so less visual gap */
+.side-nav::after {
+  right:-14px;
+  width:14px;
+}
+
+/* Optional: if you want absolutely flush (no visual glow “gap”), remove border/right shadow */
+.side-nav-wrapper.expanded .side-nav {
+  /* Uncomment next line to remove right edge softness completely */
+  /* box-shadow: 0 6px 28px -10px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03); */
+}
+
+/* Link padding tighten (remove remaining right interior space) */
+.side-nav a {
+  padding:.55rem .3rem .5rem 1.05rem;
+}
+.side-nav-wrapper.expanded .side-nav a {
+  padding-right:.2rem;
 }

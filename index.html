@@ -90,17 +90,19 @@
       </div>
     </section>
   </div>
-  <!-- INSERT: Right-side dynamic vertical nav -->
-  <nav class="side-nav" aria-label="Section navigation">
-    <a href="#about">About</a>
-    <a href="#education-contact">Education</a>
-    <a href="#skills">Skills</a>
-    <a href="#leadership">Leadership</a>
-    <a href="#certifications">Certs</a>
-    <a href="#resume">Resume</a>
-    <a href="#experience">Experience</a>
-    <a href="#competitions">Competitions</a>
-  </nav>
+  <!-- Side Nav (updated: hover + scroll reveal) -->
+  <div class="side-nav-wrapper collapsed" aria-label="Section navigation">
+    <nav class="side-nav" role="navigation">
+      <a href="#about">About</a>
+      <a href="#education-contact">Education</a>
+      <a href="#skills">Skills</a>
+      <a href="#leadership">Leadership</a>
+      <a href="#certifications">Certs</a>
+      <a href="#resume">Resume</a>
+      <a href="#experience">Experience</a>
+      <a href="#competitions">Competitions</a>
+    </nav>
+  </div>
 
   <!-- About + Photo -->
   <section class="section" id="about">
@@ -148,17 +150,18 @@
         <div class="column is-half-desktop is-full-tablet">
           <div class="box hover-glow">
             <h3 class="title is-4 has-text-centered">Contact Info</h3>
-            <p><strong>Email:</strong> aaron_sierra1@baylor.edu</p>
-            <p><strong>Email 2:</strong> aaronsierra2nd@gmail.com</p>
+            <p><strong>Email:</strong> aaronsierra.gen@gmail.com</p>
             <p><strong>Phone:</strong> 806-922-3947</p>
             <p>
+              <strong>LinkedIn:</strong>
               <a href="https://www.linkedin.com/in/aaronsierra1/" target="_blank">
-                LinkedIn: www.linkedin.com/in/aaronsierra1/
+                www.linkedin.com/in/aaronsierra1/
               </a>
             </p>
             <p>
+              <strong>GitHub:</strong>
               <a href="https://www.github.com/MildTreeRat/" target="_blank">
-                GitHub: www.github.com/MildTreeRat/
+                www.github.com/MildTreeRat/
               </a>
             </p>
             <p>
@@ -314,15 +317,11 @@
   </footer>
 
   <script>
-    /* =========================
-       Utilities / Setup
-    ========================== */
+    /* Year */
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    /* =========================
-       Mobile Burger
-    ========================== */
+    /* Mobile Burger */
     const burger = document.querySelector('.navbar-burger');
     const mobileMenu = document.getElementById('mobile-nav');
     if (burger && mobileMenu) {
@@ -341,7 +340,7 @@
         company: "L3Harris",
         period: "June 2025 – Current",
         location: "Waco, TX",
-        logo: "images/l3harris-logo.webp",
+        logo: "images/L3Harris.svg",
         logoAlt: "L3Harris logo",
         summary: "Contributing to Java/Gradle services and internal infrastructure; bootstrapped internal DNS (PowerDNS) improving service discovery & environment parity.",
         skills: ["Java 11","Gradle 8.9","Git 2.13","PowerDNS","Python 3","Artifactory"],
@@ -355,7 +354,7 @@
         role: "Undergraduate Cybersecurity Research Assistant",
         company: "Baylor University",
         period: "Aug 2024 – May 2025",
-        logo: "images/baylor-logo.webp",
+        logo: "images/bu.svg",
         logoAlt: "Baylor University logo",
         summary: "Developed educational cybersecurity labs; executed CIIRC red teaming & post-mortems; exploring AI/ML applications in offensive security curriculum.",
         skills: ["AI/ML","WEKA","scikit-learn","KNN","Terraform","PenTesting"],
@@ -366,10 +365,10 @@
         ]
       },
       {
-        role: "Digital Information Technology Intern",
+        role: "Software Engineer Intern",
         company: "General Motors",
         period: "May 2024 – Aug 2024",
-        logo: "images/gm-logo.webp",
+        logo: "images/GM.svg",
         logoAlt: "General Motors logo",
         summary: "Built internal tooling for multi‑platform OSE workflows (Linux/Windows/macOS/mobile) using KISS & GRASP design principles.",
         skills: [".NET MAUI","C#","Agile","HashiCorp Vault","Microsoft Graph API","Insomnia"],
@@ -383,7 +382,7 @@
         role: "Security Operations Center Intern",
         company: "Baylor University",
         period: "Aug 2023 – May 2024",
-        logo: "images/soc-logo.webp",
+        logo: "images/bu.svg",
         logoAlt: "Security operations icon",
         summary: "Performed SIEM investigations (Splunk), log correlation, HIDS/NIDS alert triage, incident response documentation.",
         skills: ["Splunk","Python","Incident Investigation","Log Analysis","Detection Tuning"],
@@ -396,7 +395,7 @@
         role: "Information Security Analyst Intern",
         company: "General Motors",
         period: "May 2023 – Aug 2023",
-        logo: "images/gm-logo.webp",
+        logo: "images/GM.svg",
         logoAlt: "General Motors logo",
         summary: "Monitored cloud security (Sentinel/Defender), triaged alerts, automated enrichment with notebooks.",
         skills: ["KQL","Microsoft Sentinel","365 Defender","Azure","Jupyter","Automation"],
@@ -409,7 +408,7 @@
         role: "Student Network Technician",
         company: "Baylor University",
         period: "Aug 2022 – May 2023",
-        logo: "images/network-tech.webp",
+        logo: "images/bu.svg",
         logoAlt: "Network tools icon",
         summary: "Maintained campus network: cable fabrication, jack repairs, port activation, MDF/IDF upkeep.",
         skills: ["RJ45","Cable Testing","Port Provisioning","MDF/IDF Maintenance"],
@@ -422,7 +421,7 @@
         role: "Cybersecurity Student Worker",
         company: "Baylor University",
         period: "Jan 2022 – Aug 2022",
-        logo: "images/cyber-lab.webp",
+        logo: "images/bu.svg",
         logoAlt: "Cyber lab icon",
         summary: "Provisioned Proxmox lab for CCDC; built multi‑service clusters & AD domains; authored deployment docs.",
         skills: ["Proxmox","Active Directory","Group Policy","MariaDB","MySQL","MongoDB","Tomcat","nginx","DNS","Bash","PowerShell"],
@@ -462,20 +461,18 @@
 
     (function mountExperiences() {
       const mount = document.getElementById('experience-dynamic');
-      if (mount) {
-        mount.innerHTML = experiencesData.map(renderExperienceCard).join("");
-      }
+      if (mount) mount.innerHTML = experiencesData.map(renderExperienceCard).join("");
     })();
 
     /* =========================
-       Competitions / Extracurricular Data
+       Competitions Data
     ========================== */
     const competitionsData = [
       {
         name: "Southwest Collegiate Cyber Defense Competition (CCDC)",
         short: "CCDC",
         period: "Aug 2022 – Present (2x Regional Qualifier)",
-        logo: "images/ccdc.webp",
+        logo: "images/swccdc.png",
         logoAlt: "CCDC logo",
         link: "https://southwestccdc.com/",
         summary: "High‑pressure blue team/incident response competition defending simulated corporate infrastructure while sustaining critical business services under live red team attack.",
@@ -493,7 +490,7 @@
         name: "National Cyber League (NCL)",
         short: "NCL",
         period: "4 Seasons (Top 395 / 8,000 best finish)",
-        logo: "images/ncl.webp",
+        logo: "images/ncl.png",
         logoAlt: "NCL logo",
         link: "https://nationalcyberleague.org/",
         summary: "Jeopardy‑style individual + team capture-the-flag challenges spanning cryptography, traffic & log analysis, web exploitation, enumeration, and OSINT.",
@@ -509,7 +506,7 @@
         name: "TryHackMe",
         short: "TryHackMe",
         period: "Ongoing (Top 4%)",
-        logo: "images/tryhackme.webp",
+        logo: "images/tryhackme.svg",
         logoAlt: "TryHackMe badge",
         link: "https://tryhackme.com/p/aaronsierra",
         summary: "Hands‑on labs from fundamentals through red team tactics: privilege escalation, lateral movement, exploitation chains, and Active Directory attack paths.",
@@ -541,7 +538,7 @@
         name: "Esports Leadership (OSO / Overwatch 2)",
         short: "Esports",
         period: "Multiple Seasons",
-        logo: "images/esports.webp",
+        logo: "images/oso_esports.jpg",
         logoAlt: "Esports icon",
         link: "",
         summary: "Team coordination, scheduling, and strategic planning translating into transferable leadership & communication for technical teams.",
@@ -557,10 +554,9 @@
 
     function renderCompetitionCard(c) {
       const achievementsHTML = c.achievements.map(a => `<li>${a}</li>`).join("");
-      const metricsHTML = c.metrics && c.metrics.length
+      const metricsHTML = c.metrics?.length
         ? `<p class="has-text-weight-semibold mt-3 mb-1">Impact / Metrics:</p>
-           <ul class="comp-metrics">${c.metrics.map(m => `<li>${m}</li>`).join("")}</ul>`
-        : "";
+           <ul class="comp-metrics">${c.metrics.map(m => `<li>${m}</li>`).join("")}</ul>` : "";
       return `
         <article class="box hover-glow competition-card">
           <div class="competition-layout">
@@ -579,81 +575,93 @@
               </details>
             </div>
           </div>
-        </article>
-      `;
+        </article>`;
     }
-
     (function mountCompetitions() {
       const mount = document.getElementById('competitions-dynamic');
-      if (!mount) return;
-      mount.innerHTML = competitionsData.map(renderCompetitionCard).join("");
+      if (mount) mount.innerHTML = competitionsData.map(renderCompetitionCard).join("");
     })();
 
     /* =========================
-       Navigation Behavior
+       Intersection Highlighting (Hero + Side)
     ========================== */
-    // HERO nav active state
     const heroNavLinks = Array.from(document.querySelectorAll('.hero-nav a'));
-    const contentSections = Array.from(document.querySelectorAll('section[id]')); // sections only (not the header wrapper div)
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+
     function setHeroActive(id) {
       heroNavLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + id));
     }
 
     const heroObserver = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) setHeroActive(e.target.id);
-      });
+      entries.forEach(e => { if (e.isIntersecting) setHeroActive(e.target.id); });
     }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    sections.forEach(s => heroObserver.observe(s));
 
-    contentSections.forEach(sec => heroObserver.observe(sec));
-
-    // Smooth scroll for hero nav
+    // Smooth scroll hero nav
     document.addEventListener('click', e => {
       const a = e.target.closest('.hero-nav a');
       if (!a) return;
       const id = a.getAttribute('href').slice(1);
       const el = document.getElementById(id);
-      if (el) {
-        e.preventDefault();
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      if (el) { e.preventDefault(); el.scrollIntoView({ behavior:'smooth' }); }
     });
 
-    // SIDE NAV show/hide + active
-    const sideNav = document.querySelector('.side-nav');
-    if (sideNav) sideNav.classList.add('is-hidden-side-nav'); // start hidden
+    /* =========================
+       RIGHT SIDE NAV (Hover + Scroll Reveal)
+    ========================== */
+    const sideWrapper = document.querySelector('.side-nav-wrapper');
+    const sideNav = sideWrapper?.querySelector('.side-nav');
     const sideLinks = sideNav ? Array.from(sideNav.querySelectorAll('a')) : [];
     const sideSections = sideLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
 
     function setSideActive(id) {
       sideLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
     }
-
-    // Highlight sections in side nav
-    const sideObserver = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) setSideActive(e.target.id);
-      });
+    const sideIO = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) setSideActive(e.target.id); });
     }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    sideSections.forEach(sec => sideIO.observe(sec));
 
-    sideSections.forEach(sec => sideObserver.observe(sec));
+    // Reveal/hide logic
+    let hideTimer = null;
+    const SHOW_DURATION = 1800; // ms after scroll without activity
 
-    // Show/hide side nav based on hero visibility
-    const heroBanner = document.querySelector('.hero-banner');
-    if (heroBanner && sideNav) {
-      const heroVisibilityObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            sideNav.classList.add('is-hidden-side-nav');
-          } else {
-            sideNav.classList.remove('is-hidden-side-nav');
-          }
-        });
-      }, { threshold: 0.15 });
-      heroVisibilityObserver.observe(heroBanner);
+    function showSideNav(reason='') {
+      if (!sideWrapper) return;
+      sideWrapper.classList.remove('collapsed');
+      sideWrapper.classList.add('expanded');
+      sideWrapper.setAttribute('data-reason', reason);
+      if (hideTimer) clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        if (!sideWrapper.matches(':hover')) collapseSideNav();
+      }, SHOW_DURATION);
+    }
+    function collapseSideNav() {
+      if (!sideWrapper) return;
+      sideWrapper.classList.add('collapsed');
+      sideWrapper.classList.remove('expanded');
     }
 
-    // Smooth scroll for side nav
+    // Scroll -> show briefly
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+      const current = window.scrollY;
+      if (Math.abs(current - lastScrollY) > 2) {
+        showSideNav('scroll');
+        lastScrollY = current;
+      }
+    }, { passive:true });
+
+    // Hover region (wrapper) keeps open
+    if (sideWrapper) {
+      sideWrapper.addEventListener('mouseenter', () => showSideNav('hover'));
+      sideWrapper.addEventListener('mouseleave', () => {
+        if (hideTimer) clearTimeout(hideTimer);
+        hideTimer = setTimeout(() => collapseSideNav(), 400);
+      });
+    }
+
+    // Smooth scroll side nav
     if (sideNav) {
       sideNav.addEventListener('click', e => {
         const a = e.target.closest('a');
@@ -662,12 +670,26 @@
         const el = document.getElementById(id);
         if (el) {
           e.preventDefault();
-            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          el.scrollIntoView({ behavior:'smooth' });
+          showSideNav('click');
         }
       });
     }
 
-    // Input modality helper (optional)
+    // Start collapsed
+    collapseSideNav();
+
+    // Accessibility: keyboard focus expands
+    sideLinks.forEach(link => {
+      link.addEventListener('focus', () => showSideNav('focus'));
+      link.addEventListener('blur', () => {
+        if (!sideWrapper.contains(document.activeElement)) {
+          hideTimer = setTimeout(() => collapseSideNav(), 600);
+        }
+      });
+    });
+
+    // Input modality helper
     document.body.addEventListener('mousedown', () => document.body.classList.add('using-mouse'));
     document.body.addEventListener('keydown', e => { if (e.key === 'Tab') document.body.classList.remove('using-mouse'); });
   </script>
