@@ -15,6 +15,9 @@
                      09-01-2025 -  NEXT UP - Edit the "Experience" section to include more details
                                    about my roles and responsibilities. Same with competiton. Iron
                                    out kinks such as nav bar clicking, and pictures
+                     10-02-2025 -  Any skill I add in my job array, should auto populate to the Skills
+                                   section, then the user should be able to click on it and it takes them
+                                    to a page that has resources to learn that skill.
 
  -->
 
@@ -121,7 +124,7 @@
         <div class="column is-half-desktop is-full-tablet">
           <div class="box has-text-centered hover-glow">
             <figure class="image" style="max-width:360px;margin:0 auto;">
-              <img src="AaronGrad.jpeg" alt="Professional headshot">
+              <img src="images/Aaron_and_karina.jpg" alt="Me and my beautiful girlfriend Karina">
             </figure>
           </div>
         </div>
@@ -340,28 +343,27 @@
         company: "L3Harris",
         period: "June 2025 – Current",
         location: "Waco, TX",
-        logo: "images/L3Harris.svg",
+        logo: "images/L3Harris_Logo.jpg",
         logoAlt: "L3Harris logo",
-        summary: "Contributing to Java/Gradle services and internal infrastructure; bootstrapped internal DNS (PowerDNS) improving service discovery & environment parity.",
-        skills: ["Java 11","Gradle 8.9","Git 2.13","PowerDNS","Python 3","Artifactory"],
+        summary: "Contributed to Java/Gradle services and internal infrastructure; bootstrapped internal DNS (PowerDNS), changed old XMPP server to a new implementation.",
+        skills: ["Java 11","Gradle 8.9","Git 2.13","PowerDNS","Python 3","Artifactory", "Prosody XMPP", "Openfire XMPP", "Bash", "Jenkins", ],
         projects: [
-          { title: "Internal DNS Bootstrap", impact: "Automated PowerDNS zones; reduced manual host overrides and cut lookup latency ~40%." },
-          { title: "Gradle Build Streamlining", impact: "Refactored multi-module build; CI pipeline time 11 → 7 mins." },
-          { title: "Artifact Integrity Gate", impact: "Checksum + signature gate blocked unverified third‑party libs." }
+          { title: "Internal DNS Bootstrap", impact: "Automated PowerDNS zones; reduced manual host overrides and implemented 2 redundancy servers." },
+          { title: "Gradle Build Streamlining", impact: "Environment did not previously work on Windows OS, implemented gradle changes to restore compatibility." },
+          { title: "Artifactory GUI ", impact: "Developed a user-friendly GUI for Artifactory, (in python) improving artifact management and visibility." }
         ]
       },
       {
         role: "Undergraduate Cybersecurity Research Assistant",
         company: "Baylor University",
         period: "Aug 2024 – May 2025",
-        logo: "images/bu.svg",
+        logo: "images/bayloruniversity.png",
         logoAlt: "Baylor University logo",
-        summary: "Developed educational cybersecurity labs; executed CIIRC red teaming & post-mortems; exploring AI/ML applications in offensive security curriculum.",
-        skills: ["AI/ML","WEKA","scikit-learn","KNN","Terraform","PenTesting"],
+        summary: "Developed educational cybersecurity labs; BRIC official Offensive Testing & post-mortems; exploring AI/ML applications in offensive security curriculum.",
+        skills: ["AI/ML","Terraform","PenTesting", "Nmap", "Proxmox",],
         projects: [
-          { title: "CIIRC Offensive Testing", impact: "Defined ROE & executed controlled attacks; remediation report adopted next iteration." },
-          { title: "ML Attack Pattern Prototype", impact: "Explored clustering feasibility for lateral movement detection baselines." },
-          { title: "Lab Module Authoring", impact: "Drafted 3 lab scenarios (priv‑esc, log analysis, persistence) in pilot use." }
+          { title: "BRIC Offensive Testing", impact: "Defined ROE & executed controlled nmap discover scans; remediation report adopted next iteration." },
+          { title: "Hackfest", impact: "Created 14+ virtual machines with varying attack vectors for red team exercises." }
         ]
       },
       {
@@ -371,23 +373,23 @@
         logo: "images/GM.svg",
         logoAlt: "General Motors logo",
         summary: "Built internal tooling for multi‑platform OSE workflows (Linux/Windows/macOS/mobile) using KISS & GRASP design principles.",
-        skills: [".NET MAUI","C#","Agile","HashiCorp Vault","Microsoft Graph API","Insomnia"],
+        skills: [".NET MAUI","C#","Agile","HashiCorp Vault","Microsoft Graph API","Insomnia", "Azure",],
         projects: [
-          { title: "Platform Scheduling App", impact: "Centralized OS eng tasks; reduced email coordination (qual +30% efficiency perception)." },
-          { title: "Secrets Integration", impact: "Integrated Vault dynamic creds removing plaintext configs." },
-          { title: "Graph API Sync Tool", impact: "Automated device inventory reconciliation (daily delta export)." }
+          { title: "Platform Scheduling App", impact: "Centralized OS eng tasks; reduced email coordination, improved task visibility by 30%." },
+          { title: "Vacation Request Tool", impact: "Streamlined vacation request process, reducing approval time by 95%." },
+          { title: "People Monitor App", impact: "Monitored employees and displayed 15+ fields of information from Azure AD." },
         ]
       },
       {
         role: "Security Operations Center Intern",
         company: "Baylor University",
         period: "Aug 2023 – May 2024",
-        logo: "images/bu.svg",
+        logo: "images/bayloruniversity.png",
         logoAlt: "Security operations icon",
         summary: "Performed SIEM investigations (Splunk), log correlation, HIDS/NIDS alert triage, incident response documentation.",
         skills: ["Splunk","Python","Incident Investigation","Log Analysis","Detection Tuning"],
         projects: [
-          { title: "Correlation Search Suite", impact: "Added 5 detections lowering MTTD ~25% for targeted behaviors." },
+          { title: "Correlation Search Suite", impact: "Added 5 detections lowering Mean Time To Detection (MTTD) ~25% for targeted behaviors." },
           { title: "Playbook Refinement", impact: "Streamlined escalation tree; reduced false escalations (analyst feedback)." }
         ]
       },
@@ -401,34 +403,36 @@
         skills: ["KQL","Microsoft Sentinel","365 Defender","Azure","Jupyter","Automation"],
         projects: [
           { title: "Alert Enrichment Notebook", impact: "Cut manual lookup time ~30% (self‑reported)." },
-          { title: "KQL Rule Optimization", impact: "Reduced false positive ratio via threshold/entity tuning." }
+          { title: "KQL Data Aggregation", impact: "Combined 3 large tables into a single query, improving readability and performance." },
+          { title: "Entity Mapping", impact: "Mapped 20+ new entities in Sentinel, enhancing alert context and investigation efficiency." }
         ]
       },
       {
         role: "Student Network Technician",
         company: "Baylor University",
         period: "Aug 2022 – May 2023",
-        logo: "images/bu.svg",
+        logo: "images/bayloruniversity.png",
         logoAlt: "Network tools icon",
         summary: "Maintained campus network: cable fabrication, jack repairs, port activation, MDF/IDF upkeep.",
         skills: ["RJ45","Cable Testing","Port Provisioning","MDF/IDF Maintenance"],
         projects: [
           { title: "Port Activation Checklist", impact: "Standardized steps reducing reopen tickets." },
-          { title: "Patch Panel Audit", impact: "Cataloged labeling discrepancies feeding remediation backlog." }
+          { title: "Ticket Volume", impact: "Consistently ranked top 2 in ticket closes per semester (self-tracked)." }
         ]
       },
       {
         role: "Cybersecurity Student Worker",
         company: "Baylor University",
         period: "Jan 2022 – Aug 2022",
-        logo: "images/bu.svg",
+        logo: "images/bayloruniversity.png",
         logoAlt: "Cyber lab icon",
         summary: "Provisioned Proxmox lab for CCDC; built multi‑service clusters & AD domains; authored deployment docs.",
         skills: ["Proxmox","Active Directory","Group Policy","MariaDB","MySQL","MongoDB","Tomcat","nginx","DNS","Bash","PowerShell"],
         projects: [
             { title: "AD Domain Lab Build", impact: "Scripts cut reprovision time from hours to <30 min." },
-            { title: "Service Cluster Templates", impact: "Base images sped practice environment setup." },
-            { title: "Documentation Portal", impact: "Centralized runbooks improved onboarding clarity." }
+            { title: "DNS Automation Scripts", impact: "Automated DNS record setup to discover and register 8+ weekly lab machines." },
+            { title: "Proxmox Server Management", impact: "Created and managed 20+ user pools and lab environments." },
+            { title: "Proxmox Documentation", impact: "Authored 15 page step-by-step guides for lab deployment and maintenance." }
         ]
       }
     ];
