@@ -1,0 +1,5 @@
+# GitHub Pages (Jekyll) build settings.
+# docs/ holds working plans and tools/ the screenshot harness: neither belongs on the live site.
+exclude:
+  - docs
+  - tools
