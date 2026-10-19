@@ -6,10 +6,27 @@
 
 /* ---------- Tokens ---------- */
 :root {
-  /* Bulma 1.0.4's own --bulma-family-primary, so naming it here changes nothing.
-     Not applied: Bulma still sets the family. */
-  --font-sans: Inter, "SF Pro", "Segoe UI", Roboto, Oxygen, Ubuntu, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
+  /* Type. Inter is the webfont index.html's <head> loads (400-700, display=swap); the rest is
+     what draws until it arrives, or if it never does. Bulma 1.0.4's own stack names "SF Pro",
+     which Safari does not expose by that name, so an iPhone fell through to Helvetica Neue:
+     -apple-system is the name that reaches San Francisco. */
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  /* Bulma's own family tokens, so its components (navbar, tags, buttons) follow */
+  --bulma-family-primary: var(--font-sans);
+  --bulma-family-secondary: var(--font-sans);
+  --bulma-body-line-height: 1.6;
+
+  /* Heading scale: tighter steps than Bulma's 32/24/20px, fluid between phone and desktop.
+     The px at 390 and at 1440 wide are in each comment. The hero h1 is not on it: its markup's
+     is-size-*-{mobile,tablet,desktop} helpers, which Bulma marks important, set 32/40/48px. */
+  --text-title-lg: clamp(1.5rem, 1.25rem + 1vw, 1.875rem);     /* .title.is-3: 24 -> 30 */
+  --text-title-md: clamp(1.25rem, 1.125rem + .5vw, 1.375rem);  /* .title.is-4: 20 -> 22 */
+  --text-title-sm: clamp(1.0625rem, 1rem + .25vw, 1.125rem);   /* .title.is-5: 17 -> 18 */
+  --text-subtitle-hero: clamp(1.125rem, 1rem + .75vw, 1.375rem); /* hero subtitle: 19 -> 22 */
+  --weight-title: 700;
+  --tracking-title: -.02em;
+  --leading-title: 1.2;
 
   /* Surfaces and lines */
   --color-bg: #111;
@@ -26,6 +43,9 @@
   --color-text-nav: #d2d2d5;
   --color-text-side-nav: #d2d2d6;
   --color-text-strong: #fff;
+  /* Headings and <strong>: what Bulma's dark scheme gives them. Its light scheme, the iPhone
+     default, gave #2e333d, near-invisible on the dark boxes. */
+  --color-heading: #ebecf0;
   --color-dot: #6e6e75;
 
   /* Links */
@@ -106,6 +126,23 @@ a:hover {
   text-decoration: underline;
 }
 
+strong {
+  color: var(--color-heading);
+}
+
+/* Bulma's title tokens, set on the element because Bulma declares them there. The hero's
+   .hero.is-dark .title sets its colour directly, so this colour stops at the hero. */
+.title {
+  --bulma-title-color: var(--color-heading);
+  --bulma-title-weight: var(--weight-title);
+  --bulma-title-line-height: var(--leading-title);
+  letter-spacing: var(--tracking-title);
+}
+
+.title.is-3 { font-size: var(--text-title-lg); }
+.title.is-4 { font-size: var(--text-title-md); }
+.title.is-5 { font-size: var(--text-title-sm); }
+
 .title + .subtitle {
   margin-top: .5rem;
 }
@@ -156,10 +193,19 @@ section[id] { scroll-margin-top: 70px; }
   text-shadow: var(--shadow-text-hero);
 }
 
+/* Off the heading scale's .subtitle.is-4 (24px everywhere); 500 so it holds up on the photo */
+.hero.hero-banner .subtitle {
+  font-size: var(--text-subtitle-hero);
+  font-weight: 500;
+}
+
 /* Outlined title. On the hero h1 the rule above out-specifies this text-shadow, so only the
-   stroke shows there. */
+   stroke shows there. paint-order puts the fill over the stroke: Inter is a variable font
+   whose glyphs overlap their own contours, and a stroke painted on top draws those overlaps
+   as lines through the A and the e. The stroke is doubled because only its outer half shows. */
 .font-outline {
-  -webkit-text-stroke: 1px var(--stroke-outline);
+  -webkit-text-stroke: 2px var(--stroke-outline);
+  paint-order: stroke fill;
   text-shadow: var(--shadow-text-outline);
 }
 

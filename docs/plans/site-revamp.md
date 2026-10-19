@@ -20,7 +20,7 @@ on a phone the right-side section pane covers half the screen.
 | **P0** | This plan document, and keep `docs/` off the live site | ✅ Done *(2026-10-19)* — approved by the owner |
 | **P1** | The screenshot harness, and the baseline shots | ✅ Done *(2026-10-19)* |
 | **P2** | Consolidate `custom.css` into one clean file with design tokens | ✅ Done *(2026-10-19)* |
-| **P3** | Typography: Inter and a tighter type scale | ⬜ |
+| **P3** | Typography: Inter and a tighter type scale | ✅ Done *(2026-10-19)* |
 | **P4** | Optimise the images | ⬜ |
 | **P5** | Calmer motion: no parallax, hover only where it helps | ⬜ |
 | **P6** | The phone menu: visible, closes on tap, smooth scroll | ⬜ |
@@ -479,3 +479,49 @@ every later phase compares against; it lives on this machine only.
   panel, which ends at or past the viewport's right edge in both states, and the panel's
   `overflow: hidden` clips it anyway. The collapsed "tab" is the panel's own left 14px plus its
   shadow (the phone diff at the tab is ~29 CSS px wide because of the shadow). The CSS comment says so.
+
+### P3 (2026-10-19)
+
+- **Inter is loaded and drawn.** `index.html`'s `<head>` preconnects to `fonts.googleapis.com` and
+  `fonts.gstatic.com` and loads `Inter:wght@400;500;600;700&display=swap`, before Bulma. `custom.css`
+  sets `--bulma-family-primary` and `--bulma-family-secondary` to `--font-sans` and the body
+  `line-height` to 1.6 (`--bulma-body-line-height`). In both devices and both schemes every probed
+  element computes to `Inter`, the four weights load, and CDP's `CSS.getPlatformFontsForNode` reports
+  the text **drawn in `Inter (web)`**. Before P3 the same text was drawn in Segoe UI and Segoe UI Black.
+- **`document.fonts.check` proves nothing here.** It read `true` before P3 too, and it reads `true` for
+  `'16px NoSuchFamilyAtAll'`. Computed `font-family` is also `Inter` before P3, because Bulma's stack
+  starts with it. The proof is the platform font. `tools/checks/P3.mjs` (new; the contract's place for
+  a phase check) prints all three: `node tools/checks/P3.mjs`.
+- **The scale** (`--text-title-*`, `clamp()`, px at 390 → 1440): `.title.is-3` 24 → 30 (was 32),
+  `.title.is-4` 20 → 22 (was 24), `.title.is-5` 17 → 18 (was 20), hero subtitle 19 → 22 at weight 500
+  (was 24 at 400). Titles are weight 700 (Bulma's was 800), `line-height` 1.2, letter-spacing −0.02em.
+  The hero h1 stays 32/40/48px, at 700 now, because its markup's `is-size-*` helpers are `!important`.
+  **For P9:** dropping those helper classes from the h1 is how to put it on a `clamp()`.
+- **P1's light-scheme headings are fixed, with `<strong>` too.** In light, every `.title` and every
+  `<strong>` (the Contact and Education labels, the `Notable Projects` summaries) computed
+  `rgb(46, 51, 61)` on the dark boxes. They now take the new token `--color-heading: #ebecf0`, which is
+  exactly what Bulma's dark scheme already gave them, so the dark scheme is unchanged. **For P12:**
+  rule 7's check for other Bulma light-theme text is still worth one pass. This fixes only titles and
+  `strong`.
+- **Inter broke the outlined hero name, and P3 fixed it.** Google serves Inter as a variable font, and
+  its glyphs overlap their own contours. `.font-outline`'s `-webkit-text-stroke` painted over the fill
+  drew those overlaps as lines through the A's crossbar and the e's bar. Now the stroke is 2px with
+  `paint-order: stroke fill`, so the fill covers the inner half and the visible outline is the 1px it
+  was. Checked in Edge only. **For P9:** confirm on the iPhone that Safari honours `paint-order` on
+  HTML text. If it does not, the name shows the lines again with a 2px stroke. The fallback is to drop
+  the stroke and keep the text-shadow.
+- **Fallback stack:** `--font-sans` now goes `Inter, -apple-system, BlinkMacSystemFont, system-ui,
+  "Segoe UI", …`. Bulma's `"SF Pro"` is not a name Safari exposes, so before P3 the iPhone drew the
+  site in Helvetica Neue. During `swap`, or if Google Fonts fails, it now draws San Francisco.
+- **No overflow:** scrollWidth is 390 of 390 and 1440 of 1440 at every shot. At 1024 wide, the
+  narrowest that shows it, the hero nav pill is 926px, so Inter's wider caps still fit on one row.
+  The only error is still the favicon 404.
+- **The page got taller:** full shots are phone 390×13484 (baseline 13229) and desktop 1440×8444
+  (8215), from the 1.6 line-height. **For P4 onward:** pixel diffs of anything with text now go against
+  `tools/shots/p3/`, not `baseline`. Against baseline, `-fuzz 1%` AE is ~6,300 on `desktop-top` and
+  ~30,000 on `phone-top`.
+- **For P9:** at 19px/500 Inter the phone subtitle still wraps ("… • Cybersecurity / Focus") over the
+  stole and tie, with the white film's low contrast. The overflow is still 0.
+- **For P10:** the experience and competition tags are Bulma's default 12px, while Skills uses
+  `are-medium` (16px). `.notable-projects ul` and `.comp-details ul` keep `line-height: 1.35` at
+  .9/.85rem, tighter than the body's 1.6. Both are candidates for the card polish.
