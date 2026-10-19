@@ -18,7 +18,7 @@ on a phone the right-side section pane covers half the screen.
 | Phase | What | State |
 |---|---|---|
 | **P0** | This plan document, and keep `docs/` off the live site | ✅ Done *(2026-10-19)* — approved by the owner |
-| **P1** | The screenshot harness, and the baseline shots | ⬜ |
+| **P1** | The screenshot harness, and the baseline shots | ✅ Done *(2026-10-19)* |
 | **P2** | Consolidate `custom.css` into one clean file with design tokens | ⬜ |
 | **P3** | Typography: Inter and a tighter type scale | ⬜ |
 | **P4** | Optimise the images | ⬜ |
@@ -374,3 +374,61 @@ every later phase compares against; it lives on this machine only.
 - No `docs/` or `_config.yml` existed before; the tree was clean and level with `origin/main`.
 - **For P1**: `tools/` is already excluded from the Jekyll build by `_config.yml`; only `.gitignore`
   needs `tools/node_modules/` and `tools/shots/`.
+
+### P1 (2026-10-19)
+
+- **Harness:** `tools/shoot.mjs` on `playwright-core` **1.61.1**, pinned exactly: it is the last release
+  whose engines accept Node 18/19 (1.62.0 onward needs Node 20). Drives the installed Edge
+  155.0.4283.62 headless; a run of both devices takes ~55 s.
+- **Beyond the contract:** shots are `tools/shots/<label>/<device>-top.png`, `<device>-<section id>.png`
+  and `<device>-full.png`, with a `report.json` beside them (overflow at every shot, console errors,
+  failed requests). `--dark` writes to `tools/shots/<label>-dark/`, so `final` and `final --dark`
+  never overwrite each other; `--device phone|desktop` shoots one. Exports besides `openPage`:
+  `scrollToId(page, id)` (JS scroll + settle), `settle(page)` (2.5 s, then network idle),
+  `measureOverflow(page)`, `DEVICES`, `startServer`, `launchEdge`. `openPage` also takes
+  `reducedMotion`, `path` and `baseUrl` (e.g. `'https://www.aaron-sierra.com'` to open the live site), and
+  returns `diag` (`consoleErrors`, `failedRequests`), `context` and `browser` as well.
+- Full-page shots are at **CSS scale** (the phone page is 390×13229 CSS px; at 3× it would be ~39,700 px,
+  past what Chromium captures in one piece). Viewport shots keep the device's scale (phone 1170×2532).
+- The freeze style also covers `::before`/`::after`, and leaves `scroll-behavior` alone (the harness's
+  own scrolls pass `behavior: 'instant'`). **For P6**: `html`'s computed `scroll-behavior` reads true
+  through `openPage` without `liveMotion`.
+- **Baseline** (`tools/shots/baseline/`, plus `baseline-dark/` for the `--dark` phases):
+  - **Section ids** (8, in order): `about`, `education-contact`, `skills`, `leadership`,
+    `certifications`, `resume`, `experience`, `competitions`. The hero is not one (`id="home"` is on
+    the wrapper `div`), so the hero appears only in `top` and `full`.
+  - **scrollWidth:** phone **390** of 390, desktop **1440** of 1440: no horizontal overflow at any
+    shot, in either scheme.
+  - **Console errors:** one, `/favicon.ico` 404. **Failed requests:** the same favicon 404 and nothing
+    else. It is Chromium's own request, so Playwright never sees it; the server reports it, under
+    whichever device runs first (the browser caches the miss). The live site 404s `/favicon.ico`
+    too. **For P4 and P12**: this 404 predates the revamp and is no image P4 touches, so the
+    failed-requests list cannot read empty unless a favicon is added.
+- **Local matches live:** `index.html` and `custom.css` equal the served files apart from CRLF (git
+  `autocrlf`), and `AaronGrad.jpeg` is byte-identical. Local and live top shots differ only inside the
+  hero photo: max channel difference 1/255 on desktop, 8/255 on the phone.
+- **Pixel noise. For P2:** two runs of an untouched tree gave AE 0 on 19 of 20 shots. `phone-top`
+  gave **AE 0.0065**, with a max channel difference of 1/255, all inside the hero photo, and one
+  `openPage` run gave `desktop-top` 0.0052 the same way. ImageMagick 7.1.2 prints AE as a fraction.
+  An AE below 1 on a top shot is therefore hero raster noise. To show that, run
+  `magick compare -metric AE -fuzz 1% …`, which reads it as 0. A real CSS change scores in the
+  hundreds or more.
+- **The phone pane bug, confirmed:** every settled phone shot shows the collapsed pane's 14px tab on
+  the right edge. `tools/shots/baseline/phone-pane-open.png` was taken 300 ms after a scroll through
+  `openPage`, and shows the pane open over the page: 210px wide, left edge at x=180 of 390,
+  `display: flex`, class `expanded`.
+- **For P9:** "the subtitle runs off the right edge" did **not** reproduce. Under mobile emulation at
+  390px the subtitle wraps to two lines and scrollWidth stays 390. The harness renders in Segoe UI
+  (Windows) where the iPhone uses SF Pro, so line breaks differ until P3 brings Inter; the measured
+  overflow is 0. Confirmed from the top shot: the name and subtitle sit over the stole and tie, and
+  the white film flattens their contrast.
+- **For P3 (and P12):** in the **light** scheme, which is the iPhone default (rule 7), every section
+  heading (`#about .title`, `#skills .title`, …) computes to `rgb(46, 51, 61)` on the dark boxes. They
+  are near-invisible in `phone-about.png` and `phone-skills.png`, and on desktop the same way. Under
+  `--dark` they compute to `rgb(235, 236, 240)`. Bulma's light theme is colouring them, and "What
+  research found" missed it. P3's heading rules should set the colour explicitly from a token. P2
+  cannot, because P2 must render identically.
+- **For P6:** the burger computes `rgb(66, 88, 255)` (Bulma's link blue) in both schemes. In the light
+  phone top shot it shows as thin blue bars against the white sky.
+- **For P11:** the local server serves the whole repo root, `tools/` included, so
+  `tools/node_modules/…` is reachable at `/tools/…` locally. The live site excludes `tools/`.

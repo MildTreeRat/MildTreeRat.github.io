@@ -1,0 +1,3 @@
+# The screenshot harness (docs/plans/site-revamp.md, P1): dependencies and shots stay local.
+tools/node_modules/
+tools/shots/

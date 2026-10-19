@@ -1,0 +1,12 @@
+{
+  "name": "site-tools",
+  "private": true,
+  "description": "Screenshot and interaction harness for the site revamp (docs/plans/site-revamp.md). Not part of the site: _config.yml excludes tools/.",
+  "type": "module",
+  "scripts": {
+    "shoot": "node shoot.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "1.61.1"
+  }
+}
