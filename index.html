@@ -117,10 +117,10 @@
   <!-- About + Photo -->
   <section class="section" id="about">
     <div class="container">
+      <h3 class="title is-3 has-text-centered section-title">Who Am I?</h3>
       <div class="columns is-variable is-6 is-multiline">
         <div class="column is-half-desktop is-full-tablet">
           <div class="box">
-            <h3 class="title is-3 has-text-centered mb-4">Who Am I?</h3>
             <p>
               I have the experience and technical foundation of a computer scientist, which
               means I'm not just comfortable with coding, but I also enjoy digging into
@@ -142,10 +142,10 @@
   <!-- Education + Contact -->
   <section class="section" id="education-contact">
     <div class="container">
-      <div class="columns is-variable is-6 is-multiline">
+      <div class="columns is-variable is-6 is-multiline card-row">
         <div class="column is-half-desktop is-full-tablet">
+          <h3 class="title is-3 has-text-centered section-title">Education</h3>
           <div class="box">
-            <h3 class="title is-4 has-text-centered">Education</h3>
             <h4 class="title is-5 mb-1">Baylor University</h4>
             <p>Bachelor of Science in Computer Science<br>Concentration in Cybersecurity</p>
             <p><strong>Graduation:</strong> May 2025</p>
@@ -158,8 +158,8 @@
           </div>
         </div>
         <div class="column is-half-desktop is-full-tablet">
-          <div class="box">
-            <h3 class="title is-4 has-text-centered">Contact Info</h3>
+          <h3 class="title is-3 has-text-centered section-title">Contact Info</h3>
+          <div class="box contact-card">
             <p><strong>Email:</strong> aaronsierra.gen@gmail.com</p>
             <p><strong>Phone:</strong> 806-922-3947</p>
             <p>
@@ -198,8 +198,8 @@
   <!-- Skills -->
   <section class="section" id="skills">
     <div class="container">
+      <h3 class="title is-3 has-text-centered section-title">Skills / Experience Working With</h3>
       <div class="box">
-        <h3 class="title is-4 has-text-centered">Skills / Experience Working With</h3>
         <div class="tags are-medium is-flex is-flex-wrap-wrap">
           <span class="tag">Assembly (x86)</span>
           <span class="tag">Azure 365 Defender</span>
@@ -238,8 +238,8 @@
   <!-- Leadership Experience -->
   <section class="section" id="leadership">
     <div class="container">
-      <h3 class="title is-3 has-text-centered">Leadership Experience</h3>
-      <div class="columns is-multiline">
+      <h3 class="title is-3 has-text-centered section-title">Leadership Experience</h3>
+      <div class="columns is-multiline is-centered card-row">
         <div class="column is-one-third-desktop is-half-tablet">
           <div class="box hover-glow">
             <p class="has-text-weight-semibold">Project Manager - Software Engineering II course</p>
@@ -282,12 +282,16 @@
   <!-- Certifications -->
   <section class="section" id="certifications">
     <div class="container">
+      <h3 class="title is-3 has-text-centered section-title">Certifications</h3>
       <div class="box has-text-centered">
-        <h3 class="title is-4">Certifications</h3>
         <p>CompTIA Security+</p>
         <figure class="image" style="max-width:420px;margin:1.5rem auto;">
-          <img src="images/security-plus-840.jpg" alt="CompTIA Security+" loading="lazy" width="840" height="649">
+          <!-- The image opens the PDF too; the line under it is the link a keyboard and a screen reader get -->
+          <a class="cert-link" href="CompTIASecurityPlus.pdf" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+            <img src="images/security-plus-840.jpg" alt="CompTIA Security+" loading="lazy" width="840" height="649">
+          </a>
         </figure>
+        <p><a href="CompTIASecurityPlus.pdf" target="_blank" rel="noopener">View certificate (PDF)</a></p>
       </div>
     </div>
   </section>
@@ -295,8 +299,8 @@
   <!-- Resume -->
   <section class="section" id="resume">
     <div class="container">
+      <h3 class="title is-3 has-text-centered section-title">Resume (updated: 1-14-2025)</h3>
       <div class="box has-text-centered">
-        <h3 class="title is-4">Resume (updated: 1-14-2025)</h3>
         <figure class="image" style="max-width:700px;margin:1.5rem auto;">
           <img src="Resume-1.jpg" alt="Resume" loading="lazy" width="2550" height="3300">
         </figure>
@@ -308,7 +312,7 @@
   <!-- Work Experience -->
   <section class="section" id="experience">
     <div class="container">
-      <h3 class="title is-3 has-text-centered">Work Experience</h3>
+      <h3 class="title is-3 has-text-centered section-title">Work Experience</h3>
       <div id="experience-dynamic"></div>
     </div>
   </section>
@@ -316,13 +320,13 @@
   <!-- Competitions & Extracurricular -->
   <section class="section" id="competitions">
     <div class="container">
-      <h3 class="title is-3 has-text-centered">Competitions & Extracurricular</h3>
+      <h3 class="title is-3 has-text-centered section-title">Competitions & Extracurricular</h3>
       <div id="competitions-dynamic"></div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="footer has-background-black has-text-centered has-text-grey-light">
+  <footer class="footer has-text-centered">
     <p>&copy; <span id="year"></span> Aaron Sierra. All rights reserved.</p>
   </footer>
 

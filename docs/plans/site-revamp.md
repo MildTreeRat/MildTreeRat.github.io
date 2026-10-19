@@ -27,7 +27,7 @@ on a phone the right-side section pane covers half the screen.
 | **P7** | Phone slim dots replace the side pane | ✅ Done *(2026-10-19)* |
 | **P8** | Desktop side pane stays hidden over the hero | ✅ Done *(2026-10-19)* |
 | **P9** | The phone hero: shorter, readable, nothing off the edge | ✅ Done *(2026-10-19)* |
-| **P10** | Cards, spacing and section polish | ⬜ |
+| **P10** | Cards, spacing and section polish | ✅ Done *(2026-10-19)* |
 | **P11** | The resume section, with the SWE resume as a PDF | ⬜ |
 | **P12** | Close: full review, changelog line, leftovers listed | ⬜ |
 
@@ -894,3 +894,84 @@ every later phase compares against; it lives on this machine only.
   820×1180) also keep the full-height hero, with the name over the collar and stole. D11 covered
   only the phone, so they were left alone. If the owner wants them changed, it is one line: widen
   the query to `(max-width: 1023px) and (orientation: portrait)`.
+
+### P10 (2026-10-19)
+
+- **One card.** Every `.box` (26: the leadership cards, experience and competition cards included)
+  is `--color-surface`, which is now the page's hue one step darker
+  (`hsl(var(--bulma-dark-h), var(--bulma-dark-s), 14%)`, `rgb(31, 34, 41)`, was near-black
+  `#1c1c1c`). Each has a 1px `--white-08` edge, 16px corners (`--radius-lg`), and `--pad-card`
+  inside: `clamp(1.25rem, 1rem + 1vw, 1.75rem)`, so 20px on a phone and 28px on a desktop. The padding
+  and radius go through Bulma's own `--bulma-box-padding` and `--bulma-box-radius`, set on `.box`, so
+  the experience and competition cards lost their own paddings. `--shadow-card` is a soft dark
+  shadow, where it was a 5px white glow. The leadership hover (`--shadow-card-hover`) is an accent
+  ring plus a soft violet shadow, where it was an 18px white glow at 0.7. It still lifts 2px.
+- **Titles: every one above its card, never inside.** There are 9 section titles, all
+  `h3.title.is-3.has-text-centered.section-title`, 24px on a phone and 30px on a desktop. Before,
+  six sat inside their box at is-4 or is-3, and the three multi-card sections had theirs outside.
+  "Who Am I?" heads the About section, above both columns. Education and Contact Info each sit
+  above their own card, inside their column. Skills, Certifications and Resume moved out of their
+  boxes. The wording is unchanged.
+- **Spacing.** On a phone (≤768px) a section has `--pad-section-phone` (2rem) above and below, where
+  it had 3rem. The gap between two sections' cards was ~96px, a third of the screen. On a desktop
+  (≥1024) it has `--pad-section-desktop`, 3.5rem (was 3rem). Both go through Bulma's section
+  tokens. Full pages: phone 13,315 → 12,077px tall, desktop 8,444 → 8,720.
+- **Equal heights:** `.card-row` (Education/Contact's columns, and Leadership's) makes each column
+  a flex column, so its box fills it. On a desktop every leadership card is 109.2px tall, and the
+  Education and Contact cards are 288.3px each. Leadership's columns are also `is-centered`, so the
+  lone seventh card sits centred under the other six. About was left as it was. Its text card is
+  shorter than the photo card beside it, and stretching it would leave a mostly empty card.
+- **Two phone layout bugs, found beyond the steps.** Below 640px the experience and competition
+  cards stack logo over text in a flex column, where **every flex-basis becomes a height**. The
+  media's (140px, 110px) left 20px under the smaller logo. The body's 320px left up to ~90px of
+  empty card under a short competition card (Esports, NCL), visible in `p9/phone-full.png`. Both are
+  `flex-basis: auto` in the 640px query now, and the logos are `display: block`.
+- **Fold-outs are one style.** Notable Projects and Highlights were near-copies: different padding,
+  open borders (white-15 against white-14) and lists (.9rem against .85rem, both at 1.35).
+  `.notable-projects summary` also had `outline: none`, so a keyboard could not see it. They now
+  share every rule, with an accent `:focus-visible` ring, and lists at `--text-list` (.9rem) and
+  `--leading-list` (1.5), as P3 suggested.
+- **Tags** are pills on `--white-06` with a `--white-08` edge, weight 500: 13px (`--text-tag`) in the
+  cards and 15px (`--text-tag-lg`) in Skills. Bulma's `.tags` already has `gap: .5rem`, and the
+  margin each tag also had doubled it. The margin is gone. Hover (fine pointer only) is `--white-15`.
+- **Contact:** the card is `.contact-card`, whose paragraphs are `overflow-wrap: anywhere`. At 390,
+  375 and 320 wide, the page has no overflow and the text stays inside the card. **D5:** the
+  Security+ image is wrapped in `a.cert-link` to `CompTIASecurityPlus.pdf`, with
+  `<p><a>View certificate (PDF)</a></p>` under it, both `target="_blank" rel="noopener"`. The image's
+  link is `tabindex="-1" aria-hidden="true"`, so a keyboard and a screen reader meet one link,
+  not two. Served locally, the PDF answers 200, `application/pdf`, and starts `%PDF-`.
+- **Footer:** a `--color-surface` band under a `--white-08` hairline, text `--color-text-muted`
+  (`#a3a8b3`) at `--text-small`, 28px padding (`--bulma-footer-padding`). Bulma's was 3rem above and
+  **6rem below** one line, on black. `has-background-black` and `has-text-grey-light` left the
+  markup.
+- **Rule 7, P6's item:** `--color-bg` is now `var(--bulma-dark)`, the `rgb(46, 51, 61)` that body's
+  `has-background-dark` has always drawn (`#111` was declared and never shown), and `html` takes it.
+  So a light-scheme iPhone's overscroll is the page colour, not white. `--hero-band` now reads
+  `--color-bg`, which is the same value.
+- **Tokens:** P2's near-duplicates are merged. `--color-text-side-nav` became `--color-text-nav`
+  (1/255 apart), `--white-05` became `--white-06`, and `--white-14` became `--white-15`. Also gone:
+  `--color-surface-raised`, `--color-surface-hover`, `--color-border` and `--color-border-raised`.
+  New: `--color-text-muted`, the type tokens above, `--pad-card` and the two section paddings. No
+  token is used undefined or defined unused. The file's `!important`s are still only the
+  reduced-motion block's 3.
+- **P5's item:** hero-nav links no longer underline on hover. `.hero-nav a:hover` joined
+  `.side-nav a:hover` in the hover block's `text-decoration: none`.
+- **Done criteria:** `node tools/checks/P10.mjs` (new; takes `--base`) gives **71 passed, 0 failed**
+  across phone and desktop, light and dark. `node tools/shoot.mjs p10`: scrollWidth is 390 of 390 and
+  1440 of 1440 at every shot, and the favicon 404 is the only error. Every section shot was read at
+  both sizes. `desktop-top` against `p9` is AE 0. `phone-top` differs by 5 px inside the hero (the
+  burger's border, white-14 → white-15), and below the hero it is the About section's new layout.
+- **Regressions:** `P5.mjs` 14 passed / 0 failed. Its hover lift is still 2px, and taps leave
+  nothing stuck. `P6.mjs` 45 PASS, `P7.mjs` 48 PASS. `P8.mjs` gave 19/1, then 18/2, then 20/0. Every
+  FAIL was one of its byte-compared "strip not drawn" lines over the hero photo, with the pane's
+  state reading hidden and 0px on screen. That is P9's recorded flake, not P10.
+- **For P11:** put the resume section's title above its card, as
+  `h3.title.is-3.has-text-centered.section-title`. The current "Resume (updated: 1-14-2025)" title
+  already sits there. A `.box` gets the card style, padding included, with no class of its own.
+  Side-by-side cards that should match in height go in `.columns.card-row`. The Certifications
+  markup is a pattern for an image that links to a PDF with a text link under it (`.cert-link`).
+- **For P12:** `.comp-metrics { margin-top }` is dead and was before P10. `.comp-details ul`
+  (0,1,1) out-specifies it, and the "Impact / Metrics:" line's `mb-1` is what spaces the list.
+  `tools/checks/P10.mjs` re-runs in about two minutes. Rule 7's light-scheme pass is now down to
+  whatever Bulma still colours by itself: every card, tag, fold-out and the footer set their colours
+  outright.
