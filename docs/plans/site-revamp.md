@@ -28,7 +28,7 @@ on a phone the right-side section pane covers half the screen.
 | **P8** | Desktop side pane stays hidden over the hero | ✅ Done *(2026-10-19)* |
 | **P9** | The phone hero: shorter, readable, nothing off the edge | ✅ Done *(2026-10-19)* |
 | **P10** | Cards, spacing and section polish | ✅ Done *(2026-10-19)* |
-| **P11** | The resume section, with the SWE resume as a PDF | ⬜ |
+| **P11** | The resume section, with the SWE resume as a PDF | ✅ Done *(2026-10-19)* |
 | **P12** | Close: full review, changelog line, leftovers listed | ⬜ |
 
 ---
@@ -975,3 +975,67 @@ every later phase compares against; it lives on this machine only.
   `tools/checks/P10.mjs` re-runs in about two minutes. Rule 7's light-scheme pass is now down to
   whatever Bulma still colours by itself: every card, tag, fold-out and the footer set their colours
   outright.
+
+### P11 (2026-10-19)
+
+- **The PDF.** Word COM converted `C:\Users\aaron\Downloads\SWE_Resume_Aaron.docx` read-only, as
+  written in the steps, to `resumes/Aaron_Sierra_SWE_Resume.pdf`: 303,167 bytes, one US Letter page
+  (612 x 792 pt). The docx still shows its 2026-08-09 modified time. The PDF carries no author or
+  title metadata, only Word's Creator/Producer and the export time.
+- **The thumbnail** is `resumes/Aaron_Sierra_SWE_Resume.png`, 600 x 776 and 39 KB. I read it, and
+  it is the SWE resume's first page: "Aaron Sierra", Career Profile, Baylor May 2025, L3Harris /
+  General Motors / Baylor. The new helper `tools/pdf-thumb.mjs <pdf> [--width 600] [--out <png>]`
+  made it. It loads `pdfjs-dist` in Edge through `openPage` and draws page 1 on a white canvas (an
+  unpainted canvas is transparent). Then `magick` re-encodes the PNG with `-strip -colors 32`,
+  146 KB → 39 KB, and the page uses 22 colours. `pdfjs-dist` is pinned to **4.8.69**, the last release
+  whose engines field accepts Node 19, for the reason `playwright-core` is pinned. Its optional
+  `canvas` dependency is a native build that fails here and is never needed (pdf.js runs in Edge).
+  npm still wrote that dependency's tree into `tools/package-lock.json`, so the lockfile grew by
+  ~500 lines that install nothing.
+- **The section.** The title is "Resume", the `h3.title.is-3…section-title` P10 set, with the old
+  "(updated: 1-14-2025)" dropped. Under it, `#resumes-dynamic` is a `.columns.is-centered.card-row`,
+  filled from `resumesData` (`{ label, updated, pdf, thumb }`) by `renderResumeCard`, mounted before
+  the experience cards, as theirs are. Each card is a `.box.resume-card`
+  (`is-half-tablet is-one-third-desktop`). The thumbnail is `a.resume-thumb` to the PDF,
+  `tabindex="-1" aria-hidden="true"`, as `.cert-link` is. Then come the label (`h4.title.is-4`) and
+  "Updated Aug 2026" (`--color-text-muted`, 6.7:1). Last, two pill buttons, 44px tall: **View PDF**
+  (new tab, `noopener`) and **Download** (`download`). Download is drawn as a quiet outlined
+  pill, not bare text, so a phone gets the same 44px target for it. Neither is Bulma's
+  `.button`: that renders white in the light scheme (rule 7), so `.resume-button` sets every
+  colour itself. Without a `thumb`, the card is text only. `Resume-1.jpg` is off the page and
+  still on disk (rule 5).
+- **New tokens:** `--accent-blue-deep` `#4169e1`, `--accent-purple-deep` `#7c4ddb`,
+  `--accent-gradient-deep`, `--radius-xs` 6px. White text on the existing accent gradient is
+  3.1:1 at the blue end and 3.8:1 at the purple, under AA. On the deep pair it is 4.85:1 and
+  5.3:1, and the check reads both stops from the computed gradient. The hover rules (fine pointer only)
+  stop `a:hover` underlining or recolouring the buttons. View PDF brightens, and Download takes
+  `--white-15`. Nothing lifts (D9). The CSS block sits between "boxes and tags" and "experience",
+  and the file's header order says so.
+- **Sizes.** Phone: the card is 342 wide (24..366 of 390) and 565 tall, with the thumbnail drawn at
+  298 x 385. Desktop: the card is 432 wide (504..936, centred) and 636 tall, with the thumbnail
+  capped at 340 (drawn 338 x 437). At 390, 375 and 320 wide, the page has no overflow and the
+  buttons stay inside the card.
+- **Done criteria:** `node tools/checks/P11.mjs` (new; takes `--base`) gives **66 passed, 0 failed**
+  across phone and desktop, light and dark. Through the page's own fetch, the PDF answers 200,
+  `application/pdf`, `%PDF-`. `curl -sI` against a local server gives `200`,
+  `Content-type: application/pdf`, `Content-Length: 303167`. `node tools/shoot.mjs p11`: scrollWidth
+  is 390/390 and 1440/1440, and the favicon 404 is the only error. I read the resume shots at both
+  sizes. Against `p10` (`-fuzz 1%` AE): top, about, education-contact, skills and leadership are 0
+  at both sizes. Certifications differs only where the new resume section shows at the foot of its
+  frame. Experience and competitions differ by 0–0.8%, as faint text edges from a sub-pixel shift
+  (the section above changed height), with no content change.
+- **Regressions:** P3, P4 and P5 pass (P5 14/0). P6 gives 45/0, P7 48/0 and P10 71/0. P8 failed
+  4 runs of 4 on this tree (19/1, 18/2, 19/1, 18/2), every FAIL one of its byte-compared "strip
+  not drawn" lines over the hero, with the pane collapsed and 0px on screen. A clean worktree at
+  `64cc99e` (P10's commit) gave 19/1, then 20/0. So it is the flake P9 and P10 recorded, not P11,
+  though it fails more often than P10 saw.
+- **For P12:** `Resume-1.jpg` is now unreferenced by `index.html` and `custom.css`, and joins
+  P4's list. **Add-a-resume note, ready to copy:** convert the docx with the Word COM line in P11's
+  steps, writing to `resumes/<Name>.pdf`. Run `node tools/pdf-thumb.mjs resumes/<Name>.pdf` (it
+  writes `resumes/<Name>.png` beside it; `npm install` in `tools/` first on a fresh clone). Add one
+  entry to `resumesData` in `index.html`:
+  `{ label: "…", updated: "Mon YYYY", pdf: "resumes/<Name>.pdf", thumb: "resumes/<Name>.png" }`.
+  Two or three cards sit side by side on a desktop, equal heights, with their buttons aligned at the
+  foot. A fourth wraps to a new row. P8's flake is worth a sentence in the leftovers. Its "strip
+  not drawn" byte compare over the hero fails more often than not now, while the pane's own
+  state reads hidden every time.

@@ -296,15 +296,11 @@
     </div>
   </section>
 
-  <!-- Resume -->
+  <!-- Resume: one card per entry in resumesData, in the script below -->
   <section class="section" id="resume">
     <div class="container">
-      <h3 class="title is-3 has-text-centered section-title">Resume (updated: 1-14-2025)</h3>
-      <div class="box has-text-centered">
-        <figure class="image" style="max-width:700px;margin:1.5rem auto;">
-          <img src="Resume-1.jpg" alt="Resume" loading="lazy" width="2550" height="3300">
-        </figure>
-      </div>
+      <h3 class="title is-3 has-text-centered section-title">Resume</h3>
+      <div id="resumes-dynamic" class="columns is-centered card-row"></div>
     </div>
   </section>
 
@@ -362,6 +358,48 @@
         }
       });
     }
+
+    /* =========================
+       Resumes Data
+       Another resume (another skill set) is its PDF in resumes/, its thumbnail beside it
+       (node tools/pdf-thumb.mjs resumes/<name>.pdf), and one entry here. A missing thumb
+       leaves a text-only card. The img's 600x776 is US Letter at 600 wide; it only reserves
+       the space before the image arrives, so an A4 thumbnail (600x849) still draws true.
+    ========================== */
+    const resumesData = [
+      {
+        label: "Software Engineering",
+        updated: "Aug 2026",
+        pdf: "resumes/Aaron_Sierra_SWE_Resume.pdf",
+        thumb: "resumes/Aaron_Sierra_SWE_Resume.png"
+      }
+    ];
+
+    // The thumbnail opens the PDF as the button does. The button and the Download link are the
+    // ones in the tab order and the ones a screen reader hears, as with the certificate's links.
+    function renderResumeCard(r) {
+      const thumbHTML = r.thumb
+        ? `<a class="resume-thumb" href="${r.pdf}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+             <img src="${r.thumb}" alt="First page of the ${r.label} resume" loading="lazy" width="600" height="776">
+           </a>` : "";
+      return `
+        <div class="column is-half-tablet is-one-third-desktop">
+          <article class="box resume-card has-text-centered">
+            ${thumbHTML}
+            <h4 class="title is-4 mb-1">${r.label}</h4>
+            <p class="resume-updated">Updated ${r.updated}</p>
+            <div class="resume-actions">
+              <a class="resume-button is-primary" href="${r.pdf}" target="_blank" rel="noopener">View PDF</a>
+              <a class="resume-button" href="${r.pdf}" download>Download</a>
+            </div>
+          </article>
+        </div>`;
+    }
+
+    (function mountResumes() {
+      const mount = document.getElementById('resumes-dynamic');
+      if (mount) mount.innerHTML = resumesData.map(renderResumeCard).join("");
+    })();
 
     /* =========================
        Experience Data

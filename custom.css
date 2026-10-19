@@ -1,6 +1,6 @@
 /* The site's own layer over Bulma 1.0.4.
    Order: tokens, base, hero, hero nav, phone menu, side nav, dot rail, boxes and tags,
-   experience, competitions, footer, utilities, and every media query last, so a breakpoint always wins over the rule it narrows
+   resume, experience, competitions, footer, utilities, and every media query last, so a breakpoint always wins over the rule it narrows
    (the phone side pane once stayed visible because a later unconditional rule beat its hide).
    Each selector is declared once outside the media queries. New colours go in :root first. */
 
@@ -68,6 +68,12 @@
   --accent-lilac: #b07bff;
   --accent-focus: #7a5dff;
   --accent-gradient: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+  /* The same two hues a step deeper, for a filled button: white text on the accent itself is
+     3.1:1 at the blue end and 3.8:1 at the purple, under AA's 4.5:1 for 16px text. On these it is
+     4.9:1 and 5.3:1. */
+  --accent-blue-deep: #4169e1;
+  --accent-purple-deep: #7c4ddb;
+  --accent-gradient-deep: linear-gradient(90deg, var(--accent-blue-deep), var(--accent-purple-deep));
 
   /* White washes and hairlines over the dark surfaces, named by alpha */
   --white-03: rgba(255,255,255,0.03);
@@ -103,6 +109,7 @@
   --radius-lg: 16px;
   --radius-md: 14px;
   --radius-sm: 12px;
+  --radius-xs: 6px;          /* a sheet of paper on a card: the resume's thumbnail */
 
   /* Spacing */
   --space-1: .4rem;
@@ -662,6 +669,77 @@ section[id] { scroll-margin-top: 70px; }
 /* The Skills cloud (are-medium), a step up. Bulma's selector, so it ties and comes later. */
 .tags.are-medium .tag:not(.is-normal):not(.is-large) { font-size: var(--text-tag-lg); }
 
+/* ---------- Resume (rendered from resumesData in index.html) ---------- */
+/* One card per resume: its first page, which opens the PDF, then its name, its date and two
+   actions. A column of its own, so in a row of resumes (.card-row) the actions line up at the
+   foot of every card however long a name runs. */
+.resume-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* White paper on the dark card: a hairline and a paper's corner rather than the card's 16px,
+   and a cap on the width, so one resume on a desktop is a card and not a poster */
+.resume-thumb {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--white-15);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.resume-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.resume-updated {
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+  margin-bottom: var(--space-3);
+}
+
+.resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+/* Not Bulma's .button: in the light scheme, the iPhone default, that draws white (rule 7), so
+   these set every colour themselves. Pills, 44px tall for a thumb; the filled one is the PDF in a
+   new tab, the quiet one downloads it. */
+.resume-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 1.25rem;
+  border: 1px solid var(--white-15);
+  border-radius: var(--radius-pill);
+  background: var(--white-06);
+  color: var(--color-text-strong);
+  font-weight: 600;
+  line-height: 1.2;
+  transition: background .2s, filter .2s;
+}
+
+.resume-button.is-primary {
+  background: var(--accent-gradient-deep);
+  border-color: transparent;
+}
+
+.resume-button:focus-visible {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: 2px;
+}
+
 /* ---------- Experience (rendered from experiencesData in index.html) ---------- */
 .experience-layout {
   display: flex;
@@ -976,6 +1054,18 @@ section[id] { scroll-margin-top: 70px; }
   .tag:hover { background: var(--white-15); }
 
   .comp-link:hover { text-decoration: underline; }
+
+  /* The resume's two buttons keep their own colour and never underline */
+  .resume-button:hover {
+    color: var(--color-text-strong);
+    text-decoration: none;
+    background: var(--white-15);
+  }
+
+  .resume-button.is-primary:hover {
+    background: var(--accent-gradient-deep);
+    filter: brightness(1.12);
+  }
 }
 
 /* prefers-reduced-motion: nothing slides, fades, lifts or scrolls smoothly. The side pane still
