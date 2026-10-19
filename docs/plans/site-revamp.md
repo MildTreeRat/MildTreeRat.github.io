@@ -25,7 +25,7 @@ on a phone the right-side section pane covers half the screen.
 | **P5** | Calmer motion: no parallax, hover only where it helps | ✅ Done *(2026-10-19)* |
 | **P6** | The phone menu: visible, closes on tap, smooth scroll | ✅ Done *(2026-10-19)* |
 | **P7** | Phone slim dots replace the side pane | ✅ Done *(2026-10-19)* |
-| **P8** | Desktop side pane stays hidden over the hero | ⬜ |
+| **P8** | Desktop side pane stays hidden over the hero | ✅ Done *(2026-10-19)* |
 | **P9** | The phone hero: shorter, readable, nothing off the edge | ⬜ |
 | **P10** | Cards, spacing and section polish | ⬜ |
 | **P11** | The resume section, with the SWE resume as a PDF | ⬜ |
@@ -784,3 +784,57 @@ every later phase compares against; it lives on this machine only.
   hero after a fast scroll up). The owner's phone is the check. The rail's names are the pane's
   texts, so "Certs" is what VoiceOver reads. Changing it means changing the pane's link text too,
   which shows on desktop (rule 3).
+
+### P8 (2026-10-19)
+
+- **What landed.** All four ways the pane opens (scroll, hover, focus, a click on its own link) go
+  through `showSideNav`. It now returns early while `html.hero-in-view` is set, so one test covers
+  all four. `custom.css` has `.hero-in-view .side-nav-wrapper` right after the two state rules
+  (it ties them on specificity): `translateX(100%)`, opacity 0, `visibility: hidden`,
+  `pointer-events: none`. So the pane slides fully off the edge, tab included. `visibility` joined
+  the wrapper's transition (.45 s, the slide's length), so a pane leaving over the hero stays drawn
+  until it is off the edge. Past the hero nothing changed: scroll shows the pane for 1.8 s, hover
+  holds it open, keyboard focus opens it. The pane still never stays put. P7's state is reused as
+  P7 asked. `heroInView()` reads the class, and `setHeroInView` is now a function declaration, so
+  `showSideNav` can call it before its line runs. The threshold (`rootMargin`) is unchanged.
+- **The pane opens when the hero leaves view.** Setting the class to false (it was true) calls
+  `showSideNav('scroll')`. Without that, a **jump** past the hero left the pane collapsed. A jump
+  fires one scroll event, and it runs before the observer's callback drops the class. Jumps happen
+  with the harness's `scrollToId` and, for a visitor, under reduced motion. A smooth
+  scroll did not need this, because its later events open the pane anyway. Setting the class to
+  true collapses the pane, so an open pane tucks away when you scroll back up to the photo.
+- **Keyboard.** While the hero is in view the pane's links are hidden, so they are out of the tab
+  order. A Tab from the hero nav goes straight into About. The hero nav has the same eight links.
+  Once past the hero, Shift+Tab reaches the pane's links and focusing one opens the pane, as before.
+- **A pre-existing timer bug, fixed in passing.** The links' `blur` handler overwrote `hideTimer`
+  without clearing it. That left the show timer from the focus running, and it collapsed the pane
+  1.8 s after the focus, whatever had shown it since. `P8.mjs` found it on the untouched tree: after
+  a focus and blur, "after scrolling to #about it is expanded" read collapsed at 600 ms. One line,
+  `clearTimeout(hideTimer)`, as `mouseleave` already did.
+- **Done criteria:** `node tools/checks/P8.mjs` (new; desktop, live motion; about 17 s; takes
+  `--base`) gives **20 PASS, 0 FAIL**. On the untouched tree it gave 11 PASS / 9 FAIL. At the top
+  the pane is collapsed, 0 px on screen, and the strip is not drawn. "Drawn" is read off pixels:
+  the right edge is shot as it is, then with the pane at `display: none`, and the shots must match.
+  Six small scrolls inside the hero (three wheel, three scripted, up to 420 px) cause 0 expands,
+  counted by a `MutationObserver`. The mouse on the edge and a `focus()` on a pane link do not
+  expand it either. A jump to `#about` gives expanded, 210 px on screen, at 600 ms. At 2.5 s it is
+  collapsed, 14 px on screen, and the strip is drawn. Past the hero, hover holds it open for 2.5 s,
+  leaving lets it go, and focus opens it. Jumping back to the top from an open pane hides it. In a
+  smooth scroll from the top to `#skills` by the hero nav, none of the 44 frames over the hero
+  (foot below mid-screen) draws the pane. Past the hero, 212 of 215 frames draw it; the first 3
+  after the line are the observer's lag, since its callback is a task after the frame.
+  scrollWidth is 1440 at the top and at `#about`.
+- **Shots** (`p8` against `p7`): 18 of 20 give AE 0 at `-fuzz 1%`. Before fuzz, `desktop-about`
+  gave 0.0013, `phone-certifications` 2.9 and `phone-resume` 6.0, all raster noise.
+  `desktop-top` and `desktop-full` differ by about 235 px at `-fuzz 1%`, all inside a 25×365 box
+  at x 1415, y 274: the tab, which no longer sits on the photo. The before/after crop is
+  `tools/shots/p8-check/top-edge-p7-vs-p8.png`. The phone is unchanged, since there the pane is
+  `display: none`. The favicon 404 is the only error.
+- **Regressions:** `P5.mjs` gives 14 passed, 0 failed; `P6.mjs` 45 PASS, 0 FAIL; `P7.mjs` 48 PASS,
+  0 FAIL.
+- **For P9:** the desktop pane and the phone rail share one threshold, the hero's foot at
+  mid-screen. A change to the observer's `rootMargin` moves both, so re-run `P7.mjs` and `P8.mjs`.
+  A shorter hero that applies only below 1024px leaves the desktop pane alone.
+- **For P12:** `tools/checks/P8.mjs` re-runs in about 17 s. The pane only exists at 1024px and up,
+  so the owner's iPhone never shows it. Desktop Safari's discrete `visibility` transition is
+  standard, but only Edge has been checked.

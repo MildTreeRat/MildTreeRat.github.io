@@ -350,7 +350,8 @@ section[id] { scroll-margin-top: 70px; }
 
 /* ---------- Side nav ---------- */
 /* Wrapper: pinned to the right edge, centres the panel vertically, and slides it in and out.
-   index.html's script swaps .collapsed and .expanded. */
+   index.html's script swaps .collapsed and .expanded. visibility rides the slide, so a pane
+   going away over the hero stays drawn until it is off the edge. */
 .side-nav-wrapper {
   position: fixed;
   top: 0;
@@ -359,7 +360,7 @@ section[id] { scroll-margin-top: 70px; }
   display: flex;
   align-items: center;
   z-index: 60;
-  transition: transform .45s var(--ease-slide), opacity .35s;
+  transition: transform .45s var(--ease-slide), opacity .35s, visibility .45s;
 }
 
 /* Collapsed, the panel's own left 14px stay on screen as a tab */
@@ -371,6 +372,18 @@ section[id] { scroll-margin-top: 70px; }
 .side-nav-wrapper.expanded {
   transform: translateX(0);
   opacity: 1;
+}
+
+/* Over the hero photo there is no pane at all, tab included (D2): it slides fully off the edge.
+   .hero-in-view is on <html> while the photo's foot is below the middle of the screen, and the
+   script expands nothing while it is there. Hidden, the links leave the tab order too, so focus
+   cannot land on a pane nobody can see; the hero nav holds the same links. After the two state
+   rules on purpose, which it ties on specificity. */
+.hero-in-view .side-nav-wrapper {
+  transform: translateX(100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* Panel: the wrapper does the positioning. Its right padding is 0 in both states. */

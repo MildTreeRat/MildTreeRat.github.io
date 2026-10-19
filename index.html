@@ -100,7 +100,7 @@
       </div>
     </section>
   </div>
-  <!-- Side Nav (updated: hover + scroll reveal). Below 1024px it is hidden, and the script builds
+  <!-- Side Nav (updated: hover + scroll reveal, hidden over the hero). Below 1024px it is hidden, and the script builds
        the phone's dot rail from these links, after this element. -->
   <div class="side-nav-wrapper collapsed" aria-label="Section navigation">
     <nav class="side-nav" role="navigation">
@@ -687,8 +687,10 @@
     let hideTimer = null;
     const SHOW_DURATION = 1800; // ms after scroll without activity
 
+    // Not over the hero photo (D2): scroll, hover, focus and click all come through here, so this
+    // one test keeps the pane collapsed there, and custom.css hides its tab too.
     function showSideNav(reason='') {
-      if (!sideWrapper) return;
+      if (!sideWrapper || heroInView()) return;
       sideWrapper.classList.remove('collapsed');
       sideWrapper.classList.add('expanded');
       sideWrapper.setAttribute('data-reason', reason);
@@ -755,10 +757,22 @@
 
     /* Hero in view: while the photo's bottom edge is still below the middle of the screen. It is
        a class on <html>, so CSS can keep things off the photo: the dot rail fades out there and
-       is otherwise always shown, never popping in and out on scroll. Measured once so the first
-       paint is right, then kept by an observer whose root is the lower half of the viewport. */
+       is otherwise always shown, never popping in and out on scroll, and the desktop pane is
+       hidden, tab and all. Measured once so the first paint is right, then kept by an observer
+       whose root is the lower half of the viewport.
+       The pane tucks away as the photo comes back. Leaving the photo is a scroll, so it shows
+       the pane as any scroll past the photo does: a jump (one scroll event, which runs before
+       this observer has dropped the class) would otherwise leave it collapsed. */
     const heroBanner = document.querySelector('.hero-banner');
-    const setHeroInView = on => document.documentElement.classList.toggle('hero-in-view', on);
+    function heroInView() {
+      return document.documentElement.classList.contains('hero-in-view');
+    }
+    function setHeroInView(on) {
+      const was = heroInView();
+      document.documentElement.classList.toggle('hero-in-view', on);
+      if (on) collapseSideNav();
+      else if (was) showSideNav('scroll');
+    }
     if (heroBanner) {
       setHeroInView(heroBanner.getBoundingClientRect().bottom > window.innerHeight / 2);
       new IntersectionObserver(([e]) => setHeroInView(e.isIntersecting), {
@@ -774,6 +788,8 @@
       link.addEventListener('focus', () => showSideNav('focus'));
       link.addEventListener('blur', () => {
         if (!sideWrapper.contains(document.activeElement)) {
+          // Cleared first, as mouseleave does: an orphaned show timer collapsed the pane early
+          clearTimeout(hideTimer);
           hideTimer = setTimeout(() => collapseSideNav(), 600);
         }
       });
