@@ -22,7 +22,7 @@ on a phone the right-side section pane covers half the screen.
 | **P2** | Consolidate `custom.css` into one clean file with design tokens | ✅ Done *(2026-10-19)* |
 | **P3** | Typography: Inter and a tighter type scale | ✅ Done *(2026-10-19)* |
 | **P4** | Optimise the images | ✅ Done *(2026-10-19)* |
-| **P5** | Calmer motion: no parallax, hover only where it helps | ⬜ |
+| **P5** | Calmer motion: no parallax, hover only where it helps | ✅ Done *(2026-10-19)* |
 | **P6** | The phone menu: visible, closes on tap, smooth scroll | ⬜ |
 | **P7** | Phone slim dots replace the side pane | ⬜ |
 | **P8** | Desktop side pane stays hidden over the hero | ⬜ |
@@ -594,3 +594,67 @@ every later phase compares against; it lives on this machine only.
   `AaronGrad.jpeg`, `images/Aaron_and_karina.jpg`, `CompTIASecurityPlus-1.jpg`,
   `images/oso_esports.jpg` and `images/swccdc.png`. Check `showcase.html` before calling any of them
   deletable. `Resume-1.jpg` joins them after P11.
+
+### P5 (2026-10-19)
+
+- **What changed.** `background-attachment: fixed` is gone from the hero, and so is the 768px query
+  that undid it on phones. Every `.box` now rests in `--shadow-card`, the old resting glow, so the
+  page looks the same at rest. `hover-glow` stays only on the 7 leadership cards: they lift 2px (was
+  3px, `--lift-card`) and keep the old glow (`--shadow-card-hover`). `index.html` changed only
+  classes: 9 `hover-glow`s came off, 7 of them in markup and 2 in the experience and competition
+  templates. Every `:hover` rule now lives in one `@media (hover: hover) and (pointer: fine)` block,
+  kept in its old order. A `prefers-reduced-motion: reduce` block, last in the file, sets
+  `transition`, `animation` and `scroll-behavior` off on everything, and stops a leadership card's
+  lift (it still glows). That block holds the file's only `!important`. Its comment explains why:
+  it has to beat Bulma's transitions as well as the site's own.
+- **Beyond the step list: the logo images no longer move under the cursor.** The experience and
+  competition logos used to lift 4px and scale 1.03 or 1.04 with a purple glow on hover. They are
+  not links. D9 allows lift and glow on the small cards only, and the Goal is "the page stops moving
+  under the cursor", so both hovers are gone, with their transitions and the two
+  `--shadow-media-hover*` tokens.
+- **The cascade, for whoever adds a hover next.** `a:hover` used to come *before* the nav rules, so
+  `.side-nav a`'s `text-decoration: none` and the two navs' active styles beat it. In the foot block
+  it comes after them. So the block restates two things: `.side-nav a:hover { text-decoration: none }`,
+  and `:not(.is-active)` / `:not(.active)` on the nav hovers, so an active link keeps its gradient
+  under the cursor. `node tools/checks/P5.mjs --json before.json` on the untouched tree, and
+  `--against before.json` after, showed **7 hover probes identical**: a contact link, `.comp-link`,
+  a tag, a hero-nav link (plain and active) and a side-nav link (plain and active). The only probes
+  that differ are the 19 big boxes (no lift, no hover glow), the 7 leadership cards (lift −3 → −2)
+  and the 2 logos.
+- **Done criteria** (`node tools/checks/P5.mjs`, 14 PASS lines). On desktop, the hover query
+  matches. Hovering any of the 19 big boxes leaves `transform: none`, and hovering a leadership card
+  gives `matrix(1, 0, 0, 1, 0, -2)`. No element (or its `::before`/`::after`) computes a fixed
+  background, and neither file contains the string. On the phone the hover query does not match,
+  and tapping any of the 26 boxes, or either logo, leaves `transform: none`. Before P5 every one of
+  those taps left the box stuck at −3px. Under reduced motion, the side pane, its dots, the hero nav,
+  the cards and `<details>` all compute `0s`. `html` stays `auto` even when a
+  `scroll-behavior: smooth` is injected, which is P6's rule, simulated.
+- **Shots** (`p5` against `p4`): **19 of 20 give AE 0**, `phone-top` and `desktop-top` included.
+  At scroll 0 the hero fills the viewport, so a fixed and a scrolling background draw the same.
+  `desktop-about` gives 31,594 px, and that is the parallax itself. The 70px scroll margin shows the
+  hero's foot above `#about`. Fixed, that strip showed the photo's sky. Now it shows the photo's own
+  bottom edge (grass), and the nav pill's backdrop blur changes with it. scrollWidth is 390 of 390
+  and 1440 of 1440, and the favicon 404 is the only error.
+- **For P6:** `html` computes `scroll-behavior: auto` today; neither Bulma nor this file sets it.
+  P1's "reads true" means the harness's freeze leaves it truthful. The reduced-motion block already forces `auto` on every
+  element, so P6's `html { scroll-behavior: smooth }` needs no reduced-motion twin. **But the two
+  scripted scrolls ignore it.** `scrollIntoView({ behavior:'smooth' })` sits at `index.html:615`
+  (hero nav) and `:682` (side nav). A call that names `'smooth'` overrides CSS. Edge does not honour
+  emulated reduced motion for it either: under `reduce`, a hero-nav click had scrolled 45 of 1,867 px
+  after 60 ms. Dropping the `behavior` option (it defaults to `'auto'`, which follows CSS) lets the
+  new `html` rule and the reduced-motion block decide for both calls. P5's Files allowed it no script
+  change. P6 owns `index.html`'s script.
+- **For P7:** the rail's tap-to-scroll should likewise call `scrollIntoView` with no `behavior` and
+  let CSS decide. The label pill's and the rail's fade transitions need nothing extra for reduced
+  motion, because the foot block turns them off. Any hover the rail gets belongs in the hover
+  block, though on the phone it never matches.
+- **For P8:** under reduced motion the desktop pane still pops out and tucks away, but it jumps
+  instead of sliding. `P8.mjs` runs with `liveMotion` and no `reducedMotion`, so its timings are
+  unaffected.
+- **For P10:** the hero-nav links still underline on hover. That predates P5: the base `a:hover`
+  underline reaches them, and `.hero-nav a` never resets it, while the active link draws its own
+  gradient underline. The resting card shadow is one token, `--shadow-card`, a 5px white glow kept
+  so P5 changed no resting pixel. "Softer cards" (D3) can change it there for all 26 boxes. The
+  leadership hover glow (`--shadow-card-hover`, 18px at 0.7 alpha) was kept as it was.
+- **For P12:** new hover rules go in the foot hover block, and the reduced-motion block stays last.
+  `tools/checks/P5.mjs` re-runs in about a minute and catches a stuck tap on the phone.

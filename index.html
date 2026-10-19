@@ -117,7 +117,7 @@
     <div class="container">
       <div class="columns is-variable is-6 is-multiline">
         <div class="column is-half-desktop is-full-tablet">
-          <div class="box hover-glow">
+          <div class="box">
             <h3 class="title is-3 has-text-centered mb-4">Who Am I?</h3>
             <p>
               I have the experience and technical foundation of a computer scientist, which
@@ -127,7 +127,7 @@
           </div>
         </div>
         <div class="column is-half-desktop is-full-tablet">
-          <div class="box has-text-centered hover-glow">
+          <div class="box has-text-centered">
             <figure class="image" style="max-width:360px;margin:0 auto;">
               <img src="images/aaron-karina-800.jpg" alt="Me and my beautiful girlfriend Karina" loading="lazy" width="800" height="1067">
             </figure>
@@ -142,7 +142,7 @@
     <div class="container">
       <div class="columns is-variable is-6 is-multiline">
         <div class="column is-half-desktop is-full-tablet">
-          <div class="box hover-glow">
+          <div class="box">
             <h3 class="title is-4 has-text-centered">Education</h3>
             <h4 class="title is-5 mb-1">Baylor University</h4>
             <p>Bachelor of Science in Computer Science<br>Concentration in Cybersecurity</p>
@@ -156,7 +156,7 @@
           </div>
         </div>
         <div class="column is-half-desktop is-full-tablet">
-          <div class="box hover-glow">
+          <div class="box">
             <h3 class="title is-4 has-text-centered">Contact Info</h3>
             <p><strong>Email:</strong> aaronsierra.gen@gmail.com</p>
             <p><strong>Phone:</strong> 806-922-3947</p>
@@ -196,7 +196,7 @@
   <!-- Skills -->
   <section class="section" id="skills">
     <div class="container">
-      <div class="box hover-glow">
+      <div class="box">
         <h3 class="title is-4 has-text-centered">Skills / Experience Working With</h3>
         <div class="tags are-medium is-flex is-flex-wrap-wrap">
           <span class="tag">Assembly (x86)</span>
@@ -280,7 +280,7 @@
   <!-- Certifications -->
   <section class="section" id="certifications">
     <div class="container">
-      <div class="box hover-glow has-text-centered">
+      <div class="box has-text-centered">
         <h3 class="title is-4">Certifications</h3>
         <p>CompTIA Security+</p>
         <figure class="image" style="max-width:420px;margin:1.5rem auto;">
@@ -293,7 +293,7 @@
   <!-- Resume -->
   <section class="section" id="resume">
     <div class="container">
-      <div class="box hover-glow has-text-centered">
+      <div class="box has-text-centered">
         <h3 class="title is-4">Resume (updated: 1-14-2025)</h3>
         <figure class="image" style="max-width:700px;margin:1.5rem auto;">
           <img src="Resume-1.jpg" alt="Resume" loading="lazy" width="2550" height="3300">
@@ -447,7 +447,7 @@
       const skillsHTML = exp.skills.map(s => `<span class="tag">${s}</span>`).join("");
       const projectsHTML = exp.projects.map(p => `<li><strong>${p.title}:</strong> ${p.impact}</li>`).join("");
       return `
-        <article class="box hover-glow experience-card ${altClass}">
+        <article class="box experience-card ${altClass}">
           <div class="experience-layout">
             <figure class="experience-media">
               ${exp.logo ? `<img src="${exp.logo}" alt="${exp.logoAlt || ''}" loading="lazy" width="140" height="140">` : ""}
@@ -567,7 +567,7 @@
         ? `<p class="has-text-weight-semibold mt-3 mb-1">Impact / Metrics:</p>
            <ul class="comp-metrics">${c.metrics.map(m => `<li>${m}</li>`).join("")}</ul>` : "";
       return `
-        <article class="box hover-glow competition-card">
+        <article class="box competition-card">
           <div class="competition-layout">
             <figure class="competition-media">
               ${c.logo ? `<img src="${c.logo}" alt="${c.logoAlt || ''}" loading="lazy" width="110" height="110">` : ""}

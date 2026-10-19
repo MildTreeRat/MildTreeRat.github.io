@@ -93,23 +93,23 @@
   --space-4: 1.5rem;
   --space-5: 1.75rem;
 
-  /* Shadows */
-  --shadow-glow: 0 0 5px rgba(255,255,255,0.25);
-  --shadow-glow-hover: 0 0 18px rgba(255,255,255,0.7);
+  /* Shadows. Every box rests in --shadow-card; only a leadership card glows on hover. */
+  --shadow-card: 0 0 5px rgba(255,255,255,0.25);
+  --shadow-card-hover: 0 0 18px rgba(255,255,255,0.7);
   --shadow-pill: 0 4px 18px -6px rgba(0,0,0,0.55), 0 0 0 1px var(--white-04);
   --shadow-panel: 0 6px 28px -10px rgba(0,0,0,0.6), 0 0 0 1px var(--white-03);
   --shadow-active-pill: 0 0 0 1px rgba(180,180,255,0.18), 0 4px 14px -4px rgba(90,70,255,0.45);
   --shadow-active-panel: 0 0 0 1px rgba(160,140,255,0.20), 0 4px 14px -4px rgba(110,80,255,0.55);
   --shadow-strip: 0 0 12px -2px rgba(120,90,255,0.55);
   --shadow-dot-active: 0 0 10px 3px rgba(135,110,255,0.55);
-  --shadow-media-hover: 0 0 18px -4px rgba(140,120,255,0.4);
-  --shadow-media-hover-sm: 0 0 16px -4px rgba(120,110,255,0.45);
   --shadow-text-hero: 0 2px 12px rgba(0,0,0,0.55);
   --shadow-text-outline: 0 0 6px var(--white-15);
   --stroke-outline: rgba(0,0,0,0.6);
 
-  /* Motion */
+  /* Motion. Hover effects live in one (hover: hover) and (pointer: fine) block at the foot, and
+     prefers-reduced-motion switches every transition off after it. */
   --ease-slide: cubic-bezier(.4,.12,.15,.98);
+  --lift-card: -2px;
 }
 
 /* ---------- Base ---------- */
@@ -120,10 +120,6 @@ body {
 
 a {
   color: var(--color-link);
-}
-a:hover {
-  color: var(--color-link-hover);
-  text-decoration: underline;
 }
 
 strong {
@@ -155,12 +151,13 @@ section[id] { scroll-margin-top: 70px; }
   position: relative;
   /* A 1920px copy of AaronGrad.jpeg (4592px, 2.1 MB), stripped of its EXIF. Phones get it too:
      on a portrait screen `cover` fits the photo's height, so a 390x844 hero draws it ~2,500 device
-     px tall at 3x, and a 900px copy (676 rows) was plainly blurry there (P4, the owner's call) */
+     px tall at 3x, and a 900px copy (676 rows) was plainly blurry there (P4, the owner's call).
+     The photo scrolls with the page. A fixed attachment made it a parallax layer that repainted on
+     every scroll frame, and iOS Safari ignores it anyway (P5, D9). */
   background-image: url("images/hero-1920.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
   overflow: hidden;
 }
 
@@ -262,11 +259,6 @@ section[id] { scroll-margin-top: 70px; }
   border-radius: 2px;
 }
 
-.hero-nav a:hover {
-  color: var(--color-text-strong);
-  background: var(--white-05);
-}
-
 .hero-nav a.is-active {
   color: var(--color-text-strong);
   background: var(--active-pill);
@@ -345,7 +337,8 @@ section[id] { scroll-margin-top: 70px; }
   pointer-events: none;
 }
 
-/* Links. Declared after the base a:hover so the pane's links never underline. */
+/* Links. The pane's links never underline: the hover block at the foot says so again, because
+   its a:hover comes after this rule. */
 .side-nav a {
   position: relative;
   font-size: .78rem;
@@ -377,11 +370,6 @@ section[id] { scroll-margin-top: 70px; }
   transition: background .25s, transform .35s, box-shadow .35s;
 }
 
-.side-nav a:hover {
-  background: var(--white-06);
-  color: var(--color-text-strong);
-}
-
 .side-nav a.active {
   color: var(--color-text-strong);
   background: var(--active-panel);
@@ -403,20 +391,15 @@ section[id] { scroll-margin-top: 70px; }
 .using-mouse .side-nav a:focus { outline: none; }
 
 /* ---------- Boxes and tags ---------- */
+/* Every box holds still, in the shadow they all used to rest in. Only the small leadership
+   cards carry .hover-glow, and its lift and glow are in the hover block at the foot: a big box
+   rising under the cursor was the page moving while you read it, and on a phone a tap left it
+   stuck up (P5, D9). */
 .box {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   color: var(--color-text-box);
-}
-
-.hover-glow {
-  transition: box-shadow .3s, transform .25s;
-  box-shadow: var(--shadow-glow);
-}
-
-.hover-glow:hover {
-  box-shadow: var(--shadow-glow-hover);
-  transform: translateY(-3px);
+  box-shadow: var(--shadow-card);
 }
 
 .tag {
@@ -424,10 +407,6 @@ section[id] { scroll-margin-top: 70px; }
   color: var(--color-text-tag);
   margin: 0 var(--space-1) var(--space-1) 0;
   border: 1px solid var(--color-border-raised);
-}
-
-.tag:hover {
-  background: var(--color-surface-hover);
 }
 
 /* ---------- Experience (rendered from experiencesData in index.html) ---------- */
@@ -446,6 +425,8 @@ section[id] { scroll-margin-top: 70px; }
   text-align: center;
 }
 
+/* The logos are not links, and no longer lift and grow under the cursor (P5, D9: lift and glow
+   only on the small cards). The competition logos below are the same. */
 .experience-media img {
   width: 140px;
   height: 140px;
@@ -454,12 +435,6 @@ section[id] { scroll-margin-top: 70px; }
   border: 1px solid var(--white-08);
   border-radius: var(--radius-lg);
   padding: .75rem;
-  transition: transform .35s, box-shadow .35s;
-}
-
-.experience-media img:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: var(--shadow-media-hover);
 }
 
 .experience-body { flex: 1 1 320px; }
@@ -546,12 +521,6 @@ section[id] { scroll-margin-top: 70px; }
   border: 1px solid var(--white-08);
   border-radius: var(--radius-md);
   padding: .6rem;
-  transition: transform .35s, box-shadow .35s;
-}
-
-.competition-media img:hover {
-  transform: translateY(-4px) scale(1.04);
-  box-shadow: var(--shadow-media-hover-sm);
 }
 
 .competition-body { flex: 1 1 320px; }
@@ -560,8 +529,6 @@ section[id] { scroll-margin-top: 70px; }
   color: var(--color-link);
   font-weight: 600;
 }
-
-.comp-link:hover { text-decoration: underline; }
 
 .comp-details {
   background: var(--white-03);
@@ -651,14 +618,61 @@ section[id] { scroll-margin-top: 70px; }
   .experience-card.alt-right .experience-body { order: initial; }
 }
 
-/* No fixed background attachment on small screens: it janks on mobile */
-@media (max-width: 768px) {
-  .hero.hero-banner { background-attachment: scroll; }
-}
-
 @media (max-width: 640px) {
   .experience-layout { flex-direction: column; }
   .experience-media img { width: 120px; height: 120px; }
   .competition-layout { flex-direction: column; }
   .competition-media img { width: 90px; height: 90px; }
+}
+
+/* Hover effects, only where a pointer can hover: on a touchscreen :hover sticks to whatever was
+   last tapped. They keep the order they had in the sections above. a:hover now comes after the
+   nav rules it used to precede, so the two navs restate what those rules settled: the pane's
+   links never underline, and an active link keeps its gradient under the cursor. */
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    color: var(--color-link-hover);
+    text-decoration: underline;
+  }
+
+  .hero-nav a:not(.is-active):hover {
+    color: var(--color-text-strong);
+    background: var(--white-05);
+  }
+
+  .side-nav a:hover { text-decoration: none; }
+
+  .side-nav a:not(.active):hover {
+    background: var(--white-06);
+    color: var(--color-text-strong);
+  }
+
+  /* The small leadership cards, and nothing else: a gentle lift and the glow */
+  .hover-glow { transition: box-shadow .3s, transform .25s; }
+
+  .hover-glow:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(var(--lift-card));
+  }
+
+  .tag:hover { background: var(--color-surface-hover); }
+
+  .comp-link:hover { text-decoration: underline; }
+}
+
+/* prefers-reduced-motion: nothing slides, fades, lifts or scrolls smoothly. The side pane still
+   opens and tucks away, but at once. Last in the file and important, the one place this file
+   uses it, because it has to beat every transition declared anywhere (Bulma's included) and any
+   scroll-behavior: smooth set on html. A scrollIntoView that passes behavior: 'smooth' itself
+   is out of CSS's reach, and its script has to ask matchMedia instead. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hover-glow:hover { transform: none; }
 }
