@@ -161,6 +161,11 @@
               Database Design, Data Communications (Networking), Intro Cyber, Operating Systems,
               Foundations of Computing, Calc II, Linear Algebra, Cryptology, Statistics.
             </p>
+            <p><strong>Course Projects:</strong></p>
+            <ul class="course-projects">
+              <li>Applied SonarQube static analysis to a peer-to-peer networking project (Gnutella-style protocol), identifying and resolving code-quality and security findings.</li>
+              <li>Remediated Nessus-identified vulnerabilities across two Metasploitable hosts, tracking findings to closure through a POA&amp;M.</li>
+            </ul>
           </div>
         </div>
         <div class="column is-half-desktop is-full-tablet">
@@ -369,6 +374,9 @@
 
     /* =========================
        Experience Data
+       Each bullet is one resume-ready sentence, so it can be lifted onto a resume as written.
+       A bullet is a string, or { text, link } when it has a page to point at (the link renders
+       after the text and stays out of it, so the text still copies clean).
     ========================== */
     const experiencesData = [
       {
@@ -379,11 +387,13 @@
         logo: "images/L3Harris_Logo.jpg",
         logoAlt: "L3Harris logo",
         summary: "Contributed to Java/Gradle services and internal infrastructure; bootstrapped internal DNS (PowerDNS), changed old XMPP server to a new implementation.",
-        skills: ["Java 11","Gradle 8.9","Git 2.13","PowerDNS","Python 3","Artifactory", "Prosody XMPP", "Openfire XMPP", "Bash", "Jenkins", ],
-        projects: [
-          { title: "Internal DNS Bootstrap", impact: "Automated PowerDNS zones; reduced manual host overrides and implemented 2 redundancy servers." },
-          { title: "Gradle Build Streamlining", impact: "Environment did not previously work on Windows OS, implemented gradle changes to restore compatibility." },
-          { title: "Artifactory GUI ", impact: "Developed a user-friendly GUI for Artifactory, (in python) improving artifact management and visibility." }
+        skills: ["Java 11","Gradle 8.9","Git 2.13","PowerDNS","Python 3","PyQt","SQLite","Artifactory","Docker Compose","Prosody XMPP","Openfire XMPP","RHEL 8.10","CentOS 7.9","LDAP SSO","Nessus","Fortify","Bash","Jenkins"],
+        bullets: [
+          "Removed 100+ CVEs flagged by Nessus and Fortify scans by replacing vulnerable Openfire servers with a hardened Prosody XMPP deployment on CentOS 7.9 and RHEL 8.10 with LDAP SSO.",
+          "Owned end-to-end development of a Windows desktop client for JFrog Artifactory on an air-gapped network using Python (PyQt, threading), SQLite, and Artifactory REST APIs; designed with UML, developed against a Docker Compose Artifactory instance, and delivered an exe with robust error handling and progress-tracked transfers.",
+          "Refactored a multi-module Java/Gradle codebase (28+ builds) to run consistently across operating systems, standardizing build scripts for cross-platform development.",
+          "Bootstrapped internal DNS on PowerDNS, automating zones to reduce manual host overrides and standing up 2 redundant servers.",
+          "Routinely distill in-the-weeds engineering work into one-sentence summaries for L3Harris managers outside the project's technical detail."
         ]
       },
       {
@@ -393,10 +403,15 @@
         logo: "images/bayloruniversity.png",
         logoAlt: "Baylor University logo",
         summary: "Developed educational cybersecurity labs; BRIC official Offensive Testing & post-mortems; exploring AI/ML applications in offensive security curriculum.",
-        skills: ["AI/ML","Terraform","PenTesting", "Nmap", "Proxmox",],
-        projects: [
-          { title: "BRIC Offensive Testing", impact: "Defined ROE & executed controlled nmap discover scans; remediation report adopted next iteration." },
-          { title: "Hackfest", impact: "Created 14+ virtual machines with varying attack vectors for red team exercises." }
+        skills: ["AI/ML","Terraform","PenTesting","Nmap","Proxmox","Flask","SQLite"],
+        bullets: [
+          "Conducted an authorized penetration test of the Baylor BRIC network, writing the Rules of Engagement and obtaining sysadmin sign-off before testing within a defined (ICMP-only) scope.",
+          "Authored a non-technical findings report for the BRIC system administrator after an authorized pentest, translating technical vulnerabilities into clear risk guidance.",
+          {
+            text: "Built and hosted a web CTF at the Baylor BRIC using Flask and SQLite, featuring SQL injection (OWASP A03) and steganography challenges; rotating per-submission flags forced re-exploitation and prevented answer sharing among 30+ participants.",
+            link: "https://github.com/MildTreeRat/CTF"
+          },
+          "Created 14+ virtual machines with varied attack vectors for Hackfest red team exercises."
         ]
       },
       {
@@ -406,11 +421,13 @@
         logo: "images/GM.svg",
         logoAlt: "General Motors logo",
         summary: "Built internal tooling for multi‑platform OSE workflows (Linux/Windows/macOS/mobile) using KISS & GRASP design principles.",
-        skills: [".NET MAUI","C#","Agile","HashiCorp Vault","Microsoft Graph API","Insomnia", "Azure",],
-        projects: [
-          { title: "Platform Scheduling App", impact: "Centralized OS eng tasks; reduced email coordination, improved task visibility by 30%." },
-          { title: "Vacation Request Tool", impact: "Streamlined vacation request process, reducing approval time by 95%." },
-          { title: "People Monitor App", impact: "Monitored employees and displayed 15+ fields of information from Azure AD." },
+        skills: [".NET MAUI","C#","Agile","HashiCorp Vault","Microsoft Graph API","Insomnia","Azure"],
+        bullets: [
+          "Led a 5-person team as Lead Software Engineer delivering 3 internal projects from concept to demo, finishing 3 weeks ahead of deadline, with results presented to CEO Mary Barra.",
+          "Refactored and enhanced 3 C# internal tools using the Microsoft Graph API, securely managing API keys with HashiCorp Vault.",
+          "Centralized OS engineering tasks in a platform scheduling app, reducing email coordination and improving task visibility by 30%.",
+          "Streamlined the vacation request process with an internal tool, reducing approval time by 95%.",
+          "Surfaced 15+ fields of employee information from Azure AD in a people monitor app."
         ]
       },
       {
@@ -421,9 +438,9 @@
         logoAlt: "Security operations icon",
         summary: "Performed SIEM investigations (Splunk), log correlation, HIDS/NIDS alert triage, incident response documentation.",
         skills: ["Splunk","Python","Incident Investigation","Log Analysis","Detection Tuning"],
-        projects: [
-          { title: "Correlation Search Suite", impact: "Added 5 detections lowering Mean Time To Detection (MTTD) ~25% for targeted behaviors." },
-          { title: "Playbook Refinement", impact: "Streamlined escalation tree; reduced false escalations (analyst feedback)." }
+        bullets: [
+          "Added 5 Splunk correlation searches, lowering mean time to detection (MTTD) by ~25% for targeted behaviors.",
+          "Streamlined the incident escalation tree, reducing false escalations based on analyst feedback."
         ]
       },
       {
@@ -434,10 +451,10 @@
         logoAlt: "General Motors logo",
         summary: "Monitored cloud security (Sentinel/Defender), triaged alerts, automated enrichment with notebooks.",
         skills: ["KQL","Microsoft Sentinel","365 Defender","Azure","Jupyter","Automation"],
-        projects: [
-          { title: "Alert Enrichment Notebook", impact: "Cut manual lookup time ~30% (self‑reported)." },
-          { title: "KQL Data Aggregation", impact: "Combined 3 large tables into a single query, improving readability and performance." },
-          { title: "Entity Mapping", impact: "Mapped 20+ new entities in Sentinel, enhancing alert context and investigation efficiency." }
+        bullets: [
+          "Automated alert enrichment with a Jupyter notebook, cutting manual lookup time by ~30%.",
+          "Combined 3 large tables into a single KQL query, improving readability and performance.",
+          "Mapped 20+ new entities in Microsoft Sentinel, enhancing alert context and investigation efficiency."
         ]
       },
       {
@@ -448,9 +465,9 @@
         logoAlt: "Network tools icon",
         summary: "Maintained campus network: cable fabrication, jack repairs, port activation, MDF/IDF upkeep.",
         skills: ["RJ45","Cable Testing","Port Provisioning","MDF/IDF Maintenance"],
-        projects: [
-          { title: "Port Activation Checklist", impact: "Standardized steps reducing reopen tickets." },
-          { title: "Ticket Volume", impact: "Consistently ranked top 2 in ticket closes per semester (self-tracked)." }
+        bullets: [
+          "Standardized port activation steps into a checklist, reducing reopened tickets.",
+          "Consistently ranked in the top 2 technicians for tickets closed each semester."
         ]
       },
       {
@@ -460,20 +477,27 @@
         logo: "images/bayloruniversity.png",
         logoAlt: "Cyber lab icon",
         summary: "Provisioned Proxmox lab for CCDC; built multi‑service clusters & AD domains; authored deployment docs.",
-        skills: ["Proxmox","Active Directory","Group Policy","MariaDB","MySQL","MongoDB","Tomcat","nginx","DNS","Bash","PowerShell"],
-        projects: [
-            { title: "AD Domain Lab Build", impact: "Scripts cut reprovision time from hours to <30 min." },
-            { title: "DNS Automation Scripts", impact: "Automated DNS record setup to discover and register 8+ weekly lab machines." },
-            { title: "Proxmox Server Management", impact: "Created and managed 20+ user pools and lab environments." },
-            { title: "Proxmox Documentation", impact: "Authored 15 page step-by-step guides for lab deployment and maintenance." }
+        skills: ["Proxmox","Active Directory","LDAP","Group Policy","PostgreSQL","MariaDB","MySQL","SQL Server","MongoDB","Tomcat","nginx","Caddy","DNS","Bash","PowerShell"],
+        bullets: [
+          "Designed and maintained enterprise-style homelabs for CCDC, provisioning 12+ Linux/Windows VMs with Active Directory/LDAP (100+ users), relational databases (PostgreSQL, MariaDB, MySQL, SQL Server), and web/infra services (nginx, Tomcat, Caddy, DNS, SMTP) to simulate production environments.",
+          "Administered a multi-tenant Proxmox cluster for 25+ users and 100+ VMs, standardizing templates and migrating storage from RAID 1 to 4-disk RAID 10 for performance and fault tolerance.",
+          "Scripted Active Directory domain lab builds, cutting reprovisioning time from hours to under 30 minutes.",
+          "Automated DNS record setup to discover and register 8+ lab machines each week.",
+          "Authored 15-page step-by-step guides for lab deployment and maintenance."
         ]
       }
     ];
 
+    // One <li> per bullet, shared by the experience and competition cards.
+    function renderBullet(b) {
+      if (typeof b === "string") return `<li>${b}</li>`;
+      return `<li>${b.text} <a class="comp-link" href="${b.link}" target="_blank" rel="noopener">GitHub ↗</a></li>`;
+    }
+
     function renderExperienceCard(exp, index) {
       const altClass = index % 2 === 1 ? 'alt-right' : '';
       const skillsHTML = exp.skills.map(s => `<span class="tag">${s}</span>`).join("");
-      const projectsHTML = exp.projects.map(p => `<li><strong>${p.title}:</strong> ${p.impact}</li>`).join("");
+      const bulletsHTML = exp.bullets.map(renderBullet).join("");
       return `
         <article class="box experience-card ${altClass}">
           <div class="experience-layout">
@@ -488,8 +512,8 @@
               <p class="has-text-weight-semibold mt-4 mb-2">Skills & Technologies:</p>
               <div class="tags is-flex is-flex-wrap-wrap">${skillsHTML}</div>
               <details class="notable-projects mt-4">
-                <summary><strong>Notable Projects</strong></summary>
-                <ul class="mt-3">${projectsHTML}</ul>
+                <summary><strong>Highlights</strong></summary>
+                <ul class="mt-3">${bulletsHTML}</ul>
               </details>
             </div>
           </div>
@@ -503,6 +527,7 @@
 
     /* =========================
        Competitions Data
+       Bullets as in experiencesData: resume-ready sentences, the metrics folded in.
     ========================== */
     const competitionsData = [
       {
@@ -513,30 +538,30 @@
         logoAlt: "CCDC logo",
         link: "https://southwestccdc.com/",
         summary: "High‑pressure blue team/incident response competition defending simulated corporate infrastructure while sustaining critical business services under live red team attack.",
-        achievements: [
-          "Led network mapping & service hardening (custom nmap & enum scripts).",
-          "Authored password / LDAP policy baseline adopted by team practice environment.",
-          "Prepared Active Directory escalation runbooks reducing recovery time during injects."
-        ],
-        metrics: [
-          "Improved initial service hardening checklist coverage to >90% pre-start.",
+        bullets: [
+          "Led red team operations for Baylor's CCDC practice program across 9 competition cycles, performing Nmap reconnaissance and port/service mapping of 12+ hosts before each authorized engagement.",
+          "Executed full attack-chain operations in CCDC red team exercises (enumeration, exploitation, privilege escalation, and persistence) against hardened blue-team environments to validate defensive readiness.",
+          "Hardened Active Directory as domain lead for a 2x CCDC regional qualifying team over 2 years, applying GPO and registry controls to 10+ accounts and keeping the domain controller free of successful compromise across all engagements, confirmed in post-competition debriefs.",
+          "Presented red team findings to coaches in CCDC post-mortems, articulating exploitation paths and defensive gaps to drive remediation.",
+          "Led network mapping and service hardening with custom Nmap and enumeration scripts.",
+          "Authored a password and LDAP policy baseline adopted by the team's practice environment.",
+          "Prepared Active Directory escalation runbooks that reduced recovery time during injects.",
+          "Raised pre-start service hardening checklist coverage to over 90%.",
           "Cut mean credential rotation time during inject phases by ~35%."
         ]
       },
       {
         name: "National Cyber League (NCL)",
         short: "NCL",
-        period: "4 Seasons (Top 395 / 8,000 best finish)",
+        period: "4 Seasons (best finish: 395 of 8,000, top 4.9%)",
         logo: "images/ncl.png",
         logoAlt: "NCL logo",
         link: "https://nationalcyberleague.org/",
         summary: "Jeopardy‑style individual + team capture-the-flag challenges spanning cryptography, traffic & log analysis, web exploitation, enumeration, and OSINT.",
-        achievements: [
-          "Specialized in log analysis & crypto challenge tiers.",
-          "Created internal cheat-sheet repo (hash ID, encoding pivots, PCAP workflow)."
-        ],
-        metrics: [
-          "Consistent top 5% performance in log analysis subsection (internal tracking)."
+        bullets: [
+          "Exploited web application vulnerabilities including SQL injection using Burp Suite in National Cyber League competitions, placing in the top 4.9% nationally (395 of 8,000).",
+          "Specialized in the log analysis and cryptography challenge categories, placing consistently in the top 5% in log analysis.",
+          "Built an internal cheat-sheet repository covering hash identification, encoding pivots, and PCAP workflows."
         ]
       },
       {
@@ -547,12 +572,10 @@
         logoAlt: "TryHackMe badge",
         link: "https://tryhackme.com/p/aaronsierra",
         summary: "Hands‑on labs from fundamentals through red team tactics: privilege escalation, lateral movement, exploitation chains, and Active Directory attack paths.",
-        achievements: [
-          "Completed red team pathway and AD attack rooms with personal notes.",
-          "Built local repeatable lab (Proxmox) to replicate select scenarios offline."
-        ],
-        metrics: [
-          "Maintained daily streak during intensive study blocks (skill retention)."
+        bullets: [
+          "Completed the red team pathway and Active Directory attack rooms, documenting each in personal notes.",
+          "Built a repeatable local Proxmox lab to replicate selected scenarios offline.",
+          "Maintained a daily streak through intensive study blocks."
         ]
       },
       {
@@ -563,12 +586,9 @@
         logoAlt: "HiveStorm logo",
         link: "https://www.hivestorm.org/",
         summary: "Defensive hardening competition focusing on rapid triage of misconfigurations, patch application, and service uptime scoring.",
-        achievements: [
-          "Created baseline Linux hardening script (sshd / logging / firewall templates).",
-          "Led ticket triage prioritization (CVSS + service criticality)."
-        ],
-        metrics: [
-          "Baseline script cut initial misconfiguration count by ~50% in later runs."
+        bullets: [
+          "Wrote a baseline Linux hardening script (sshd, logging, and firewall templates) that cut initial misconfiguration counts by ~50% in later runs.",
+          "Led ticket triage, prioritizing by CVSS score and service criticality."
         ]
       },
       {
@@ -579,21 +599,16 @@
         logoAlt: "Esports icon",
         link: "",
         summary: "Team coordination, scheduling, and strategic planning translating into transferable leadership & communication for technical teams.",
-        achievements: [
-          "Implemented review cadence mirroring agile retrospectives.",
-          "Introduced stat tracking sheet to identify tactical improvement areas."
-        ],
-        metrics: [
-          "Increased scrim efficiency (objective time usage) per internal tracking."
+        bullets: [
+          "Implemented a review cadence modeled on agile retrospectives.",
+          "Introduced a stat-tracking sheet to identify tactical improvement areas.",
+          "Increased scrim efficiency, measured by time spent on objectives."
         ]
       }
     ];
 
     function renderCompetitionCard(c) {
-      const achievementsHTML = c.achievements.map(a => `<li>${a}</li>`).join("");
-      const metricsHTML = c.metrics?.length
-        ? `<p class="has-text-weight-semibold mt-3 mb-1">Impact / Metrics:</p>
-           <ul class="comp-metrics">${c.metrics.map(m => `<li>${m}</li>`).join("")}</ul>` : "";
+      const bulletsHTML = c.bullets.map(renderBullet).join("");
       return `
         <article class="box competition-card">
           <div class="competition-layout">
@@ -607,8 +622,7 @@
               <p>${c.summary}${c.link ? ` <a class="comp-link" href="${c.link}" target="_blank" rel="noopener">Site ↗</a>` : ""}</p>
               <details class="comp-details mt-3">
                 <summary><strong>Highlights</strong></summary>
-                <ul class="mt-3">${achievementsHTML}</ul>
-                ${metricsHTML}
+                <ul class="mt-3">${bulletsHTML}</ul>
               </details>
             </div>
           </div>

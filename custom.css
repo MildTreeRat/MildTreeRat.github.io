@@ -775,8 +775,8 @@ section[id] { scroll-margin-top: 70px; }
 
 .experience-card:not(.alt-right) .experience-body { padding-left: 0; }
 
-/* The fold-outs: an experience card's Notable Projects and a competition card's Highlights are
-   one style. They were two near-copies, with different padding, open borders and list sizes,
+/* The fold-outs: an experience card's Highlights (.notable-projects, from when it was titled
+   that) and a competition card's Highlights are one style. They were two near-copies, with different padding, open borders and list sizes,
    and the experience one had its focus ring switched off, so a keyboard could not see it. Their
    lists were 1.35 high at .9 and .85rem, tighter than the body's 1.6; now both are --text-list
    at --leading-list. */
@@ -843,6 +843,16 @@ section[id] { scroll-margin-top: 70px; }
 .notable-projects li + li,
 .comp-details li + li { margin-top: var(--space-1); }
 
+/* The Education card's course projects: the fold-outs' list, without a fold-out around it. */
+.course-projects {
+  padding-left: 1.1rem;
+  list-style: disc;
+  font-size: var(--text-list);
+  line-height: var(--leading-list);
+}
+
+.course-projects li + li { margin-top: var(--space-1); }
+
 /* ---------- Competitions (rendered from competitionsData in index.html) ---------- */
 .competition-layout {
   display: flex;
@@ -875,9 +885,8 @@ section[id] { scroll-margin-top: 70px; }
   font-weight: 600;
 }
 
-/* The fold-out itself is with Notable Projects, above. The metrics list takes its spacing from
-   the "Impact / Metrics:" line's mb-1: a margin-top here lost to `.comp-details ul` (0,1,1). */
-.comp-metrics li { list-style: circle; }
+/* The fold-out itself is with the experience cards', above. Its metrics list went when the
+   metrics were folded into the bullets themselves. */
 
 /* ---------- Footer ---------- */
 /* A band in the cards' colour under a hairline, rather than black, and without Bulma's 6rem
