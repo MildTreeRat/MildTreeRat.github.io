@@ -21,7 +21,7 @@ on a phone the right-side section pane covers half the screen.
 | **P1** | The screenshot harness, and the baseline shots | ✅ Done *(2026-10-19)* |
 | **P2** | Consolidate `custom.css` into one clean file with design tokens | ✅ Done *(2026-10-19)* |
 | **P3** | Typography: Inter and a tighter type scale | ✅ Done *(2026-10-19)* |
-| **P4** | Optimise the images | ⬜ |
+| **P4** | Optimise the images | ✅ Done *(2026-10-19)* |
 | **P5** | Calmer motion: no parallax, hover only where it helps | ⬜ |
 | **P6** | The phone menu: visible, closes on tap, smooth scroll | ⬜ |
 | **P7** | Phone slim dots replace the side pane | ⬜ |
@@ -525,3 +525,72 @@ every later phase compares against; it lives on this machine only.
 - **For P10:** the experience and competition tags are Bulma's default 12px, while Skills uses
   `are-medium` (16px). `.notable-projects ul` and `.comp-details ul` keep `line-height: 1.35` at
   .9/.85rem, tighter than the body's 1.6. Both are candidates for the card polish.
+
+### P4 (2026-10-19)
+
+- **Resumed.** The first attempt made every copy and edit, then stopped BLOCKED on the phone hero.
+  This session applied the owner's answer, re-ran the verify, and committed. Everything the first
+  attempt left in the tree was P4's and was kept, apart from `hero-900.jpg`.
+- **The phone hero gets `hero-1920.jpg` too (the owner's call, 2026-10-19).** The plan's 900px copy
+  at ≤768px was visibly blurry. On a portrait phone, `background-size: cover` with a 4:3 photo fits
+  the photo's **height**, so a 390×844 hero draws it 844 CSS px tall, which is 2,532 device px at 3×.
+  `hero-900.jpg` has 676 rows (stretched 3.75×), `hero-1920.jpg` has 1,442 (1.76×), and the original
+  has 3,448. In a face crop of the phone top shot, the original was sharp, 1920 slightly soft and 900
+  plainly soft. The other options were 900 (the plan as written) and a portrait phone crop. So the
+  768px query is back to its P3 form (`background-attachment: scroll` only), and the hero rule's
+  comment says why. `hero-900.jpg` was a new file, never committed, and it is deleted.
+- **Bytes** (`-auto-orient -strip -resize <w>x -quality 78`; the originals stay on disk, rule 5):
+
+  | Original | Bytes | Copy | Bytes | Pixels |
+  |---|---:|---|---:|---|
+  | `AaronGrad.jpeg` (hero) | 2,136,850 | `images/hero-1920.jpg` | 386,653 | 1920×1442 |
+  | `images/Aaron_and_karina.jpg` | 9,115,839 | `images/aaron-karina-800.jpg` | 148,396 | 800×1067 |
+  | `CompTIASecurityPlus-1.jpg` | 449,729 | `images/security-plus-840.jpg` | 57,614 | 840×649 |
+  | `images/oso_esports.jpg` | 394,998 | `images/oso-esports-280.jpg` | 26,990 | 280×333 |
+  | `images/swccdc.png` | 231,706 | `images/swccdc-280.webp` | 15,622 | 280×220 |
+  | **the five** | **12,329,122** | | **635,275** | **−94.8%** |
+
+- **Page image weight** (`node tools/checks/P4.mjs`, own-origin images; the "before" is the P3 site
+  measured live with `--base https://www.aaron-sierra.com`). Phone and desktop now load the same
+  images:
+
+  | | Before (P3, live) | After (P4) | Change |
+  |---|---:|---:|---:|
+  | Whole page, scrolled to the bottom | 13,185 KB | 1,765.6 KB | **−86.6%** |
+  | First load | 12,452 KB | 522.5 KB | **−95.8%** |
+
+  The first load on both devices is the hero plus the About photo, because Chromium's lazy threshold
+  reaches the About box from the top. `Resume-1.jpg` (1,023 KB, now lazy) is 58% of what remains.
+- **Lazy loading:** every `<img>` below the fold has `loading="lazy"` with `width`/`height`: the About
+  photo, the TryHackMe badge (external, 249×58), Security+ and `Resume-1.jpg`. The experience and
+  competition logos, which the inline script renders, already had both. `P4.mjs` lists every `<img>`
+  as loaded, lazy, and sized, on both devices.
+- **EXIF:** no original carried GPS. `AaronGrad.jpeg` carried camera EXIF (Panasonic DMC-G7, lens,
+  capture dates, a serial-like string), XMP, IPTC and an sRGB ICC profile, and `-strip` drops them all
+  (sRGB is what browsers assume anyway). `Aaron_and_karina.jpg` (q100) carried no metadata at all.
+  `magick identify` finds no EXIF in any of the five copies.
+- **swccdc:** chose lossy WebP (15.6 KB) over a full-alpha PNG (51 KB) and a PNG8 (15 KB), because
+  the PNG8 lost the alpha anti-aliasing round the badge's rim. `hivestorm.webp` was already WebP.
+- **Shots** (`p4` against `p3`, `-fuzz 1%` AE): `desktop-resume` is 0. The other desktop shots are
+  1,100 to 5,800, and the phone shots 3,000 to 72,000. I read `phone-top`, `phone-certifications` and
+  `phone-resume` beside their `p3` versions, and they look the same. The phone top shows the 1920
+  copy with no visible softening at that scale. Two causes account for the AE. The hero's
+  recompression moves pixels in the top shots. Below About, there is a **sub-pixel layout shift**,
+  not a content change. The copies' rounded aspect ratios make the About photo 480.14 CSS px tall
+  instead of 480, and the Security+ image 324.5 instead of 324.44. So everything below them sits
+  0.14–0.2 px lower (measured through `openPage`, live against local), and whole-pixel shift tests
+  cannot cancel it.
+- **No overflow and no 404s from P4:** scrollWidth is 390 of 390 and 1440 of 1440. `P4.mjs` sees 0
+  failed requests on both devices. `shoot.mjs` reports the same single favicon 404 that P1 recorded,
+  which predates the revamp and is no image.
+- **For P9:** the phone hero draws `hero-1920.jpg` 1.76× upscaled at full height. A shorter hero
+  (D11) makes it **sharper**, not softer: at about 70svh, `cover` is still height-limited and the
+  stretch drops to about 1.2×. If P9 wants more, the third option was a portrait phone crop
+  (`hero-phone-*.jpg`, new name, rule 5) behind a media query. The empty `<figure class="hero-avatar">`
+  (`index.html:70`) still holds a commented-out `AaronGrad.jpeg` `<img>`; it loads nothing.
+- **For P11:** `Resume-1.jpg` is now `loading="lazy" width="2550" height="3300"`. It is the largest
+  image left on the page, and removing it (D4) takes the whole page to about 742 KB.
+- **For P12:** the originals that are now unreferenced by `index.html` and `custom.css` are
+  `AaronGrad.jpeg`, `images/Aaron_and_karina.jpg`, `CompTIASecurityPlus-1.jpg`,
+  `images/oso_esports.jpg` and `images/swccdc.png`. Check `showcase.html` before calling any of them
+  deletable. `Resume-1.jpg` joins them after P11.

@@ -153,7 +153,10 @@ section[id] { scroll-margin-top: 70px; }
 /* ---------- Hero ---------- */
 .hero.hero-banner {
   position: relative;
-  background-image: url("AaronGrad.jpeg");
+  /* A 1920px copy of AaronGrad.jpeg (4592px, 2.1 MB), stripped of its EXIF. Phones get it too:
+     on a portrait screen `cover` fits the photo's height, so a 390x844 hero draws it ~2,500 device
+     px tall at 3x, and a 900px copy (676 rows) was plainly blurry there (P4, the owner's call) */
+  background-image: url("images/hero-1920.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
