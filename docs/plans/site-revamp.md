@@ -26,7 +26,7 @@ on a phone the right-side section pane covers half the screen.
 | **P6** | The phone menu: visible, closes on tap, smooth scroll | ✅ Done *(2026-10-19)* |
 | **P7** | Phone slim dots replace the side pane | ✅ Done *(2026-10-19)* |
 | **P8** | Desktop side pane stays hidden over the hero | ✅ Done *(2026-10-19)* |
-| **P9** | The phone hero: shorter, readable, nothing off the edge | ⬜ |
+| **P9** | The phone hero: shorter, readable, nothing off the edge | ✅ Done *(2026-10-19)* |
 | **P10** | Cards, spacing and section polish | ⬜ |
 | **P11** | The resume section, with the SWE resume as a PDF | ⬜ |
 | **P12** | Close: full review, changelog line, leftovers listed | ⬜ |
@@ -838,3 +838,59 @@ every later phase compares against; it lives on this machine only.
 - **For P12:** `tools/checks/P8.mjs` re-runs in about 17 s. The pane only exists at 1024px and up,
   so the owner's iPhone never shows it. Desktop Safari's discrete `visibility` transition is
   standard, but only Edge has been checked.
+
+### P9 (2026-10-19)
+
+- **What changed (phone, portrait, below 768px).** The hero is `80svh` (`80vh` fallback): 675px at
+  390×844, and about 531 on an iPhone with Safari's toolbars showing (simulated at 390×664). The
+  photo is drawn from the top and ends `--hero-text-space` (8rem) above the hero's foot
+  (`background-size: auto max(100% - 8rem, 75.1vw)`, a plain `76%` before it as the fallback). A
+  scrim fades it into a band of `--hero-band` (`--bulma-dark`, the body's own colour, so the band
+  runs straight into the page). The name and subtitle sit at the top of the band
+  (`align-items: flex-end`, 2rem bottom padding, the empty hero foot hidden). At 390×844 the h1 is
+  545–588 (36px) and the subtitle 596–643, with the stole ending near 476; at 390×664 the h1 starts
+  at 401 and the stole ends near 350. Drawn shorter, the photo is sharper: 1.1× upscaled, where full
+  height was 1.76× (P4).
+- **The white film is gone everywhere,** and its `backdrop-filter: brightness(1.05)` went with it.
+  Desktop and tablet get `--hero-scrim`, which starts darkening at 35% and reaches 0.42 black at the
+  foot, under the hero nav. The desktop photo is no longer hazy. The name and subtitle are exactly
+  where they were (h1 top 386, subtitle 451 at 1440×900). `desktop-top` differs from P8 by AE
+  202,070 at `-fuzz 1%`: that is the whole photo, no longer washed.
+- **The empty avatar figure is gone,** and `.hero-avatar img` with it. It took 31–32px above the h1
+  (its line box plus `mb-5`). `.hero.hero-banner .hero-body .container { padding-top: 2rem }` keeps
+  the desktop and tablet name below the chin, where it was. Removing the figure without it moved
+  the name up 16px, onto the chin.
+- **The name is on the type scale now.** The h1 lost its `is-size-*` helpers (P3's route) and reads
+  `--text-title-hero: clamp(2.25rem, 1.5rem + 2.4vw, 3rem)`: 36px at 390, 42 at 768, 48 from 1000
+  wide (it was 32/40/48).
+- **Subtitle.** It is now two `.hero-phrase` spans with `white-space: nowrap`, so it breaks after the
+  bullet ("Computer Scientist •" / "Cybersecurity Focus"). The wording is unchanged (rule 3).
+  `text-wrap: balance` would need iOS 17.5.
+- **Text shadow.** `--shadow-text-hero` gained a tight first layer (`0 1px 3px`). On desktop
+  "Scientist" crosses the white shirt collar, and the diffuse shadow alone left it faint there.
+- **The phone drops the name's outline** (`-webkit-text-stroke: 0`): on the band it has nothing to
+  stand out from. That also means the owner's iPhone, held upright, never meets P3's open question
+  of whether Safari honours `paint-order` on HTML text.
+- **Portrait only.** At 667×375 (a phone held sideways) the band covered everything but the sky. So
+  the query is `(max-width: 767px) and (orientation: portrait)`, and a phone held sideways keeps
+  the full-height hero with the name over the photo, as before.
+- **Overflow:** scrollWidth is 390 of 390 and 1440 of 1440 at every shot, light and dark. Nothing
+  was widening the page (P1 and P2 found the same). The favicon 404 is the only error.
+- **Regressions:** `P5.mjs` gives 14 passed, 0 failed; `P6.mjs` 45 PASS; `P7.mjs` 48 PASS (200px into
+  the shorter hero the rail is still hidden: the hero's foot is at 475, below mid-screen at 422).
+  `P8.mjs` gives 19 or 20 PASS; see the next item. `P3.mjs` reads the hero h1 at 36px phone and
+  48px desktop. The phone section shots differ from P8 by a one-pixel shift of everything below
+  the hero (80vh of 844 is 675.2px). In `about`, the 70px of hero above the anchor now shows the
+  band. `desktop-skills` is AE 0.
+- **`P8.mjs` is flaky, and was before P9.** Its `edgeDrawn` compares two PNG buffers byte for byte,
+  but two screenshots of the hero photo taken with nothing changed differ by 1/255 (AE 0 at
+  `-fuzz 1%`). That holds with the old flat film too. Against this tree, 1 run in 4 failed one of
+  the "strip not drawn" lines. Against HEAD's page (P8 as committed), 2 in 4 did.
+  **For P12:** a lone FAIL on "the strip is (still) not drawn" is this noise. Re-run it, or give
+  the comparison a fuzz.
+- **For P12:** the owner's iPhone is the check for the height. The harness has no toolbars, so
+  `svh` equals `vh` there. Desktop Safari, and a phone held sideways, still draw the name's stroke
+  with `paint-order`, which has only been checked in Edge. Tablets in portrait (768–1023px, such as
+  820×1180) also keep the full-height hero, with the name over the collar and stole. D11 covered
+  only the phone, so they were left alone. If the owner wants them changed, it is one line: widen
+  the query to `(max-width: 1023px) and (orientation: portrait)`.
