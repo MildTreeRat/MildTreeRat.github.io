@@ -1,6 +1,6 @@
 /* The site's own layer over Bulma 1.0.4.
-   Order: tokens, base, hero, hero nav, side nav, boxes and tags, experience, competitions,
-   utilities, and every media query last, so a breakpoint always wins over the rule it narrows
+   Order: tokens, base, hero, hero nav, phone menu, side nav, dot rail, boxes and tags,
+   experience, competitions, utilities, and every media query last, so a breakpoint always wins over the rule it narrows
    (the phone side pane once stayed visible because a later unconditional rule beat its hide).
    Each selector is declared once outside the media queries. New colours go in :root first. */
 
@@ -468,6 +468,97 @@ section[id] { scroll-margin-top: 70px; }
 
 .using-mouse .side-nav a:focus { outline: none; }
 
+/* ---------- Dot rail (below 1024px, where it stands in for the side pane) ---------- */
+/* index.html's script builds it from the pane's links and lights it from the pane's observer.
+   28px wide, centred on the right edge, so it clears the burger in the top corner; z-index 20,
+   under the phone bar's 30, so an open menu covers it. It is shown everywhere but over the hero
+   and never pops in and out on scroll: it fades away while .hero-in-view is on <html>. The media
+   query at the foot is what displays it. */
+.dot-rail {
+  display: none;
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 20;
+  flex-direction: column;
+  width: 28px;
+  transform: translateY(-50%);
+  transition: opacity .3s, visibility .3s;
+}
+
+.hero-in-view .dot-rail {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* A 28x36 tap target with an 8px dot in its middle, dim until it is the current section */
+.dot-rail-dot {
+  position: relative;
+  display: block;
+  width: 28px;
+  height: 36px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dot-rail-dot::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: var(--color-text-side-nav);
+  border-radius: 50%;
+  opacity: .4;
+  transform: translate(-50%, -50%);
+  transition: opacity .25s, transform .25s, box-shadow .25s;
+}
+
+.dot-rail-dot.active::before {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-lilac));
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.4);
+  box-shadow: var(--shadow-dot-active);
+}
+
+.dot-rail-dot:focus-visible {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: -4px;
+  border-radius: var(--radius-sm);
+}
+
+/* The section's name, in a pill left of the dot, for a moment after a tap (.labelled). When
+   shown it inherits the rail's visibility rather than setting its own, so it can never outstay
+   a rail that has faded away over the hero. */
+.dot-rail-label {
+  position: absolute;
+  top: 50%;
+  right: calc(100% - 2px);
+  padding: .25rem .7rem;
+  font-size: .75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--color-text-strong);
+  background: var(--glass-menu);
+  backdrop-filter: var(--blur-panel);
+  -webkit-backdrop-filter: var(--blur-panel);
+  border: 1px solid var(--white-08);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-panel);
+  transform: translateY(-50%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .2s, visibility .2s;
+}
+
+.dot-rail-dot.labelled .dot-rail-label {
+  opacity: 1;
+  visibility: inherit;
+}
+
 /* ---------- Boxes and tags ---------- */
 /* Every box holds still, in the shadow they all used to rest in. Only the small leadership
    cards carry .hover-glow, and its lift and glow are in the hover block at the foot: a big box
@@ -684,10 +775,12 @@ section[id] { scroll-margin-top: 70px; }
   }
 }
 
-/* Below Bulma's desktop breakpoint the phone navbar takes over and the side pane is hidden */
+/* Below Bulma's desktop breakpoint the phone navbar takes over, and the dot rail replaces the
+   side pane */
 @media (max-width: 1023px) {
   .hero-nav { display: none; }
   .side-nav-wrapper { display: none; }
+  .dot-rail { display: flex; }
 }
 
 /* Narrow screens: one column order for every experience card */
@@ -730,6 +823,14 @@ section[id] { scroll-margin-top: 70px; }
   .side-nav a:not(.active):hover {
     background: var(--white-06);
     color: var(--color-text-strong);
+  }
+
+  /* The dot rail, in a narrow window with a mouse: the dot brightens and its name shows */
+  .dot-rail-dot:hover { text-decoration: none; }
+  .dot-rail-dot:not(.active):hover::before { opacity: .8; }
+  .dot-rail-dot:hover .dot-rail-label {
+    opacity: 1;
+    visibility: inherit;
   }
 
   /* The small leadership cards, and nothing else: a gentle lift and the glow */

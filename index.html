@@ -100,7 +100,8 @@
       </div>
     </section>
   </div>
-  <!-- Side Nav (updated: hover + scroll reveal) -->
+  <!-- Side Nav (updated: hover + scroll reveal). Below 1024px it is hidden, and the script builds
+       the phone's dot rail from these links, after this element. -->
   <div class="side-nav-wrapper collapsed" aria-label="Section navigation">
     <nav class="side-nav" role="navigation">
       <a href="#about">About</a>
@@ -644,8 +645,38 @@
     const sideLinks = sideNav ? Array.from(sideNav.querySelectorAll('a')) : [];
     const sideSections = sideLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
 
+    /* Phone dot rail. Below 1024px the pane is hidden (custom.css) and a column of dots on the
+       right edge stands in for it. It is built from the pane's own links, so there is one list
+       of sections, and lit by the pane's observer below. Each dot's label is drawn only for a
+       moment after a tap; the link's aria-label is what a screen reader hears. */
+    const rail = document.createElement('nav');
+    rail.className = 'dot-rail';
+    rail.setAttribute('aria-label', 'Sections');
+    const railDots = sideLinks.map(link => {
+      const name = link.textContent.trim();
+      const dot = document.createElement('a');
+      dot.className = 'dot-rail-dot';
+      dot.href = link.getAttribute('href');
+      dot.setAttribute('aria-label', name);
+      const label = document.createElement('span');
+      label.className = 'dot-rail-label';
+      label.setAttribute('aria-hidden', 'true');
+      label.textContent = name;
+      dot.append(label);
+      rail.append(dot);
+      return dot;
+    });
+    if (sideWrapper && railDots.length) sideWrapper.after(rail);
+
     function setSideActive(id) {
-      sideLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+      const href = '#' + id;
+      sideLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === href));
+      railDots.forEach(dot => {
+        const on = dot.getAttribute('href') === href;
+        dot.classList.toggle('active', on);
+        if (on) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
     }
     const sideIO = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) setSideActive(e.target.id); });
@@ -704,6 +735,35 @@
           showSideNav('click');
         }
       });
+    }
+
+    // Dot rail scroll: a bare scrollIntoView, like both navs', so html's scroll-behavior decides.
+    // The tapped dot shows its section's name for a moment; a second tap moves the label.
+    const LABEL_DURATION = 1200; // ms
+    let labelTimer = null;
+    rail.addEventListener('click', e => {
+      const dot = e.target.closest('.dot-rail-dot');
+      if (!dot) return;
+      const el = document.querySelector(dot.getAttribute('href'));
+      if (!el) return;
+      e.preventDefault();
+      el.scrollIntoView();
+      railDots.forEach(d => d.classList.toggle('labelled', d === dot));
+      clearTimeout(labelTimer);
+      labelTimer = setTimeout(() => dot.classList.remove('labelled'), LABEL_DURATION);
+    });
+
+    /* Hero in view: while the photo's bottom edge is still below the middle of the screen. It is
+       a class on <html>, so CSS can keep things off the photo: the dot rail fades out there and
+       is otherwise always shown, never popping in and out on scroll. Measured once so the first
+       paint is right, then kept by an observer whose root is the lower half of the viewport. */
+    const heroBanner = document.querySelector('.hero-banner');
+    const setHeroInView = on => document.documentElement.classList.toggle('hero-in-view', on);
+    if (heroBanner) {
+      setHeroInView(heroBanner.getBoundingClientRect().bottom > window.innerHeight / 2);
+      new IntersectionObserver(([e]) => setHeroInView(e.isIntersecting), {
+        rootMargin: '-50% 0px 0px 0px', threshold: 0
+      }).observe(heroBanner);
     }
 
     // Start collapsed

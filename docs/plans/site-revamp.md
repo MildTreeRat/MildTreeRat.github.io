@@ -24,7 +24,7 @@ on a phone the right-side section pane covers half the screen.
 | **P4** | Optimise the images | ✅ Done *(2026-10-19)* |
 | **P5** | Calmer motion: no parallax, hover only where it helps | ✅ Done *(2026-10-19)* |
 | **P6** | The phone menu: visible, closes on tap, smooth scroll | ✅ Done *(2026-10-19)* |
-| **P7** | Phone slim dots replace the side pane | ⬜ |
+| **P7** | Phone slim dots replace the side pane | ✅ Done *(2026-10-19)* |
 | **P8** | Desktop side pane stays hidden over the hero | ⬜ |
 | **P9** | The phone hero: shorter, readable, nothing off the edge | ⬜ |
 | **P10** | Cards, spacing and section polish | ⬜ |
@@ -719,3 +719,68 @@ every later phase compares against; it lives on this machine only.
   overscroll past the page's ends would show. Neither is P6's to change.
 - **For P12:** `tools/checks/P6.mjs` re-runs in about two minutes. It writes the open-menu shots to
   `tools/shots/p6-check/` and takes `--base` for the live site.
+
+### P7 (2026-10-19)
+
+- **What landed.** `index.html`'s script builds `<nav class="dot-rail" aria-label="Sections">` from the
+  side pane's own links and inserts it right after `.side-nav-wrapper`. So there is one list, and
+  each dot's `aria-label` and label text are the link's text ("Certs" included). `setSideActive`,
+  run by the pane's own `sideIO`, now also lights the matching dot: class `active` plus
+  `aria-current="true"`, which it removes from the rest. A tap calls a bare `scrollIntoView()`, adds
+  `.labelled` to that dot for `LABEL_DURATION` (1200 ms), and moves the label if a second dot is
+  tapped. The desktop pane's markup and rules are untouched.
+- **CSS placement, a small departure from the Files line.** The rail's rules are a component
+  section, "Dot rail", after "Side nav", with `display: none`. The `<1024px` query only adds
+  `.dot-rail { display: flex }` beside the pane's hide. This keeps P2's order (components, then
+  queries), as P6's "Phone menu" section does. The narrow-window-with-a-mouse hovers are in the foot
+  hover block: the dot brightens and its label shows. No new tokens: the idle dot is
+  `--color-text-side-nav` at opacity .4, the lit dot is the pane's active-dot gradient scaled 1.4
+  with `--shadow-dot-active`, and the label is `--glass-menu` with `--blur-panel` (and its
+  `-webkit-` twin). The file header's section list now names "phone menu" and "dot rail".
+- **Geometry at 390×844:** the rail is 28 px wide at x 362–390 and y 278–566 (8 dots, each a 28×36
+  target with an 8 px dot), so it clears the burger (y 4–48). The dots sit in the gutter right of
+  the boxes, which end near x 366. The "Experience" label pill spans x 274–364. The rail's z-index
+  is 20, under the bar's 30, so an open menu draws over it (checked with `elementFromPoint`).
+- **The shared hero state.** `html.hero-in-view` is true while the hero's bottom edge is below the
+  viewport's middle. It is measured once at load, so the first paint is right, then kept by an
+  `IntersectionObserver` on `.hero-banner` with `rootMargin: '-50% 0px 0px 0px'` (the lower half
+  of the viewport as root). It is `heroBanner` and `setHeroInView` in the script, next to the
+  rail's tap handler. `.hero-in-view .dot-rail` fades out (opacity 0, `visibility: hidden`,
+  `pointer-events: none`). A shown label uses `visibility: inherit`, so it cannot outstay a rail
+  that is fading away.
+- **For P8:** reuse that state rather than adding a second hero observer. Read
+  `document.documentElement.classList.contains('hero-in-view')` in `showSideNav` and the hover and
+  focus paths, and key the strip-hiding CSS off `.hero-in-view .side-nav-wrapper`. At 1440×900 the
+  hero is full height, so the class holds for the first 450 px of scroll and is false at `#about`
+  (hero bottom at 70 px), which is what P8's done criteria need. The class has **no** desktop
+  effect yet: desktop shots are unchanged. If P8 changes the threshold (the `rootMargin`), it moves
+  the phone rail's appearance too, so re-run `tools/checks/P7.mjs`.
+- **For P9:** the threshold is relative to the viewport, not the hero. A shorter hero just shows
+  the rail sooner: at 70svh, after about 0.2 of a screen of scroll. A hero shorter than half the
+  screen would show the rail at the top, and fail P7's first criterion. `#home` in the phone menu
+  still fades the rail out.
+- **Done criteria:** `node tools/checks/P7.mjs` (new; about 30 s; takes `--base`) gives **48 PASS,
+  0 FAIL** in light and dark. At the top, and 200 px down, the rail is hidden. At `#skills` it is
+  shown, 28 px wide on the right edge, with Skills lit (gradient, opaque, scale 1.4,
+  `aria-current`), the unlit dots 8 px at opacity .4, and no label. Tapping the Experience dot shows
+  only its label, left of the dot and on screen; `#experience` lands at 70 px; Experience is lit;
+  and at 1.5 s the label is gone while the rail still shows. scrollWidth is 390 at the top, at
+  Skills, and with the label up. With live motion, the scroll passes 167 intermediate positions and
+  the rail is shown on **all 292 frames** (no pop in/out). The label has faded out by 1.5 s, the
+  rail fades away back at the top and returns at `#about`. Under reduced motion a dot's tap jumps
+  (0 between). On desktop the rail computes `display: none` and the pane `flex`. A probe tapped all
+  eight dots in turn, and each lit its own section; Certifications, the shortest at 491 px, still
+  covers the observer's middle band.
+- **Shots** (`p7` against `p6`): desktop 9 of 10 give AE 0; `desktop-about` gives 0.0013, which
+  `-fuzz 1%` reads as 0. So desktop is unchanged. `phone-top` and `phone-full` give 0 at
+  `-fuzz 1%`, because the rail is hidden over the hero. The 8 phone section shots give about 1,680
+  each. About 1,657 of that is inside the rail's 28 px strip, and about 25 px is the lit dot's glow
+  just left of it. I read `phone-skills` and `phone-experience`, and the right dot is lit in each.
+  The crops are in `tools/shots/p7-check/`. scrollWidth is 390 and 1440; the favicon 404 is the
+  only error.
+- **Regressions:** `tools/checks/P5.mjs` gives 14 passed, 0 failed, and `P6.mjs` 45 PASS, 0 FAIL.
+- **For P12:** two things are checked only in Edge. One is the label pill's backdrop blur on the
+  iPhone. The other is `visibility: inherit` on Safari (if it fails, a label could flash over the
+  hero after a fast scroll up). The owner's phone is the check. The rail's names are the pane's
+  texts, so "Certs" is what VoiceOver reads. Changing it means changing the pane's link text too,
+  which shows on desktop (rule 3).
