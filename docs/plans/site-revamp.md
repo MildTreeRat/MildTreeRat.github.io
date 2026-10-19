@@ -19,7 +19,7 @@ on a phone the right-side section pane covers half the screen.
 |---|---|---|
 | **P0** | This plan document, and keep `docs/` off the live site | ✅ Done *(2026-10-19)* — approved by the owner |
 | **P1** | The screenshot harness, and the baseline shots | ✅ Done *(2026-10-19)* |
-| **P2** | Consolidate `custom.css` into one clean file with design tokens | ⬜ |
+| **P2** | Consolidate `custom.css` into one clean file with design tokens | ✅ Done *(2026-10-19)* |
 | **P3** | Typography: Inter and a tighter type scale | ⬜ |
 | **P4** | Optimise the images | ⬜ |
 | **P5** | Calmer motion: no parallax, hover only where it helps | ⬜ |
@@ -432,3 +432,50 @@ every later phase compares against; it lives on this machine only.
   phone top shot it shows as thin blue bars against the white sky.
 - **For P11:** the local server serves the whole repo root, `tools/` included, so
   `tools/node_modules/…` is reachable at `/tools/…` locally. The live site excludes `tools/`.
+
+### P2 (2026-10-19)
+
+- **`custom.css` rewritten** (601 → 615 lines, the `:root` block being most of the growth): tokens, base,
+  hero, hero nav, side nav, boxes and tags, experience, competitions, utilities, then every media query.
+  A script that walked the top-level rules counted 80 selectors outside media queries, each declared once.
+  No `!important` remains. The FIX PATCH, the legacy no-op and the empty
+  `.experience-card.alt-right .experience-layout {}` are gone.
+- **Desktop renders identically.** In light, every desktop shot gives AE 0 against `baseline` except
+  `desktop-top`, which gives 0.0052: the hero raster noise P1 measured, and `-fuzz 1%` reads it as 0.
+  In dark (`--dark --device desktop` against `baseline-dark`), all 10 shots give AE 0.
+- **Phone: no side pane.** At 390px `.side-nav-wrapper` computes `display: none`, and still does after
+  a scroll flips its class to `expanded`. The phone shots differ from baseline (AE 2,000–20,000), across
+  the tab and also as text anti-aliasing all over the page: taking away the fixed, backdrop-filtered
+  pane changes compositing. That the pane is the *only* change was shown by forcing it back:
+  injecting `.side-nav-wrapper{display:flex!important}` reproduced baseline `phone-top`, `-about` and
+  `-skills` at AE 0 under `-fuzz 1%`, and `-experience` to within a max channel difference of 5/255.
+- **For P9:** the phone scrollWidth is **390 of 390** at every shot, and also after a scroll with the
+  pane hidden. That is the same as baseline, so hiding the pane had no overflow to fix. As P1 found,
+  the off-edge subtitle needs looking for on the real iPhone or after P3's Inter, not in this harness.
+- **Departures from "carry over the winning value"**, none of them visible on desktop:
+  (1) `-webkit-backdrop-filter: brightness(1.05)` was added beside the hero film's `backdrop-filter`
+  (rule 6), so Safari now brightens the photo 5% under the film, as Chromium always did;
+  (2) the hero nav's radii (46px pill, 28px links) are `--radius-pill: 999px`, which draws the same
+  because a radius is clamped to half the height (AE 0 confirms);
+  (3) the standalone `.hero-menu-desktop { position: relative }` merged into the hero's lift group,
+  since that element is always inside the hero;
+  (4) `.side-nav-wrapper.expanded .side-nav { padding-right: 0 }` was dropped, because the panel's
+  right padding is now 0 in both states. `.side-nav`'s old `top`/`right`/`transform`, which
+  `!important` used to neutralise, are now simply unset.
+- **Tokens keep exact values**, so some near-duplicates sit side by side: `--color-text-nav` `#d2d2d5`
+  against `--color-text-side-nav` `#d2d2d6`, `--white-05` against `--white-06` (hero-nav hover vs
+  side-nav hover), and `--white-14` against `--white-15` (open `comp-details` vs `notable-projects`
+  border). **For P10:** candidates to unify.
+- **For P3:** `--font-sans` is defined but **not applied**. It is Bulma 1.0.4's own
+  `--bulma-family-primary`, and that stack **already starts with `Inter`**, so loading an `Inter`
+  webfont may change every Bulma-styled element before any rule here names it. Note also that on
+  the hero `h1`, `.hero.hero-banner h1`'s text-shadow out-specifies `.font-outline`'s, so only the
+  outline's stroke shows there.
+- **For P6:** `.hero.hero-banner .navbar` (specificity 0,3,0, the rule lifting hero content above the
+  film) beats Bulma's `.navbar.is-fixed-top` (0,2,0). The phone navbar therefore computes
+  `position: relative` and scrolls away with the hero, so it is **not fixed**. P2 kept that. A menu
+  that stays reachable needs that group to stop matching the navbar.
+- **For P7 and P8:** the `.side-nav::after` "indicator strip" never shows. It sits right of the
+  panel, which ends at or past the viewport's right edge in both states, and the panel's
+  `overflow: hidden` clips it anyway. The collapsed "tab" is the panel's own left 14px plus its
+  shadow (the phone diff at the tab is ~29 CSS px wide because of the shadow). The CSS comment says so.

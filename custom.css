@@ -1,79 +1,143 @@
-/* Dark base */
+/* The site's own layer over Bulma 1.0.4.
+   Order: tokens, base, hero, hero nav, side nav, boxes and tags, experience, competitions,
+   utilities, and every media query last, so a breakpoint always wins over the rule it narrows
+   (the phone side pane once stayed visible because a later unconditional rule beat its hide).
+   Each selector is declared once outside the media queries. New colours go in :root first. */
+
+/* ---------- Tokens ---------- */
+:root {
+  /* Bulma 1.0.4's own --bulma-family-primary, so naming it here changes nothing.
+     Not applied: Bulma still sets the family. */
+  --font-sans: Inter, "SF Pro", "Segoe UI", Roboto, Oxygen, Ubuntu, "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
+
+  /* Surfaces and lines */
+  --color-bg: #111;
+  --color-surface: #1c1c1c;
+  --color-surface-raised: #242424;
+  --color-surface-hover: #333;
+  --color-border: #2a2a2a;
+  --color-border-raised: #333;
+
+  /* Text */
+  --color-text: #e2e2e2;
+  --color-text-box: #e0e0e0;
+  --color-text-tag: #d8d8d8;
+  --color-text-nav: #d2d2d5;
+  --color-text-side-nav: #d2d2d6;
+  --color-text-strong: #fff;
+  --color-dot: #6e6e75;
+
+  /* Links */
+  --color-link: #67b7ff;
+  --color-link-hover: #9fd3ff;
+
+  /* Accent: blue to purple, and the shades either side of it */
+  --accent-blue: #5e8dff;
+  --accent-purple: #9b60ff;
+  --accent-indigo: #6a5dff;
+  --accent-lilac: #b07bff;
+  --accent-focus: #7a5dff;
+  --accent-gradient: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+
+  /* White washes and hairlines over the dark surfaces, named by alpha */
+  --white-03: rgba(255,255,255,0.03);
+  --white-04: rgba(255,255,255,0.04);
+  --white-05: rgba(255,255,255,0.05);
+  --white-06: rgba(255,255,255,0.06);
+  --white-08: rgba(255,255,255,0.08);
+  --white-14: rgba(255,255,255,0.14);
+  --white-15: rgba(255,255,255,0.15);
+  --hero-film: rgba(255,255,255,0.18);
+
+  /* Glass: the hero nav pill and the side pane */
+  --glass-pill: linear-gradient(145deg, rgba(20,20,22,0.78), rgba(32,32,36,0.55));
+  --glass-panel: linear-gradient(160deg, rgba(25,25,30,0.82), rgba(35,35,40,0.55));
+  --blur-pill: blur(14px) saturate(135%);
+  --blur-panel: blur(14px) saturate(140%);
+  --active-pill: linear-gradient(145deg, rgba(70,70,255,0.18), rgba(150,70,255,0.18));
+  --active-panel: linear-gradient(145deg, rgba(85,110,255,0.22), rgba(160,80,255,0.22));
+
+  /* Radii. A pill's radius is clamped to half its height, so 999px draws the same as any
+     radius past that. */
+  --radius-pill: 999px;
+  --radius-panel: 20px;
+  --radius-lg: 16px;
+  --radius-md: 14px;
+  --radius-sm: 12px;
+
+  /* Spacing */
+  --space-1: .4rem;
+  --space-2: .65rem;
+  --space-3: 1.1rem;
+  --space-4: 1.5rem;
+  --space-5: 1.75rem;
+
+  /* Shadows */
+  --shadow-glow: 0 0 5px rgba(255,255,255,0.25);
+  --shadow-glow-hover: 0 0 18px rgba(255,255,255,0.7);
+  --shadow-pill: 0 4px 18px -6px rgba(0,0,0,0.55), 0 0 0 1px var(--white-04);
+  --shadow-panel: 0 6px 28px -10px rgba(0,0,0,0.6), 0 0 0 1px var(--white-03);
+  --shadow-active-pill: 0 0 0 1px rgba(180,180,255,0.18), 0 4px 14px -4px rgba(90,70,255,0.45);
+  --shadow-active-panel: 0 0 0 1px rgba(160,140,255,0.20), 0 4px 14px -4px rgba(110,80,255,0.55);
+  --shadow-strip: 0 0 12px -2px rgba(120,90,255,0.55);
+  --shadow-dot-active: 0 0 10px 3px rgba(135,110,255,0.55);
+  --shadow-media-hover: 0 0 18px -4px rgba(140,120,255,0.4);
+  --shadow-media-hover-sm: 0 0 16px -4px rgba(120,110,255,0.45);
+  --shadow-text-hero: 0 2px 12px rgba(0,0,0,0.55);
+  --shadow-text-outline: 0 0 6px var(--white-15);
+  --stroke-outline: rgba(0,0,0,0.6);
+
+  /* Motion */
+  --ease-slide: cubic-bezier(.4,.12,.15,.98);
+}
+
+/* ---------- Base ---------- */
 body {
-  background: #111;
-  color: #e2e2e2;
-}
-
-/* Preserve outlined title effect */
-.font-outline {
-  -webkit-text-stroke: 1px rgba(0,0,0,0.6);
-  text-shadow: 0 0 6px rgba(255,255,255,0.15);
-}
-
-/* Hover glow effect (replaces Tailwind hover utilities) */
-.hover-glow {
-  transition: box-shadow .3s, transform .25s;
-  box-shadow: 0 0 5px rgba(255,255,255,0.25);
-}
-.hover-glow:hover {
-  box-shadow: 0 0 18px rgba(255,255,255,0.7);
-  transform: translateY(-3px);
-}
-
-/* Adjust Bulma boxes for darker theme */
-.box {
-  background: #1c1c1c;
-  border: 1px solid #2a2a2a;
-  color: #e0e0e0;
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 a {
-  color: #67b7ff;
+  color: var(--color-link);
 }
 a:hover {
-  color: #9fd3ff;
+  color: var(--color-link-hover);
   text-decoration: underline;
 }
 
-/* Tag styling tweak */
-.tag {
-  background: #242424;
-  color: #d8d8d8;
-  margin: 0 .4rem .4rem 0;
-  border: 1px solid #333;
-}
-.tag:hover {
-  background: #333;
-}
-
-/* Headings spacing */
 .title + .subtitle {
   margin-top: .5rem;
 }
 
-/* Full-bleed hero background with fixed (parallax-like) effect */
+/* Anchor targets land clear of the top edge */
+section[id] { scroll-margin-top: 70px; }
+
+/* ---------- Hero ---------- */
 .hero.hero-banner {
   position: relative;
-  background-image: url("AaronGrad.jpeg"); /* Replace with a wider banner image if you have one */
+  background-image: url("AaronGrad.jpeg");
   background-size: cover;
-  background-position: center center;
+  background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; /* Parallax feel */
+  background-attachment: fixed;
   overflow: hidden;
 }
 
-/* White translucent film over the background ONLY */
+/* White film over the photo only; the content is lifted above it */
 .hero.hero-banner::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,0.25); /* Adjust opacity (0.10–0.25) to taste */
+  background: var(--hero-film);
   backdrop-filter: brightness(1.05);
+  -webkit-backdrop-filter: brightness(1.05);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Keep foreground content above overlay */
+/* Above the film. This also makes the phone navbar position: relative, not Bulma's
+   is-fixed-top fixed: this selector is more specific. */
 .hero.hero-banner .hero-body,
 .hero.hero-banner .hero-foot,
 .hero.hero-banner .navbar,
@@ -82,39 +146,40 @@ a:hover {
   z-index: 2;
 }
 
-/* Ensure avatar + text stand out */
 .hero-avatar img {
   position: relative;
   z-index: 2;
 }
 
-/* Optional subtle text lift */
 .hero.hero-banner h1,
 .hero.hero-banner h2 {
-  text-shadow: 0 2px 12px rgba(0,0,0,0.55);
+  text-shadow: var(--shadow-text-hero);
 }
 
-/* Refined hero menu glass panel */
+/* Outlined title. On the hero h1 the rule above out-specifies this text-shadow, so only the
+   stroke shows there. */
+.font-outline {
+  -webkit-text-stroke: 1px var(--stroke-outline);
+  text-shadow: var(--shadow-text-outline);
+}
+
+/* ---------- Hero nav (desktop) ---------- */
 .hero-foot--wrapper {
   display: flex;
   justify-content: center;
-  padding: 0 1rem 1.1rem;
-}
-
-.hero-menu-desktop {
-  position: relative;
+  padding: 0 1rem var(--space-3);
 }
 
 .hero-nav {
   display: flex;
   gap: .35rem;
   padding: .55rem .7rem;
-  background: linear-gradient(145deg, rgba(20,20,22,0.78), rgba(32,32,36,0.55));
-  backdrop-filter: blur(14px) saturate(135%);
-  -webkit-backdrop-filter: blur(14px) saturate(135%);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 46px;
-  box-shadow: 0 4px 18px -6px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04);
+  background: var(--glass-pill);
+  backdrop-filter: var(--blur-pill);
+  -webkit-backdrop-filter: var(--blur-pill);
+  border: 1px solid var(--white-08);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-pill);
 }
 
 .hero-nav a {
@@ -126,12 +191,13 @@ a:hover {
   letter-spacing: .6px;
   text-transform: uppercase;
   font-weight: 600;
-  color: #d2d2d5;
-  border-radius: 28px;
+  color: var(--color-text-nav);
+  border-radius: var(--radius-pill);
   line-height: 1;
   transition: color .25s, background .35s, box-shadow .35s;
 }
 
+/* Underline that grows in under the active link */
 .hero-nav a::after {
   content: "";
   position: absolute;
@@ -139,7 +205,7 @@ a:hover {
   right: 18%;
   bottom: 6px;
   height: 2px;
-  background: linear-gradient(90deg,#5e8dff,#9b60ff);
+  background: var(--accent-gradient);
   opacity: 0;
   transform: scaleX(.25);
   transform-origin: center;
@@ -148,14 +214,14 @@ a:hover {
 }
 
 .hero-nav a:hover {
-  color: #ffffff;
-  background: rgba(255,255,255,0.05);
+  color: var(--color-text-strong);
+  background: var(--white-05);
 }
 
 .hero-nav a.is-active {
-  color: #ffffff;
-  background: linear-gradient(145deg, rgba(70,70,255,0.18), rgba(150,70,255,0.18));
-  box-shadow: 0 0 0 1px rgba(180,180,255,0.18), 0 4px 14px -4px rgba(90,70,255,0.45);
+  color: var(--color-text-strong);
+  background: var(--active-pill);
+  box-shadow: var(--shadow-active-pill);
 }
 
 .hero-nav a.is-active::after {
@@ -163,7 +229,357 @@ a:hover {
   transform: scaleX(1);
 }
 
-/* Tighten on very wide screens */
+/* ---------- Side nav ---------- */
+/* Wrapper: pinned to the right edge, centres the panel vertically, and slides it in and out.
+   index.html's script swaps .collapsed and .expanded. */
+.side-nav-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  z-index: 60;
+  transition: transform .45s var(--ease-slide), opacity .35s;
+}
+
+/* Collapsed, the panel's own left 14px stay on screen as a tab */
+.side-nav-wrapper.collapsed {
+  transform: translateX(calc(100% - 14px));
+  opacity: .65;
+}
+
+.side-nav-wrapper.expanded {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Panel: the wrapper does the positioning. Its right padding is 0 in both states. */
+.side-nav {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3) 0 var(--space-3) .9rem;
+  width: 210px;
+  max-height: 70vh;
+  overflow: hidden;
+  background: var(--glass-panel);
+  backdrop-filter: var(--blur-panel);
+  -webkit-backdrop-filter: var(--blur-panel);
+  border: 1px solid var(--white-08);
+  border-radius: var(--radius-panel) 0 0 var(--radius-panel);
+  box-shadow: var(--shadow-panel);
+  transition: padding .35s;
+}
+
+/* Indicator strip. It sits just past the panel's right edge, which is at or beyond the
+   viewport's edge in both states, and the panel clips its overflow, so it never shows. */
+.side-nav::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -14px;
+  width: 14px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--accent-indigo), var(--accent-purple));
+  border-radius: 0 4px 4px 0;
+  box-shadow: var(--shadow-strip);
+  opacity: .85;
+  transition: opacity .35s, filter .35s;
+}
+
+.side-nav-wrapper.expanded .side-nav::after {
+  opacity: 0;
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+/* Links. Declared after the base a:hover so the pane's links never underline. */
+.side-nav a {
+  position: relative;
+  font-size: .78rem;
+  letter-spacing: .55px;
+  font-weight: 600;
+  padding: .55rem .3rem .5rem 1.05rem;
+  border-radius: var(--radius-md);
+  color: var(--color-text-side-nav);
+  line-height: 1.1;
+  text-decoration: none;
+  transition: background .25s, color .25s;
+}
+
+.side-nav-wrapper.expanded .side-nav a {
+  padding-right: .2rem;
+}
+
+/* The dot beside each link */
+.side-nav a::before {
+  content: "";
+  position: absolute;
+  left: .5rem;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  background: var(--color-dot);
+  border-radius: 50%;
+  transform: translateY(-50%) scale(1);
+  transition: background .25s, transform .35s, box-shadow .35s;
+}
+
+.side-nav a:hover {
+  background: var(--white-06);
+  color: var(--color-text-strong);
+}
+
+.side-nav a.active {
+  color: var(--color-text-strong);
+  background: var(--active-panel);
+  box-shadow: var(--shadow-active-panel);
+}
+
+.side-nav a.active::before {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-lilac));
+  transform: translateY(-50%) scale(1.5);
+  box-shadow: var(--shadow-dot-active);
+}
+
+/* Keyboard focus ring; index.html's script adds .using-mouse to body on mousedown */
+.side-nav a:focus {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: 2px;
+}
+
+.using-mouse .side-nav a:focus { outline: none; }
+
+/* ---------- Boxes and tags ---------- */
+.box {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-box);
+}
+
+.hover-glow {
+  transition: box-shadow .3s, transform .25s;
+  box-shadow: var(--shadow-glow);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--shadow-glow-hover);
+  transform: translateY(-3px);
+}
+
+.tag {
+  background: var(--color-surface-raised);
+  color: var(--color-text-tag);
+  margin: 0 var(--space-1) var(--space-1) 0;
+  border: 1px solid var(--color-border-raised);
+}
+
+.tag:hover {
+  background: var(--color-surface-hover);
+}
+
+/* ---------- Experience (rendered from experiencesData in index.html) ---------- */
+.experience-card { padding: var(--space-5) 1.6rem; }
+
+.experience-layout {
+  display: flex;
+  gap: var(--space-5);
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.experience-media {
+  flex: 0 0 140px;
+  max-width: 140px;
+  text-align: center;
+}
+
+.experience-media img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  background: var(--white-04);
+  border: 1px solid var(--white-08);
+  border-radius: var(--radius-lg);
+  padding: .75rem;
+  transition: transform .35s, box-shadow .35s;
+}
+
+.experience-media img:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: var(--shadow-media-hover);
+}
+
+.experience-body { flex: 1 1 320px; }
+
+/* Every other card puts its image on the right */
+.experience-card.alt-right .experience-media { order: 2; }
+
+.experience-card.alt-right .experience-body {
+  order: 1;
+  padding-right: .25rem;
+}
+
+.experience-card:not(.alt-right) .experience-body { padding-left: 0; }
+
+.notable-projects {
+  background: var(--white-03);
+  border: 1px solid var(--white-08);
+  border-radius: var(--radius-sm);
+  padding: .75rem 1rem;
+  transition: background .35s, border-color .35s;
+}
+
+.notable-projects[open] {
+  background: var(--white-06);
+  border-color: var(--white-15);
+}
+
+.notable-projects summary {
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+  padding-right: 1.2rem;
+  outline: none;
+}
+
+.notable-projects summary::marker,
+.notable-projects summary::-webkit-details-marker { display: none; }
+
+.notable-projects summary::after {
+  content: "+";
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-weight: 600;
+  transition: transform .35s;
+}
+
+.notable-projects[open] summary::after {
+  content: "–";
+  transform: rotate(180deg);
+}
+
+.notable-projects ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  list-style: disc;
+  font-size: .9rem;
+  line-height: 1.35;
+}
+
+.notable-projects li + li { margin-top: .5rem; }
+
+/* ---------- Competitions (rendered from competitionsData in index.html) ---------- */
+.competition-card { padding: var(--space-4) 1.4rem; }
+
+.competition-layout {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.competition-media {
+  flex: 0 0 110px;
+  max-width: 110px;
+  text-align: center;
+}
+
+.competition-media img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  background: var(--white-04);
+  border: 1px solid var(--white-08);
+  border-radius: var(--radius-md);
+  padding: .6rem;
+  transition: transform .35s, box-shadow .35s;
+}
+
+.competition-media img:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: var(--shadow-media-hover-sm);
+}
+
+.competition-body { flex: 1 1 320px; }
+
+.comp-link {
+  color: var(--color-link);
+  font-weight: 600;
+}
+
+.comp-link:hover { text-decoration: underline; }
+
+.comp-details {
+  background: var(--white-03);
+  border: 1px solid var(--white-08);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) .9rem;
+  transition: background .35s, border-color .35s;
+}
+
+.comp-details[open] {
+  background: var(--white-06);
+  border-color: var(--white-14);
+}
+
+.comp-details summary {
+  cursor: pointer;
+  list-style: none;
+  position: relative;
+  padding-right: 1.2rem;
+}
+
+.comp-details summary::marker,
+.comp-details summary::-webkit-details-marker { display: none; }
+
+.comp-details summary::after {
+  content: "+";
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-weight: 600;
+  transition: transform .35s;
+}
+
+.comp-details[open] summary::after {
+  content: "–";
+  transform: rotate(180deg);
+}
+
+.comp-details ul {
+  margin: 0;
+  padding-left: 1.05rem;
+  list-style: disc;
+  font-size: .85rem;
+  line-height: 1.35;
+}
+
+.comp-details ul li + li { margin-top: var(--space-1); }
+
+.comp-metrics { margin-top: var(--space-1); }
+
+.comp-metrics li { list-style: circle; }
+
+/* ---------- Utilities ---------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+}
+
+/* ---------- Media queries (last, so each wins over the rule it narrows) ---------- */
+
+/* Very wide screens: a slightly tighter hero nav */
 @media (min-width: 1600px) {
   .hero-nav {
     padding: .6rem .9rem;
@@ -174,429 +590,26 @@ a:hover {
   }
 }
 
-/* Mobile: hide desktop nav (already hidden earlier) */
+/* Below Bulma's desktop breakpoint the phone navbar takes over and the side pane is hidden */
 @media (max-width: 1023px) {
   .hero-nav { display: none; }
-}
-
-/* Mobile fallback: disable fixed attachment to avoid jank */
-@media (max-width: 768px) {
-  .hero.hero-banner {
-    background-attachment: scroll;
-  }
-}
-
-/* Ensure anchor sections have spacing when scrolled to */
-section[id] { scroll-margin-top: 70px; }
-
-/* Right-side vertical nav */
-.side-nav {
-  position: fixed;
-  top: 50%;
-  right: 2.2vw;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: .65rem;
-  padding: 1.1rem .35rem 1.1rem .95rem; /* reduced right padding */
-  width: 210px;
-  background: linear-gradient(160deg, rgba(25,25,30,0.82), rgba(35,35,40,0.55));
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 20px 0 0 20px;
-  box-shadow: 0 6px 28px -10px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03); /* removed purple glow */
-  max-height: 70vh;
-  overflow: hidden;
-  position: relative;
-  transition: opacity .35s, visibility .35s, transform .45s;
-}
-
-/* Side Nav WRAPPER (controls slide + vertical centering) */
-.side-nav-wrapper {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  align-items: center;          /* vertical centering */
-  z-index: 60;
-  transition: transform .45s cubic-bezier(.4,.12,.15,.98), opacity .35s;
-}
-
-/* Collapsed: leave 18px indicator visible */
-.side-nav-wrapper.collapsed {
-  transform: translateX(calc(100% - 14px));
-  opacity: .65;
-}
-.side-nav-wrapper.expanded {
-  transform: translateX(0);
-  opacity: 1;
-}
-
-/* Side Nav PANEL (no longer fixed; wrapper handles position) */
-.side-nav {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: .65rem;
-  /* Base padding (collapsed state keeps a little interior space) */
-  padding: 1.1rem .3rem 1.1rem .95rem;
-  width: 210px;
-  max-height: 70vh;
-  overflow: hidden;
-  background: linear-gradient(160deg, rgba(25,25,30,0.82), rgba(35,35,40,0.55));
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 20px 0 0 20px;
-  box-shadow: 0 6px 28px -10px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03);
-  transition: padding .35s;
-}
-
-/* Remove right padding when expanded */
-.side-nav-wrapper.expanded .side-nav {
-  padding-right: 0;             /* flush on the right */
-}
-
-/* Indicator strip (teaser when collapsed) */
-.side-nav::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: -14px;
-  width: 14px;
-  height: 100%;
-  background: linear-gradient(180deg,#6a5dff,#9b60ff);
-  border-radius: 0 4px 4px 0;
-  box-shadow: 0 0 12px -2px rgba(120,90,255,0.55);
-  opacity: .85;
-  transition: opacity .35s, filter .35s;
-}
-.side-nav-wrapper.expanded .side-nav::after {
-  opacity: 0;
-  filter: blur(4px);
-  pointer-events: none;
-}
-
-/* Links: trim right padding further; flush feel when expanded */
-.side-nav a {
-  position: relative;
-  font-size: .78rem;
-  letter-spacing: .55px;
-  font-weight: 600;
-  padding: .55rem .3rem .5rem 1.05rem; /* reduced right padding */
-  border-radius: 14px;
-  color: #d2d2d6;
-  line-height: 1.1;
-  text-decoration: none;
-  transition: background .25s, color .25s;
-}
-.side-nav-wrapper.expanded .side-nav a {
-  padding-right: .2rem;         /* even tighter when visible */
-}
-
-.side-nav a::before {
-  content: "";
-  position: absolute;
-  left: .5rem;
-  top: 50%;
-  width: 6px;
-  height: 6px;
-  background: #6e6e75;
-  border-radius: 50%;
-  transform: translateY(-50%) scale(1);
-  transition: background .25s, transform .35s, box-shadow .35s;
-}
-
-.side-nav a:hover {
-  background: rgba(255,255,255,0.06);
-  color: #fff;
-}
-.side-nav a.active {
-  color: #fff;
-  background: linear-gradient(145deg, rgba(85,110,255,0.22), rgba(160,80,255,0.22));
-  box-shadow: 0 0 0 1px rgba(160,140,255,0.20), 0 4px 14px -4px rgba(110,80,255,0.55);
-}
-.side-nav a.active::before {
-  background: linear-gradient(135deg,#5e8dff,#b07bff);
-  transform: translateY(-50%) scale(1.5);
-  box-shadow: 0 0 10px 3px rgba(135,110,255,0.55);
-}
-
-@media (max-width: 1023px) {
   .side-nav-wrapper { display: none; }
 }
 
-/* Focus */
-.using-mouse .side-nav a:focus { outline: none; }
-.side-nav a:focus {
-  outline: 2px solid #7a5dff;
-  outline-offset: 2px;
-}
-
-/* Remove old hidden class (deprecated) */
-.side-nav.is-hidden-side-nav { /* legacy noop */ }
-
-/* (If not already present) hero banner parallax overlay adjustments */
-.hero.hero-banner {
-  position: relative;
-  background-image: url("AaronGrad.jpeg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  overflow: hidden;
-}
-.hero.hero-banner::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.18);
-  backdrop-filter: brightness(1.05);
-  z-index: 0;
-}
-.hero.hero-banner .hero-body,
-.hero.hero-banner .hero-foot,
-.hero.hero-banner .navbar { position: relative; z-index: 2; }
-
-@media (max-width: 768px) {
-  .hero.hero-banner { background-attachment: scroll; }
-}
-
-/* Experience (data-driven) */
-.experience-card { padding:1.75rem 1.6rem; }
-.experience-layout {
-  display:flex;
-  gap:1.75rem;
-  align-items:flex-start;
-  flex-wrap:wrap;
-}
-.experience-media {
-  flex:0 0 140px;
-  max-width:140px;
-  text-align:center;
-}
-.experience-media img {
-  width:140px;
-  height:140px;
-  object-fit:contain;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:16px;
-  padding:.75rem;
-  transition:transform .35s, box-shadow .35s;
-}
-.experience-media img:hover {
-  transform:translateY(-4px) scale(1.03);
-  box-shadow:0 0 18px -4px rgba(140,120,255,0.4);
-}
-.experience-body { flex:1 1 320px; }
-
-.notable-projects {
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:12px;
-  padding:.75rem 1rem;
-  transition:background .35s, border-color .35s;
-}
-.notable-projects[open] {
-  background:rgba(255,255,255,0.06);
-  border-color:rgba(255,255,255,0.15);
-}
-.notable-projects summary {
-  cursor:pointer;
-  list-style:none;
-  position:relative;
-  padding-right:1.2rem;
-  outline:none;
-}
-.notable-projects summary::marker,
-.notable-projects summary::-webkit-details-marker { display:none; }
-.notable-projects summary::after {
-  content:"+";
-  position:absolute;
-  right:0;
-  top:0;
-  font-weight:600;
-  transition:transform .35s;
-}
-.notable-projects[open] summary::after {
-  content:"–";
-  transform:rotate(180deg);
-}
-.notable-projects ul {
-  margin:0;
-  padding-left:1.1rem;
-  list-style:disc;
-  font-size:.9rem;
-  line-height:1.35;
-}
-.notable-projects li + li { margin-top:.5rem; }
-
-.visually-hidden {
-  position:absolute;
-  width:1px;
-  height:1px;
-  padding:0;
-  margin:-1px;
-  overflow:hidden;
-  clip:rect(0 0 0 0);
-  border:0;
-}
-
-@media (max-width:640px){
-  .experience-layout { flex-direction:column; }
-  .experience-media img { width:120px; height:120px; }
-}
-
-/* Alternating layout: visually swap columns on every other card (desktop) */
-.experience-card.alt-right .experience-layout {
-  /* keep flex so we can reorder children via order */
-}
-.experience-card.alt-right .experience-media { order: 2; }
-.experience-card.alt-right .experience-body { order: 1; }
-
-/* Optional: subtle alignment tweak when image on right */
-.experience-card.alt-right .experience-body { padding-right: .25rem; }
-.experience-card:not(.alt-right) .experience-body { padding-left: .0rem; }
-
+/* Narrow screens: one column order for every experience card */
 @media (max-width: 800px) {
-  /* On narrow screens keep a single column for readability */
   .experience-card.alt-right .experience-media,
   .experience-card.alt-right .experience-body { order: initial; }
 }
 
-/* Competitions & Extracurricular */
-.competition-card { padding:1.5rem 1.4rem; }
-.competition-layout {
-  display:flex;
-  gap:1.5rem;
-  align-items:flex-start;
-  flex-wrap:wrap;
-}
-.competition-media {
-  flex:0 0 110px;
-  max-width:110px;
-  text-align:center;
-}
-.competition-media img {
-  width:110px;
-  height:110px;
-  object-fit:contain;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:14px;
-  padding:.6rem;
-  transition:transform .35s, box-shadow .35s;
-}
-.competition-media img:hover {
-  transform:translateY(-4px) scale(1.04);
-  box-shadow:0 0 16px -4px rgba(120,110,255,0.45);
-}
-.competition-body { flex:1 1 320px; }
-.comp-link { color:#67b7ff; font-weight:600; }
-.comp-link:hover { text-decoration:underline; }
-.comp-details {
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:12px;
-  padding:.65rem .9rem;
-  transition:background .35s, border-color .35s;
-}
-.comp-details[open] {
-  background:rgba(255,255,255,0.06);
-  border-color:rgba(255,255,255,0.14);
-}
-.comp-details summary {
-  cursor:pointer;
-  list-style:none;
-  position:relative;
-  padding-right:1.2rem;
-}
-.comp-details summary::marker,
-.comp-details summary::-webkit-details-marker { display:none; }
-.comp-details summary::after {
-  content:"+";
-  position:absolute;
-  right:0;
-  top:0;
-  font-weight:600;
-  transition:transform .35s;
-}
-.comp-details[open] summary::after {
-  content:"–";
-  transform:rotate(180deg);
-}
-.comp-details ul {
-  margin:0;
-  padding-left:1.05rem;
-  list-style:disc;
-  font-size:.85rem;
-  line-height:1.35;
-}
-.comp-details ul li + li { margin-top:.4rem; }
-.comp-metrics { margin-top:.4rem; }
-.comp-metrics li { list-style:circle; }
-
-@media (max-width:640px){
-  .competition-layout { flex-direction:column; }
-  .competition-media img { width:90px; height:90px; }
+/* No fixed background attachment on small screens: it janks on mobile */
+@media (max-width: 768px) {
+  .hero.hero-banner { background-attachment: scroll; }
 }
 
-/* --- SIDE NAV FIX PATCH ---
-   Issues: duplicate .side-nav block (old fixed version) leaves top/right/transform causing
-   off‑center + gap. We neutralize the old block and tighten edge spacing.
-   ACTION: Delete (or comment out) the FIRST ".side-nav { position: fixed; top:50%; right:2.2vw; ... }"
-   block that appears under the comment "Right-side vertical nav".
-   Keep the wrapper-based version only. Then apply the overrides below.
-*/
-
-/* Collapse translation now matches new indicator width (14px instead of 18px) */
-.side-nav-wrapper.collapsed {
-  transform: translateX(calc(100% - 14px));
-}
-
-/* Ensure wrapper still centers vertically */
-.side-nav-wrapper {
-  top:0;
-  bottom:0;
-  right:0;
-  display:flex;
-  align-items:center;
-}
-
-/* Reset any legacy fixed positioning properties from the earlier (removed) block */
-.side-nav {
-  top:auto !important;
-  right:auto !important;
-  transform:none !important;
-  margin:0;
-  /* Tighten right padding for flush edge */
-  padding:1.1rem 0 1.1rem .9rem; /* right padding = 0 */
-  width:210px;
-}
-
-/* When expanded keep zero right padding; (already zero, left for clarity) */
-.side-nav-wrapper.expanded .side-nav {
-  padding-right:0;
-}
-
-/* Indicator strip: narrower so less visual gap */
-.side-nav::after {
-  right:-14px;
-  width:14px;
-}
-
-/* Optional: if you want absolutely flush (no visual glow “gap”), remove border/right shadow */
-.side-nav-wrapper.expanded .side-nav {
-  /* Uncomment next line to remove right edge softness completely */
-  /* box-shadow: 0 6px 28px -10px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03); */
-}
-
-/* Link padding tighten (remove remaining right interior space) */
-.side-nav a {
-  padding:.55rem .3rem .5rem 1.05rem;
-}
-.side-nav-wrapper.expanded .side-nav a {
-  padding-right:.2rem;
+@media (max-width: 640px) {
+  .experience-layout { flex-direction: column; }
+  .experience-media img { width: 120px; height: 120px; }
+  .competition-layout { flex-direction: column; }
+  .competition-media img { width: 90px; height: 90px; }
 }
