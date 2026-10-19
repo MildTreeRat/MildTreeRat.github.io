@@ -28,10 +28,8 @@
   --tracking-title: -.02em;
   --leading-title: 1.2;
 
-  /* Type sizes off the heading scale: the tags (the Skills cloud a step up from the cards'),
-     and small print (the footer) */
+  /* Type sizes off the heading scale: the tags, and small print (the footer) */
   --text-tag: .8125rem;      /* 13px; Bulma's tag is 12 */
-  --text-tag-lg: .9375rem;   /* 15px; Bulma's are-medium is 16 */
   --text-small: .875rem;
   --text-list: .9rem;        /* the lists inside an experience or competition card */
   --leading-list: 1.5;
@@ -665,9 +663,6 @@ section[id] { scroll-margin-top: 70px; }
   border: 1px solid var(--white-08);
   border-radius: var(--radius-pill);
 }
-
-/* The Skills cloud (are-medium), a step up. Bulma's selector, so it ties and comes later. */
-.tags.are-medium .tag:not(.is-normal):not(.is-large) { font-size: var(--text-tag-lg); }
 
 /* ---------- Resume (rendered from resumesData in index.html) ---------- */
 /* One card per resume: its first page, which opens the PDF, then its name, its date and two
