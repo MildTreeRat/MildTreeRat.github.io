@@ -880,9 +880,8 @@ section[id] { scroll-margin-top: 70px; }
   font-weight: 600;
 }
 
-/* The fold-out itself is with Notable Projects, above */
-.comp-metrics { margin-top: var(--space-1); }
-
+/* The fold-out itself is with Notable Projects, above. The metrics list takes its spacing from
+   the "Impact / Metrics:" line's mb-1: a margin-top here lost to `.comp-details ul` (0,1,1). */
 .comp-metrics li { list-style: circle; }
 
 /* ---------- Footer ---------- */

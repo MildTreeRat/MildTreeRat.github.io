@@ -29,7 +29,7 @@ on a phone the right-side section pane covers half the screen.
 | **P9** | The phone hero: shorter, readable, nothing off the edge | ✅ Done *(2026-10-19)* |
 | **P10** | Cards, spacing and section polish | ✅ Done *(2026-10-19)* |
 | **P11** | The resume section, with the SWE resume as a PDF | ✅ Done *(2026-10-19)* |
-| **P12** | Close: full review, changelog line, leftovers listed | ⬜ |
+| **P12** | Close: full review, changelog line, leftovers listed | ✅ Done *(2026-10-19)* |
 
 ---
 
@@ -1039,3 +1039,86 @@ every later phase compares against; it lives on this machine only.
   foot. A fourth wraps to a new row. P8's flake is worth a sentence in the leftovers. Its "strip
   not drawn" byte compare over the hero fails more often than not now, while the pane's own
   state reads hidden every time.
+
+### P12 (2026-10-19)
+
+- **The final shots are clean.** `node tools/shoot.mjs final` and `final --dark`: scrollWidth is
+  390 of 390 and 1440 of 1440 at every shot, and the only console error and failed request is
+  the favicon 404 (P1). I read every section shot at both sizes, light scheme, plus the foot of
+  both full pages (the footer). Nothing had regressed. Light and dark are now **the same
+  pixels**: all 20 shot pairs give AE 0 at `-fuzz 1%`. So rule 7's pass, which P3 and P10 left
+  open, ends clean, at least at rest; the open menu, hover and focus states were already checked
+  in both schemes by `P6.mjs`, `P10.mjs` and `P11.mjs`. Against `p11`, every shot is 0 at `-fuzz 1%`
+  except two phone shots, at 0.2 and 4.5 pixels of raster noise.
+- **Every in-page link lands.** `node tools/checks/P12.mjs` (new; live motion; about 80 s; takes
+  `--base`) gives **57 passed, 0 failed**. It uses each link the way a visitor would. On the phone
+  that is the burger, then each of the 9 menu links, and each of the 8 rail dots. On the desktop it
+  is each of the 9 hero-nav pills, and each of the 8 pane links after the mouse has brought the pane
+  out. Each section lands at 70px; Home lands at scrollY 0, and the menu is closed after the last tap.
+  Every `a[href^="#"]` on the page belongs to one of those four sets and has a target, so a new
+  in-page link fails the check until it is covered. Every own-origin `href`/`src` answers 200 (the
+  two PDFs as `application/pdf`). The 12 external URLs are listed, not fetched. By hand, `curl -L`
+  gets 200 from GitHub, HackTheBox, the TryHackMe badge, SWCCDC and NCL. LinkedIn (999), the
+  TryHackMe profile (429) and HiveStorm (406) refuse a script, which proves nothing either way.
+- **Regressions:** `P3.mjs` and `P4.mjs` exit 0, `P5.mjs` 14 passed, `P6.mjs` 45 PASS, `P7.mjs` 48 PASS,
+  `P10.mjs` 71 passed and `P11.mjs` 66 passed, all with 0 failed.
+- **Small fixes.** (1) **P8's flake is fixed.** `edgeDrawn` no longer byte-compares the two PNGs.
+  It counts the pixels more than 3/255 apart, decoded on the page's own canvas, and calls the strip
+  drawn past 20 of them (the tab alone is 14 x ~365). After the fix, `P8.mjs` gave **20 PASS, 0 FAIL
+  in 4 runs of 4**; P11 had 0 clean runs in 4. (2) The dead `.comp-metrics { margin-top }` (P10) is
+  gone, and the comment says what spaces that list. The shots before and after are AE 0. (3)
+  `index.html`'s header has one "Date Last Modified" entry for the revamp, wrapped the way the
+  header's TODO entries are.
+- **Leftovers for the owner.**
+  1. **Unreferenced originals, about 13.5 MB, all still on disk (rule 5) and still served at their
+     URLs.** `index.html`, `custom.css` and `showcase.*` do not use them (`custom.css` names
+     `AaronGrad.jpeg` only in a comment). Keep or delete each one:
+
+     | File | Bytes | Replaced by |
+     |---|---:|---|
+     | `AaronGrad.jpeg` | 2,136,850 | `images/hero-1920.jpg` (P4) |
+     | `images/Aaron_and_karina.jpg` | 9,115,839 | `images/aaron-karina-800.jpg` (P4) |
+     | `CompTIASecurityPlus-1.jpg` | 449,729 | `images/security-plus-840.jpg` (P4) |
+     | `Resume-1.jpg` | 1,047,994 | `resumes/Aaron_Sierra_SWE_Resume.pdf` and `.png` (P11) |
+     | `images/oso_esports.jpg` | 394,998 | `images/oso-esports-280.jpg` (P4) |
+     | `images/swccdc.png` | 231,706 | `images/swccdc-280.webp` (P4) |
+     | `images/BRIC.jpg` | 76,841 | nothing; unused before the revamp too |
+     | `images/L3Harris.svg` | 3,482 | nothing (the page uses `L3Harris_Logo.jpg`); unused before |
+     | `images/bu.svg` | 9,923 | nothing (the page uses `bayloruniversity.png`); unused before |
+
+     `CompTIASecurityPlus.pdf` and `Resume_Aaron 3.28.22.docx` are not on the list: the first is the
+     certificate's link (D5), and the second is rule 4's.
+  2. **The favicon 404.** It predates the revamp and is the only error on the page. A small
+     `favicon.ico` (or a `<link rel="icon">`) at the root would clear it.
+  3. **The TryHackMe logo is nearly invisible.** `images/tryhackme.svg` is named "White" inside,
+     but its paths have no fill, so they draw black on the dark logo tile (desktop and phone
+     competitions shots). This predates the revamp: the old tile was dark too. The fix is a white
+     fill in the SVG or a light tile behind that one logo. It is a design call, so it was left.
+  4. **The two top navs order the sections differently from the page.** The hero nav and the
+     phone menu put Certifications and Resume before Leadership. The page, the side pane and the
+     rail go Skills, Leadership, Certifications. This predates the revamp, and rule 3 kept it. Moving
+     two `<a>` lines in each nav would fix it.
+  5. **Checked only in Edge, so the iPhone has the last word:** the hero's height with Safari's
+     toolbars showing (`svh`, P9); the rail label's backdrop blur, and `visibility: inherit` keeping
+     a label from flashing over the hero after a fast scroll up (P7); and on desktop Safari, the
+     pane's discrete `visibility` transition (P8) and the hero name's stroke with `paint-order`
+     (P3; the upright phone has no stroke since P9).
+  6. **Tablets in portrait (768–1023px)** keep the full-height hero with the name over the photo.
+     D11 covered only the phone. Widening the query to `(max-width: 1023px) and (orientation:
+     portrait)` is one line (P9).
+  7. **About on the desktop:** the text card is shorter than the photo card beside it, left so on
+     purpose (P10). **VoiceOver** reads the rail's Certifications dot as "Certs", the pane's text
+     (P7). **`tools/package-lock.json`** carries ~500 lines for `pdfjs-dist`'s optional `canvas`,
+     which installs nothing (P11).
+- **Adding another resume** (another skill set):
+  1. Convert the `.docx` to `resumes/<Name>.pdf` with Word, as P11 did (its steps give the COM line;
+     *File > Save As > PDF* in Word does the same).
+  2. Make the thumbnail: `cd tools && npm install` once on a fresh clone, then from the repo root
+     `node tools/pdf-thumb.mjs resumes/<Name>.pdf`. It writes `resumes/<Name>.png` beside the PDF.
+  3. Add one entry to `resumesData` in `index.html`:
+     `{ label: "…", updated: "Mon YYYY", pdf: "resumes/<Name>.pdf", thumb: "resumes/<Name>.png" }`.
+     Without `thumb`, the card is text only.
+  Two or three cards sit side by side on a desktop with equal heights and their buttons aligned at
+  the foot; a fourth wraps to a new row. `node tools/checks/P11.mjs` then checks every card against
+  its entry: the label and date, the thumbnail (it expects `pdf-thumb.mjs`'s default 600px width),
+  both buttons, and the PDF answering 200.

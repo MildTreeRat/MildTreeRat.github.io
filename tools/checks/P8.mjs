@@ -67,7 +67,43 @@ async function edgeDrawn(page, file) {
   });
   const without = await page.screenshot({ clip: EDGE_CLIP });
   await page.evaluate(() => document.getElementById('p8-no-pane').remove());
-  return !as.equals(without);
+  return (await pixelsApart(page, as, without)) > DRAWN_PX;
+}
+
+// Two shots of the hero photo with nothing changed differ by up to 1/255 per channel, so a byte
+// compare of the PNGs failed "not drawn" in 1 run of 4 at P9 and in most runs by P11 (P9-P11
+// findings). A pixel counts as different only past PIXEL_TOLERANCE, and the strip counts as drawn
+// only past DRAWN_PX of them: the collapsed tab alone is 14 x ~365 px, far above either.
+const PIXEL_TOLERANCE = 3; // of 255, on any channel
+const DRAWN_PX = 20;
+
+/** How many pixels of two same-sized PNG screenshots differ by more than PIXEL_TOLERANCE, decoded
+ *  by the page's own canvas (the harness has no PNG decoder in Node). */
+function pixelsApart(page, a, b) {
+  return page.evaluate(async ([srcA, srcB, tol]) => {
+    const load = src => new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+    const [ia, ib] = await Promise.all([load(srcA), load(srcB)]);
+    const canvas = document.createElement('canvas');
+    canvas.width = ia.width;
+    canvas.height = ia.height;
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(ia, 0, 0);
+    const da = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(ib, 0, 0);
+    const db = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    let n = 0;
+    for (let i = 0; i < da.length; i += 4) {
+      if (Math.abs(da[i] - db[i]) > tol || Math.abs(da[i + 1] - db[i + 1]) > tol
+        || Math.abs(da[i + 2] - db[i + 2]) > tol) n++;
+    }
+    return n;
+  }, [`data:image/png;base64,${a.toString('base64')}`, `data:image/png;base64,${b.toString('base64')}`, PIXEL_TOLERANCE]);
 }
 
 /** Count every time the pane gains .expanded, from now on. */
