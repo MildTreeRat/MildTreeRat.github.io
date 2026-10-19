@@ -42,12 +42,14 @@
   <!-- Hero / Header -->
   <div class="header-wrapper" id="home">
     <section class="hero is-fullheight is-dark hero-banner">
-      <!-- Mobile Nav -->
+      <!-- Mobile Nav. Fixed, so the burger stays in reach (custom.css, "Phone menu"). A button,
+           so a keyboard can open it; four spans, because Bulma 1.0's burger draws its three bars
+           and its X from four (with three, it showed two bars). -->
       <nav class="navbar is-fixed-top is-transparent is-hidden-desktop" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-          <a role="button" class="navbar-burger burger" data-target="mobile-nav" aria-label="menu" aria-expanded="false">
-            <span></span><span></span><span></span>
-          </a>
+          <button type="button" class="navbar-burger" aria-label="menu" aria-controls="mobile-nav" aria-expanded="false">
+            <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+          </button>
         </div>
         <div id="mobile-nav" class="navbar-menu">
           <div class="navbar-end">
@@ -329,13 +331,31 @@
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    /* Mobile Burger */
+    /* Mobile Burger: it opens the menu; a link tap, a tap anywhere else and Esc close it, and
+       aria-expanded always says which. A link scrolls by its own jump, made smooth by html's
+       scroll-behavior in custom.css. */
     const burger = document.querySelector('.navbar-burger');
     const mobileMenu = document.getElementById('mobile-nav');
-    if (burger && mobileMenu) {
-      burger.addEventListener('click', () => {
-        burger.classList.toggle('is-active');
-        mobileMenu.classList.toggle('is-active');
+    const mobileBar = burger?.closest('.navbar');
+    if (burger && mobileMenu && mobileBar) {
+      const menuOpen = () => mobileMenu.classList.contains('is-active');
+      const setMenu = open => {
+        burger.classList.toggle('is-active', open);
+        mobileMenu.classList.toggle('is-active', open);
+        burger.setAttribute('aria-expanded', String(open));
+      };
+      burger.addEventListener('click', () => setMenu(!menuOpen()));
+      mobileMenu.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+      // pointerdown rather than click: iOS Safari sends no click for a tap on a plain element,
+      // so a delegated click listener never hears a tap on the page's text or photo.
+      document.addEventListener('pointerdown', e => {
+        if (menuOpen() && !mobileBar.contains(e.target)) setMenu(false);
+      });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && menuOpen()) {
+          setMenu(false);
+          burger.focus();
+        }
       });
     }
 
@@ -606,13 +626,14 @@
     }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
     sections.forEach(s => heroObserver.observe(s));
 
-    // Smooth scroll hero nav
+    // Hero nav scroll. No behavior is passed, so html's scroll-behavior decides: smooth, or a
+    // jump under prefers-reduced-motion. A 'smooth' passed here would override both.
     document.addEventListener('click', e => {
       const a = e.target.closest('.hero-nav a');
       if (!a) return;
       const id = a.getAttribute('href').slice(1);
       const el = document.getElementById(id);
-      if (el) { e.preventDefault(); el.scrollIntoView({ behavior:'smooth' }); }
+      if (el) { e.preventDefault(); el.scrollIntoView(); }
     });
 
     /* =========================
@@ -670,7 +691,7 @@
       });
     }
 
-    // Smooth scroll side nav
+    // Side nav scroll, with no behavior for the same reason as the hero nav's
     if (sideNav) {
       sideNav.addEventListener('click', e => {
         const a = e.target.closest('a');
@@ -679,7 +700,7 @@
         const el = document.getElementById(id);
         if (el) {
           e.preventDefault();
-          el.scrollIntoView({ behavior:'smooth' });
+          el.scrollIntoView();
           showSideNav('click');
         }
       });

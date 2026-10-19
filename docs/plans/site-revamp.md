@@ -23,7 +23,7 @@ on a phone the right-side section pane covers half the screen.
 | **P3** | Typography: Inter and a tighter type scale | ✅ Done *(2026-10-19)* |
 | **P4** | Optimise the images | ✅ Done *(2026-10-19)* |
 | **P5** | Calmer motion: no parallax, hover only where it helps | ✅ Done *(2026-10-19)* |
-| **P6** | The phone menu: visible, closes on tap, smooth scroll | ⬜ |
+| **P6** | The phone menu: visible, closes on tap, smooth scroll | ✅ Done *(2026-10-19)* |
 | **P7** | Phone slim dots replace the side pane | ⬜ |
 | **P8** | Desktop side pane stays hidden over the hero | ⬜ |
 | **P9** | The phone hero: shorter, readable, nothing off the edge | ⬜ |
@@ -658,3 +658,64 @@ every later phase compares against; it lives on this machine only.
   leadership hover glow (`--shadow-card-hover`, 18px at 0.7 alpha) was kept as it was.
 - **For P12:** new hover rules go in the foot hover block, and the reduced-motion block stays last.
   `tools/checks/P5.mjs` re-runs in about a minute and catches a stuck tap on the phone.
+
+### P6 (2026-10-19)
+
+- **The bar is fixed now.** `.hero.hero-banner .navbar` left the hero's lift group, so Bulma's
+  `.navbar.is-fixed-top` applies (`position: fixed`, z-index 30). Before, the burger had scrolled to
+  y = −2718 after a jump to Skills. The full-width 52px strip is `pointer-events: none`, and only the
+  burger and the open menu take taps, so the strip blocks nothing under it.
+- **The burger** is a `<button type="button" aria-controls="mobile-nav">`, so a keyboard can open it.
+  It was an `<a role="button">` with no `href`, which could not take focus. It also has **four
+  spans**. Bulma 1.0's burger draws its three bars and its X from four. With the old three, spans 1
+  and 2 overlapped, so it showed **two** bars, in Bulma's link blue `rgb(66, 88, 255)`, at 40px. Now
+  it has white bars on the hero nav's dark glass (`--glass-pill`, `--blur-pill` with the `-webkit-`
+  twin, `--white-14` border, `--shadow-pill`). It is 44×44 at x 334–378, y 4–48 (CSS px at 390
+  wide), and plainly visible on the sky in `p6/phone-top.png` and on the page in every section shot.
+  Its tap highlight is off, because Chromium drew it as a light-blue square over the round pill.
+- **The open menu** is a dark card under the burger, right-aligned, `min(16rem, 100% − 1.5rem)`
+  wide, on a new token, `--glass-menu` (0.94 → 0.88 alpha, near opaque because it opens over the
+  sky). Its rows are 44.8px tall and `--color-text-nav`. Every colour is set outright. **Before**, in
+  the light scheme (rule 7), it was a full-width white sheet (`rgb(255, 255, 255)`) under links
+  coloured `rgb(243, 244, 246)` by `.hero.is-dark .navbar`, so the links were near-invisible. The
+  "before" shot is `tools/shots/p6-before/phone-menu-open-light.png`. Bulma's light-scheme hover and
+  focus fill on `a.navbar-item` is near white, and `background: none` on the rows keeps it away.
+  Light and dark now draw the same menu.
+- **Closing.** Before, `aria-expanded` never left `"false"`, and nothing closed the menu but the
+  burger. Now `setMenu(open)` keeps both `is-active` classes and `aria-expanded` together. A link
+  tap closes the menu, and the link's own jump scrolls. A tap outside closes it on **`pointerdown`,
+  not `click`**, because iOS Safari sends no click for a tap on a plain element, so a delegated
+  click listener would never hear it. Esc closes the menu and focuses the burger.
+- **Smooth scroll.** `html { scroll-behavior: smooth }` is in Base. Both `scrollIntoView` calls
+  (hero nav, side pane) dropped `behavior: 'smooth'`, as P5 asked, so CSS decides for them too. The
+  reduced-motion block's comment now says so. The menu's links use native anchor jumps and set the
+  URL hash. The two navs' scripted scrolls still `preventDefault` and set no hash.
+- **Done criteria:** `node tools/checks/P6.mjs` (new) gives **45 PASS, 0 FAIL**, on the untouched
+  tree 12 PASS / 27 FAIL. It covers light and dark: the burger is drawn and in reach, tapping it
+  opens the menu (shot taken), and tapping "Skills" closes it with `aria-expanded="false"`, `#skills`
+  landing at **70px**, through **194 intermediate frames** (0 → 2724). It also checks the burger
+  after the scroll, an outside tap, Esc, and Enter. Under reduced motion "Skills" jumps (0 frames
+  between). On desktop the bar is `display: none`, and the hero nav and the side pane land at 70px,
+  smoothly (157 and 172 frames), and jump under reduced motion. Before, those two still
+  smooth-scrolled under `reduce`; P5's own probe now reads 1867 / 1867 at 60ms, where it read 45.
+  The check tells smooth from a jump by recording `scrollY` every animation frame, because one
+  sample straight after the tap catches a smooth scroll before it starts.
+- **Regressions:** `node tools/checks/P5.mjs` still gives 14 passed, 0 failed. Desktop `p6` against
+  `p5` gives AE 0 on 6 shots, and on the other 4 (`top`, `about`, `resume`, `full`) under 0.006, which
+  `-fuzz 1%` reads as 0. So desktop is unchanged. The phone shots differ (`-fuzz 1%` AE 1,657 to
+  44,050), because the burger now rides on every one, and in `top` because of the hero shift below.
+  scrollWidth is 390 of 390 and 1440 of 1440. The favicon 404 is the only error.
+- **For P7:** the fixed burger owns the top-right corner: 44×44 at x 334–378, y 4–48, z-index 30
+  (Bulma's `--bulma-navbar-fixed-z`, under the side pane's 60). Keep the rail clear of the top ~56px,
+  or centre it vertically as the pane is. A touch on a rail dot is outside the bar, so it closes an
+  open menu (`pointerdown`), which seems right. The dot's scroll should be a bare `scrollIntoView()`,
+  as both navs' now are.
+- **For P9:** the bar left the hero's flex column, so the hero body gained 52px and its centred
+  text moved **up 26px** (h1 top 408 → 382, subtitle 455 → 429, at 390×844). Over the stole it
+  still is. The burger pill sits over the sky at the top right. A shorter hero does not move it.
+- **For P10 or P12 (rule 7, found in passing):** `body`'s `has-background-dark` is Bulma's
+  `!important` helper, so the page computes `rgb(46, 51, 61)` in **both** schemes, never
+  `--color-bg: #111`. In light, `html` computes white, which is what an iPhone's rubber-band
+  overscroll past the page's ends would show. Neither is P6's to change.
+- **For P12:** `tools/checks/P6.mjs` re-runs in about two minutes. It writes the open-menu shots to
+  `tools/shots/p6-check/` and takes `--base` for the live site.

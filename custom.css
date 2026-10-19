@@ -70,11 +70,14 @@
   --white-15: rgba(255,255,255,0.15);
   --hero-film: rgba(255,255,255,0.18);
 
-  /* Glass: the hero nav pill and the side pane */
+  /* Glass: the hero nav pill (and the phone burger), the side pane, the phone menu */
   --glass-pill: linear-gradient(145deg, rgba(20,20,22,0.78), rgba(32,32,36,0.55));
   --glass-panel: linear-gradient(160deg, rgba(25,25,30,0.82), rgba(35,35,40,0.55));
   --blur-pill: blur(14px) saturate(135%);
   --blur-panel: blur(14px) saturate(140%);
+  /* The open phone menu: the panel's glass, near opaque, because it opens over the bright sky
+     and has to carry body-size text there, not a few short labels */
+  --glass-menu: linear-gradient(160deg, rgba(22,22,26,0.94), rgba(32,32,38,0.88));
   --active-pill: linear-gradient(145deg, rgba(70,70,255,0.18), rgba(150,70,255,0.18));
   --active-panel: linear-gradient(145deg, rgba(85,110,255,0.22), rgba(160,80,255,0.22));
 
@@ -113,6 +116,12 @@
 }
 
 /* ---------- Base ---------- */
+/* Every in-page link scrolls smoothly, the phone menu's included, and so do the two navs'
+   scripted scrolls, which pass no behavior of their own. The reduced-motion block turns it off. */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-text);
@@ -143,7 +152,7 @@ strong {
   margin-top: .5rem;
 }
 
-/* Anchor targets land clear of the top edge */
+/* Anchor targets land clear of the top edge, and of the fixed phone bar (52px, the burger in it) */
 section[id] { scroll-margin-top: 70px; }
 
 /* ---------- Hero ---------- */
@@ -173,11 +182,11 @@ section[id] { scroll-margin-top: 70px; }
   z-index: 0;
 }
 
-/* Above the film. This also makes the phone navbar position: relative, not Bulma's
-   is-fixed-top fixed: this selector is more specific. */
+/* Above the film. The phone navbar is left out on purpose: this selector is more specific than
+   Bulma's .navbar.is-fixed-top, and matching it made the bar position: relative, so it scrolled
+   away with the hero (P2's finding). Fixed, its z-index 30 already clears the film. */
 .hero.hero-banner .hero-body,
 .hero.hero-banner .hero-foot,
-.hero.hero-banner .navbar,
 .hero.hero-banner .hero-menu-desktop {
   position: relative;
   z-index: 2;
@@ -268,6 +277,75 @@ section[id] { scroll-margin-top: 70px; }
 .hero-nav a.is-active::after {
   opacity: 1;
   transform: scaleX(1);
+}
+
+/* ---------- Phone menu (below 1024px; the navbar is is-hidden-desktop) ---------- */
+/* Bulma's is-fixed-top pins the bar, which is a full-width strip 52px tall. It is see-through and
+   lets taps through to the page, so only the burger and the open menu take them. Every colour is
+   set here rather than left to Bulma, whose light scheme (the iPhone default, rule 7) drew a white
+   menu under the hero's white link text, and a blue burger on the white sky. */
+.navbar.is-fixed-top {
+  pointer-events: none;
+}
+
+/* The burger: white bars on the hero nav's dark glass, so it reads on the sky and on the page.
+   44px is the smallest touch target Apple recommends; Bulma's is 40. Equal in specificity to
+   Bulma's .navbar-burger:hover and :active and later, so a tap leaves no tint stuck on it. The
+   tap highlight goes too: a browser draws it as a square over the round pill, and the bars
+   turning into an X already answer the tap. */
+.navbar .navbar-burger {
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-inline-end: .75rem;
+  color: var(--color-text-strong);
+  background: var(--glass-pill);
+  backdrop-filter: var(--blur-pill);
+  -webkit-backdrop-filter: var(--blur-pill);
+  border: 1px solid var(--white-14);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-pill);
+}
+
+.navbar .navbar-burger:focus-visible {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: 2px;
+}
+
+/* The open menu: a dark card under the burger, right-aligned, the photo still showing beside it */
+.navbar .navbar-menu {
+  pointer-events: auto;
+  width: min(16rem, calc(100% - 1.5rem));
+  margin: .25rem .75rem 0 auto;
+  padding: var(--space-1) 0;
+  background: var(--glass-menu);
+  backdrop-filter: var(--blur-panel);
+  -webkit-backdrop-filter: var(--blur-panel);
+  border: 1px solid var(--white-08);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+}
+
+/* Rows at least 44px tall. The background is set outright so Bulma's light-scheme focus and
+   hover fill (near white) never shows; a press gets the side pane's wash instead of the
+   browser's tap highlight. */
+.navbar .navbar-item {
+  -webkit-tap-highlight-color: transparent;
+  padding: .65rem 1.1rem;
+  font-weight: 500;
+  color: var(--color-text-nav);
+  background: none;
+}
+
+.navbar .navbar-item:active {
+  color: var(--color-text-strong);
+  background: var(--white-06);
+}
+
+.navbar .navbar-item:focus-visible {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: -2px;
 }
 
 /* ---------- Side nav ---------- */
@@ -642,6 +720,13 @@ section[id] { scroll-margin-top: 70px; }
 
   .side-nav a:hover { text-decoration: none; }
 
+  /* The phone menu's rows, on a tablet-width window with a mouse: no underline, the press wash */
+  .navbar .navbar-item:hover {
+    color: var(--color-text-strong);
+    background: var(--white-06);
+    text-decoration: none;
+  }
+
   .side-nav a:not(.active):hover {
     background: var(--white-06);
     color: var(--color-text-strong);
@@ -662,9 +747,9 @@ section[id] { scroll-margin-top: 70px; }
 
 /* prefers-reduced-motion: nothing slides, fades, lifts or scrolls smoothly. The side pane still
    opens and tucks away, but at once. Last in the file and important, the one place this file
-   uses it, because it has to beat every transition declared anywhere (Bulma's included) and any
-   scroll-behavior: smooth set on html. A scrollIntoView that passes behavior: 'smooth' itself
-   is out of CSS's reach, and its script has to ask matchMedia instead. */
+   uses it, because it has to beat every transition declared anywhere (Bulma's included) and the
+   scroll-behavior: smooth set on html. index.html's scrollIntoView calls pass no behavior, so
+   they follow it; one that passed behavior: 'smooth' would be out of CSS's reach. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
