@@ -1,6 +1,6 @@
 // Render page 1 of a PDF to a PNG thumbnail (docs/plans/site-revamp.md, P11).
 //
-//   node tools/pdf-thumb.mjs resumes/Aaron_Sierra_SWE_Resume.pdf            # → resumes/…_Resume.png
+//   node tools/pdf-thumb.mjs resumes/Aaron_Sierra_DevOps_Resume.pdf            # → resumes/…_Resume.png
 //   node tools/pdf-thumb.mjs <pdf> [--width 600] [--out <png>]
 //
 // ImageMagick cannot do this here: it rasterises PDFs through Ghostscript, and this machine has none.
